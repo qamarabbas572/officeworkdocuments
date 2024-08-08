@@ -744,7 +744,14 @@ spec:
 	kubectl delete -f deployenvconfigmap.yml
 	
 =========================================================
- apiVersion: v1
+secrets
+=======
+echo "root" > username.txt; echo "password" > password.txt;
+kubectl create secret generic mysecret --from-file=username.txt --from-file=password.txt
+kubectl get secret
+kubectl describe secret mysecret
+
+apiVersion: v1
 kind: Pod
 metadata:
   name: myvolsecret
@@ -760,6 +767,17 @@ spec:
   - name: testsecret
     secret:
        secretName: mysecret  
+	   
+	   
+	nano deploysecret.yml
+	kubectl apply -f deploysecret.yml
+	kubectl get pods
+	kubectl exec myvolsecret -it -- /bin/bash
+	cd /tmp/mysecrets/
+	ls 
+		cat password.txt
+	kubectl delete -f deploysecret.yml	
+	
 ========================================================					
 
 **************************************END****************************************************					
