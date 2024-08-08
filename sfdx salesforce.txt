@@ -1,0 +1,50 @@
+As salesforce CLI version 7.176.1 is deprecated. New SFDX version i.e. 7.209.6 is now installed on your system. There were compatibility issues with the newer version which have been resolved.  
+
+required node version 16 or 18 
+
+
+Check out these other update options:
+
+Run sfdx update stable-rc to update to this week's release candidate. To return to the stable version, run sfdx update stable.
+Use the --version flag to update to an older version, such as sfdx update --version 7.178.0.
+Use the --available flag to view all available older versions you can update to or -interactive to update interactively.
+If you use autocomplete, run sfdx autocomplete --refresh-cache after you update Salesforce CLI to ensure that autocomplete works correctly on any new commands.
+
+https://developer.salesforce.com/tools/vscode/en/vscode-desktop/java-setup
+
+
+Linux
+Pop! OS 20.04 (installation via aptitude):
+
+{
+  "salesforcedx-vscode-apex.java.home": "/usr/lib/jvm/java-17-openjdk-amd64"
+}
+
+
+Windows:
+
+{
+  "salesforcedx-vscode-apex.java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.2.8-hotspot"
+}
+
+
+
+MacOS:
+
+For Mac OS X 10.5 or later, run /usr/libexec/java_home in your Terminal to get the default JDK location. To find all installed JDKs, use /usr/libexec/java_home -V.
+
+{
+  "salesforcedx-vscode-apex.java.home": "/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home"
+}
+
+Select File > Preferences > Settings (Windows or Linux) or Code > Preferences > Settings (macOS).
+Search for apex.
+Change the salesforcedx-vscode-apex.java.home setting to the full pathname of your Java Runtime. Do not set it to the Java executable itself. Note that this pathname can’t point to a location inside your project folder.
+
+*********************************************
+npm install sfdx-cli --global
+npm update --global sfdx-cli
+#sfdx
+
+sfdx --version
+****************************

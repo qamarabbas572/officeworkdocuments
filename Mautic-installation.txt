@@ -1,0 +1,51 @@
+Step 1: Download Mautic on to Your Ubuntu 20.04 Server
+
+# cd /var/www/html
+# mkdir mautic
+# wget https://github.com/mautic/mautic/releases/download/4.2.1/4.2.1-update.zip
+# unzip 4.2.1-update.zip
+# chown -R nayab.rauf:nayab.rauf /var/www/mautic
+# chmod -R 775 /var/www/mautic
+
+# mysql -u root
+# CREATE DATABASE mautic DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+# GRANT ALL ON mautic.* TO 'root'@'localhost' IDENTIFIED BY '123';
+# FLUSH PRIVILEGES;
+# EXIT;
+
+# vim /etc/apache2/sites-available/mautic.conf
+
+<VirtualHost *:80>
+    # ServerAdmin admin@domain.com
+     DocumentRoot /var/www/html/mautic
+     ServerName mautic.com
+     ServerAlias www.mautic
+
+     <Directory /var/www/html/mautic>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+     </Directory>
+     ErrorLog ${APACHE_LOG_DIR}/error.log
+     CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+
+# a2ensite mautic.conf
+# systemctl reload apache2
+
+http://192.168.7.154/mautic.com
+      < user ip address >
+
+if display this message on screen means mautic is installed and send to user
+Not Found
+The requested URL was not found on this server.
+
+Apache/2.4.41 (Ubuntu) Server at 192.168.3.165 Port 80
+
+
+
+
+
+

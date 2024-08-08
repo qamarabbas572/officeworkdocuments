@@ -1,0 +1,109 @@
+ # wget http://ftp.ruby-lang.org/pub/ruby/3.0/ruby-3.0.5.tar.gz
+ # ls
+ # ls -lh
+ # tar -xzvf ruby-3.0.5.tar.gz
+ #  cd ruby-3.0.5/
+ #  ./configure
+ #  make && make install
+ #  which ruby
+ # gem -v
+ # bundle -v
+ # gem install bundler
+ # apt update
+ # gem install rails -v 6.0.2
+ # export PATH=${PATH}:/usr/local/bin/ruby
+ # export PATH=${PATH}:/usr/local/bin/rails
+ # export PATH=${PATH}:/usr/local/bin/gem
+ # export PATH=${PATH}:/usr/local/bin/bundle
+ # ruby -v
+ # rails -v
+ 
+gem sources --remove https://rubygems.org/
+gem sources -a http://rubygems.org/
+
+gem update --system
+or
+gem source -a 'https://production.cf.rubygems.org'
+Downgrade:
+sudo gem update --system 1.4.2
+
+sudo apt-get install libmysqlclient-dev
+
+
+5.2.4.1
+========================================================================
+2000  wget http://ftp.ruby-lang.org/pub/ruby/2.5/ruby-2.5.3.tar.gz
+ 2001  pwd
+ 2002  ls
+ 2003  tar -xzvf ruby-2.5.3.tar.gz
+ 2004  cd ruby-2.5.3/
+ 2005  ./configure
+ 2006  make
+ 2007  make install
+ 2008  ruby -v
+ 2009  which ruby
+ 2010  which rails
+ 2011  apt install rails
+ 2012  which rails
+ 2013  which ruby
+ 2014  rails -v
+ 2015  apt purge rails
+ 2016  gem -v
+ 2017  bundle -v
+ 2018  gem install bundler
+ 2019  bundle -v
+ 2020  gem -v
+ 2021  apt update
+ 2022  bundle -v
+ 2023  which bundler
+ 2024  gem install rails -v 6.0.2
+ 2025  which rails
+ 2026  /usr/local/bin/rails -v
+ 2027  which bundler
+ 2028  which gem
+ 2029  which ruby
+ 2030  export PATH=${PATH}:/usr/local/bin/ruby
+ 2031  export PATH=${PATH}:/usr/local/bin/rails
+ 2032  export PATH=${PATH}:/usr/local/bin/gem
+ 2033  export PATH=${PATH}:/usr/local/bin/bundler
+ 2034  /usr/local/bin/rails -v
+ 2035  rails -v
+
+gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fbddbf5.ftp.cloud.hostpoint.ch
+
+
+rtdev@commeza.net
+
+
+JavXzvF4
+.8VpRYY(6&ATB6`D
+
+fbddbf5.ftp.cloud.hostpoint.ch
+comzadev@comza.net
+hDDW8bQB
+
+
+54.37.180.76
+178.32.98.94
+213.32.125.197
+
+13657
+
+166
+216

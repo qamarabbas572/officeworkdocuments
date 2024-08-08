@@ -1,0 +1,25 @@
+Old:  https://ironbuiltbuildings.com
+
+New: https://westeros.rolustech.com:44325/
+
+
+
+mysql -u root -p
+
+use ironcpanel_IBdb;
+
+UPDATE wp_options SET option_value = replace(option_value, 'https://ironbuiltbuildings.com', 'https://westeros.rolustech.com:44325') WHERE option_name = 'home' OR option_name = 'siteurl';
+
+UPDATE wp_posts SET post_content = replace(post_content, 'https://ironbuiltbuildings.com', 'https://westeros.rolustech.com:44325');
+
+UPDATE wp_posts SET guid = replace(guid, 'https://ironbuiltbuildings.com', 'https://westeros.rolustech.com:44325');
+
+UPDATE wp_postmeta SET meta_value = replace(meta_value,'https://ironbuiltbuildings.com', 'https://westeros.rolustech.com:44325');
+
+
+
+Verification:
+
+SELECT option_value FROM wp_options WHERE option_name = 'home' OR option_name = 'siteurl';
+
+SELECT guid FROM wp_posts WHERE post_type = 'post' OR post_type = 'page';

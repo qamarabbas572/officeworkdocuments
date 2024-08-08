@@ -1,0 +1,89 @@
+LAYER 2 - TRENDNET switches (Total 8)
+IP Range: 192.168.1.11 - 192.168.1.18
+password : R2JYCra46F
+
+
+R2JYCra46F
+en
+R2JYCra46F
+wr me
+copy running-config tftp
+192.168.6.23
+sw2C_260922
+swL3-core_050722
+====5th Floor====
+
+SW-5A: 192.168.1.21 (Trendnet)
+SW-5B: 192.168.1.28 
+SW-5C: 192.168.1.32
+
+====4th Floor====
+SW-4A: 192.168.1.11
+SW-4B: 192.168.1.12 
+SW-4C: 192.168.1.13 ( Trendnet )
+SW-4D: 192.168.1.14 ( Trendnet )
+SW-4E: 192.168.1.15
+SW-4F: 192.168.1.31 (Server Room)
+SW-IT-Room: 192.168.1.26 ( Trendnet )
+
+====3rd Floor====
+SW-3A: 192.168.1.16 ( Trendnet )
+SW-3B: 192.168.1.17 ( Trendnet )
+SW-3C: 192.168.1.18 ( Trendnet )
+SW-3D: 192.168.1.19 ( Trendnet )
+SW-3E: 192.168.1.20
+SW-3F: 192.168.1.30
+
+======2nd Floor======
+SW-2A: 192.168.1.39 (Cisco 48-port POE)
+SW-2B: 192.168.1.40 (Cisco 48-port POE)
+SW-2C: 192.168.1.41 (Cisco 48-port POE)
+
+====1st Floor====
+SW-1A: 192.168.1.33 ( Cisco POE )
+SW-1B: 192.168.1.34 ( Cisco POE)
+SW-1C: 192.168.1.35 ( Cisco )
+SW-1D: 192.168.1.36 ( Cisco )
+SW-1E: 192.168.1.38 (Cisco POE)
+
+LAYER 3 - CISCO 3750
+IP: 192.168.1.10
+************************************************
+
+Lan 6 disconnect to connect:
+         en
+         sh int status
+         sh run int Gi0/1
+         conf t
+         interface Gi0/1
+         sh
+        no switchport port-security mac-address sticky
+        switchport port-security mac-address sticky
+        no sh
+      Exit
+      Exit
+      sh int status
+      sh run int Gi0/1
+      wr
+	  
+	   R2JYCra46F
+	   
+remove auth
+		en
+         sh int status
+         sh run int Gi0/1
+         conf t
+         interface Gi0/1
+        no switchport port-security mac-address sticky
+********************************************************************	  
+	  switchport access vlan 6
+	  interface GigabitEthernet0/19
+	  
+******************************************************
+how to check the port details using mac-address
+
+		show mac address-table | include mac last 4 dig
+		show cdp nei
+		
+		
+*****************************************************		

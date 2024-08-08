@@ -1,0 +1,8 @@
+===== Setting user quotas / shared drive =====
+quota -vs ali.azhar
+cd /share/Public/
+mkdir ali.azhar
+chown -R ali.azhar:domain\ users ali.azhar/
+setquota -u ali.azhar 8G 8G 0 0 /share
+chmod -R 2775 ali.azhar
+quota -vs ali.azhar

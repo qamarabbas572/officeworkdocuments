@@ -1,0 +1,18 @@
+
+# vim /etc/hostname
+here enter the laptop tag like : RT-LT-453
+
+# vim etc/hosts
+127..0.1.1	RT-LT-453.rolustech.net  RT-LT-453
+
+# reboot
+# hostname 
+here your laptop tag appears like RT-LT-453
+
+---> connect laptop to Rolustech wifi
+go to terminal and move to root user
+
+# cd /home/admin2/Desktop/DomainJoin
+# chmod +x domainJoin20.sh
+# ./domainJoin20
+enter username and passwd 

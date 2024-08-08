@@ -1,0 +1,39 @@
+Please fill the description against every applicable field.
+Status of previous goals (Set By SM/Manager)
+Mention each short term goal and its status clearly mentioning what was done to achieve that.
+Completed CCNA 6 months certification course from Corvit Lahore. 
+Hands-on experience of configuring IP Phones, Network link speed testing, switches configuration and troubleshooting etc.
+Hands-on experience of system administration like configuration DHCP,AD, DNS etc.
+Understating of bash scripting and changing the already working scripts according to the user requirements. 
+
+What are your strengths?
+*
+Please explain in detail why you think these are your strengths and give an example where they benefited you and the company.
+My strengths are following:
+
+Ability to troubleshoot and resolve a wide range of technical issues efficiently.
+Excellent customer service skills to interact with end-users in a professional and helpful manner.
+Efficient time management to prioritize and handle multiple support tickets simultaneously.
+Collaboration with other IT professionals and departments to resolve issues and implement solutions.
+Keeping abreast of new technologies and industry trends.
+What are your areas of improvement?
+*
+Please explain in detail why you think these are your areas of improvement and give an example where they held you back.
+The areas of my improvement are following:
+Needs to understand firewall administration.
+I needs to enhance my English communication skills significantly.
+I have enrolled in cloud computing (AWS)  course in Corvit system sponsored by government.
+What are your short term goals you set by yourself (not by SM/Manager)?
+*
+Please explain in detail why you chose them and what steps have you taken for achieving them.
+My short term goals are following;
+Firewall administration.
+Amazon Web Services.
+Attempt CCNA exam.
+What are your long term goals set by yourself (not by SM/Manager)?
+*
+Please explain in detail why you chose them and what steps have you taken for achieving them.
+My long term goals are following:
+In-depth knowledge in IT Support, System Administration, and Networking skills.
+Learn and understand cloud computing and DevOps tools.
+What improvements have you brought in yourself/your team in last 6 months?

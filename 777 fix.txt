@@ -1,0 +1,54 @@
+First Revert rights for Sudoers File 
+1.pkexec chmod 555 /etc/sudoers
+2.pkexec chmod 555 /etc/sudoers.d/README
+
+After Above two commands switch towards root then proceed following (Sudo -i)
+
+
+Revert Permission on OS to Start Normally 
+1.chmod -R 755 /bin /boot /dev /etc/ /home /lib /lib64 \
+/media /mnt /opt /run /sbin /srv /usr /var
+
+2.chmod -R 777 /initrd.img /vmlinuz
+3.chmod -R 1777 /tmp
+4.chmod -R 555 /sys
+5.chmod -R 555 /proc
+6.chmod -R 700 /root
+
+Note :- Few result will give permission not permitted but dont stop keep on continuing step by step. 
+
+Verify below
+
+
+root@ubuntu:~# stat -c '%A %a %n' /*
+drwxr-xr-x 755 /bin
+drwxr-xr-x 755 /boot
+drwxr-xr-x 755 /dev
+drwxr-xr-x 755 /etc
+drwxr-xr-x 755 /home
+lrwxrwxrwx 777 /initrd.img
+lrwxrwxrwx 777 /initrd.img.old
+drwxr-xr-x 755 /lib
+drwxr-xr-x 755 /lib64
+drwx------ 700 /lost+found
+drwxr-xr-x 755 /media
+drwxr-xr-x 755 /mnt
+drwxr-xr-x 755 /opt
+dr-xr-xr-x 555 /proc
+drwx------ 700 /root
+drwxr-xr-x 755 /run
+drwxr-xr-x 755 /sbin
+drwxr-xr-x 755 /srv
+dr-xr-xr-x 555 /sys
+drwxrwxrwt 1777 /tmp
+drwxr-xr-x 755 /usr
+drwxr-xr-x 755 /var
+lrwxrwxrwx 777 /vmlinuz
+lrwxrwxrwx 777 /vmlinuz.old
+
+
+
+Reboot If all Good
+
+
+System Will Start and you will able to execute commands as sudo then revert anything specific accordingly. 

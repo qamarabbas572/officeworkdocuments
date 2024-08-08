@@ -1,0 +1,47 @@
+
+https://linuxize.com/post/how-to-install-ruby-on-ubuntu-20-04/
+
+=====>>>>> Setting UP ROR <<<<<=====
+=====>>>>> Installing Ruby using RVM <<<<<=====
+
+apt update
+apt install curl g++ gcc autoconf automake bison libc6-dev \
+        libffi-dev libgdbm-dev libncurses5-dev libsqlite3-dev libtool \
+        libyaml-dev make pkg-config sqlite3 zlib1g-dev libgmp-dev \
+        libreadline-dev libssl-dev
+		
+curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
+curl -sSL https://get.rvm.io | bash -s stable
+
+source {check-the-path-from-installaion-ending}
+source /etc/profile.d/rvm.sh
+
+rvm list known
+
+rvm install ruby-x.x.x
+rvm --default use ruby-x.x.x
+
+ruby -v
+
+
+
+gem -v
+
+gem update --system
+gem -v
+
+https://rubygems.org/gems/bundler/versions/2.1.4
+gem install bundler -v 2.1.4
+
+https://rubygems.org/gems/rails/versions
+gem install rails -v 5.2.4.1
+rails -v 
+
+
+===== known errors =====
+make install failed, exit code 2
+make install failed, exit code 2
+
+		Solution: ln -s /bin/mkdir /usr/bin/mkdir
+		

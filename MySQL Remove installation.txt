@@ -1,0 +1,44 @@
+sudo systemctl stop mysql
+sudo apt-get remove --purge mysql-\*
+sudo apt-get purge mysql-server mysql-client mysql-common mysql-server-core-* mysql-client-core-*
+sudo rm -rf /etc/mysql /var/lib/mysql
+sudo apt autoremove
+sudo apt autoclean
+
+
+yum remove mysql
+yum remove mysql-server
+yum clean all
+yum remove mysql*
+rm -rf /etc/mysql /var/lib/mysql /usr/bin/mysql /etc/my.cnf /usr/share/mysql
+rm -rf /var/lib/mysql
+rm -rf /usr/bin/mysql
+rm -rf /etc/my.cnf
+
+
+
+curl -sSLO https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
+rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+rpm -ivh mysql57-community-release-el7-9.noarch.rpm
+yum install mysql-server
+systemctl start mysqld
+grep 'temporary password' /var/log/mysqld.log
+mysql_secure_installation
+***************************************
+mysql 8 
+	wget https://repo.mysql.com/mysql80-community-release-el7-1.noarch.rpm
+	yum localinstall mysql80-community-release-el7-1.noarch.rpm
+	yum install mysql-community-server
+
+
+mysql-community-common
+mysql-community-libs
+mysql-community-libs-compat
+mysql-community-release
+
+4Zyci&CdhGC
+
+.JDpOXcqs2f(
+
+GRANT ALL PRIVILEGES ON . TO 'root'@'%' IDENTIFIED BY '@UGARcrm00792' WITH GRANT OPTION;
+FLUSH PRIVILEGES;

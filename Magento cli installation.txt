@@ -1,0 +1,56 @@
+======================= Complete================
+./magento setup:install \
+--base-url=http://localhost/magento2 \
+--db-host=localhost \
+--db-name=magento2 \
+--db-user=root \
+--db-password=123 \
+--admin-firstname=admin \
+--admin-lastname=admin \
+--admin-email=m.bilal@rolustech.net \
+--admin-user=admin \
+--admin-password=@dmin111 \
+--language=en_US \
+--currency=USD \
+--timezone=America/Chicago \
+--use-rewrites=1
+
+
+After installation run the following commands.cd
+
+bin/magento setup:upgrade
+bin/magento setup:di:compile
+bin/magento setup:static-content:deploy -f
+chmod -R 777 var pub generated
+=================================================================================
+
+php bin/magento setup:static-content:deploy -f
+
+php bin/magento cache:clean
+php bin/magento cache:flush
+php bin/magento indexer:reindex
+php bin/magento setup:upgrade
+php bin/magento setup:static-content:deploy -f
+php bin/magento setup:di:compile
+=====================================================================================
+update core_config_data set value = 'https://staging5.rolustech.com:44329' where path = 'web/unsecure/base_url'; 
+update core_config_data set value = 'https://staging5.rolustech.com:44329' where path = 'web/secure/base_url';
+
+UPDATE admin_user SET password = CONCAT(SHA2('xxxxxxxYourNewPassword', 256), ':xxxxxxx:1') WHERE username = 'admin';
+
+delete from admin_user where username='username'
+
+php bin/magento admin:user:create --admin-user="admin" --admin-password="@dmin111" --admin-email="usman.bashir@rolustech.net" --admin-firstname="Admin" --admin-lastname="Admin"
+
+php bin/magento admin:user:unlock admin
+
+composer self-update
+===================================================================================
+
+var app pub gen
+
+https://www.mageplaza.com/devdocs/how-install-magento-2-ubuntu.html#step-6-download-magento-2-pack
+
+https://www.mageplaza.com/devdocs/how-install-magento-2-ubuntu.html#step-7-install-magento-2
+
+https://bsscommerce.com/blog/magento-2-change-admin-URL#:~:text=The%20Magento%202%20admin%20URL,format%20is%20vulnerable%20to%20hackers.

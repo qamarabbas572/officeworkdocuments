@@ -1,0 +1,17 @@
+how to install navicat:
+-----------------------
+
+https://www.navicat.com/en/navicat-monitor-installation-guide?ver=ubuntu
+------------------------------------------------------------------------
+
+how to remove navicat:
+----------------------
+
+remove trial key version navicat ubuntu version.
+
+If you don't want to activate and just want to reset the trial,
+please delete the 
+~/.config/dconf/user files and the 
+~/.config/navicat folder. 
+
+Pay attention to the backup data. If conditions permit, please support genuine.

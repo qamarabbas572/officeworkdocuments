@@ -1,0 +1,81 @@
+Git global setup
+
+git config --global user.name "Administrator"
+git config --global user.password "key"
+git config --global user.email "admin@example.com"
+=============================================================
+
+Create a new repository
+
+git clone https://git.rolustech.com/alshaukat-foundation/alshaukat-foundation.git
+cd alshaukat-foundation
+touch README.md
+git add README.md
+git commit -m "add README"
+git push -u origin master
+========================================================
+Existing folder
+
+cd existing_folder
+git init
+git remote add origin https://git.rolustech.com/e2school/e2school.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master
+git push origin master --force
+==========================================================
+Existing Git repository
+
+cd existing_repo
+git remote rename origin old-origin
+git remote add origin https://git.rolustech.com/alshaukat-foundation/alshaukat-foundation.git
+git push -u origin --all
+git push -u origin --tags
+=====================================================
+git clone -b branch-name master-branch
+
+git clone -b develop https://git.rolustech.com/convertibill/external-application---convertibill.git
+
+yum update curl nss libcurl
+
+git update nss curl libcurl
+
+git push origin master --force
+
+git clone ssh://git@git.rolustech.com:46004tdp_crm/tdp_crm.git
+git clone ssh://user@32.242.111.21:11111/home/git/repo.git
+========================================================================
+
+git init
+  442  git remote add origin https://git.rolustech.com/EUresearch-RedWeb/euresearch-redweb.git
+  443  git add .
+  444  git commit -m "Initial commit"
+  445  git push -u origin master
+
+git config --global http.sslVerify false
+
+git remote -v
+git remote set-url origin
+======================================================================
+git clone https://git.rolustech.com/redminewebappalv/redmine-webapp-alv.git
+    9  cd redmine-webapp-alv
+   10  git checkout pre_production
+   11  git pull origin pre_production
+------------------------------------------------------------------------
+  git config --global http.sslVerify false
+  git remote add origin https://gitlab.log.at/pde/sugarcrm.git
+  git clone https://gitlab.log.at/pde/sugarcrm.git
+  git branch
+  git fetch origin
+  git checkout --track origin/RT-UAT-STAGING
+
+===================================================================
+ 388  git branch
+  389  git fetch origin
+  390  git checkout phase1_staging
+  391  git checkout -f phase1_staging
+  392  git reset --hard origin/phase1_staging
+
+git checkout --track origin/daves_branch
+
+===================================================

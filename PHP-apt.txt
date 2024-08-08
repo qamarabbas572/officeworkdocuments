@@ -1,0 +1,58 @@
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+sudo apt update
+
+apt install php8.2
+sudo apt-get install php8.2-bcmath php8.2-imap php8.2-intl php8.2-ldap php8.2-oauth -y
+sudo apt-get install php8.2-curl -y
+sudo apt-get install php8.2-dom -y
+sudo apt-get install php8.2-exif -y
+sudo apt-get install php8.2-gd -y
+sudo apt-get install php8.2-mbstring -y
+sudo apt-get install php8.2-mysqli -y
+sudo apt-get install php8.2-mysqlnd -y
+sudo apt-get install php8.2-pdo_mysql -y
+sudo apt-get install php8.2-SimpleXML -y
+sudo apt-get install php8.2-soap -y
+sudo apt-get install php8.2-xml -y
+sudo apt-get install php8.2-xmlreader -y
+sudo apt-get install php8.2-xmlwriter -y
+sudo apt-get install php8.2-xsl -y
+sudo apt-get install php8.2-zip -y
+sudo apt-get install php8.2-zlib -y
+php -m
+systemctl restart apache2
+--------------------------------------------------------------
+apt-get purge 'php*'
+apt-get autoclean
+apt-get autoremove
+
+--------------------------------------------------------------
+
+https://www.tecmint.com/install-php-7-in-centos-7/
+
+yum -y remove php*
+yum list installed | grep php
+
+yum install epel-release
+yum-config-manager --enable remi-php74
+
+yum install php php-cli php-soap php-bcmath php-imap php-intl php-ldap php-oauth php-curl php-dom php-exif php-gd php-mbstring php-mysqli php-mysqlnd php-pdo_mysql php-SimpleXML php-soap php-xml php-xmlreader php-xmlwriter php-xsl php-zip php-zlib
+
+
+php -m | grep -i soap
+
+---------------------------------------------------------------
+apt -y install unixodbc-dev
+
+# install sqlsrv driver
+# if this fails install sqlsrv-5.5.0preview & pdo_sqlsrv-5.5.0preview
+pecl install sqlsrv pdo_sqlsrv
+printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/8.2/mods-available/sqlsrv.ini
+printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/8.2/mods-available/pdo_sqlsrv.ini
+phpenmod -v 8.2 sqlsrv pdo_sqlsrv
+
+---------------------------------------------------------------
+
+Debian 10:-
+https://wiki.crowncloud.net/?How_to_Install_PHP_7_4_in_Debian_10

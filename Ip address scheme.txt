@@ -1,0 +1,20 @@
+
+
+
+Ip Network 		VLAN id 	Department
+
+192.168.2.0/24			2		Management
+192.168.3.0/24			3		Developers
+192.168.4.0/24			4		HR
+192.168.5.0/24			5 		Accounts
+192.168.6.0/24			6		System admin
+192.168.7.0/24			7		meeting room / deveploers
+192.168.110.0/24		110		cameras
+192.168.120.0/24		120		attendance machines/ access doors
+192.168.130.0/24		130		VOIP phones
+192.168.99.0/24			99		on-premises servers
+192.168.1.0/24			1		switches
+192.168.120.50 			120		attendance server
+192.168.140.			140 		bacement and ground floor lift machine 
+192.168.99.15					samba ( share drive server )
+192.168.99.11      windows server ( RDP)		DC, AD , DHCP , DNS

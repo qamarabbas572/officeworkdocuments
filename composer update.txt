@@ -1,0 +1,14 @@
+	************	 composer update 	********************
+
+Ticket --- update composer to 2.2 version , currently version is 2.1
+# composer -v
+# cd /usr/local/bin
+# ls
+
+# wget https://getcomposer.org/download/2.2.0/composer.phar
+
+# mv composer composer.old1
+# mv composer.phar composer
+# chmod -R 775 composer
+# su <username>
+# composer -v  

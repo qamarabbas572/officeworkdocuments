@@ -1,0 +1,46 @@
+How to install Docker on Windows:
+
+	Step 1: Download the setup using this link 
+	
+		https://www.docker.com/products/docker-desktop/
+		
+	Step 2: Install the setup accordingly
+
+	Step 3: Install the WSL using the following commands 
+	
+		----- Enable the Windows Subsystem for Linux -----
+		Open PowerShell as Administrator and run:
+
+		dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+
+		----- Restart your machine and WSL 1 is installed -----
+
+		===== for running WSL 2 =====
+
+		----- Enable Virtual Machine feature -----
+		dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+
+		----- Restart your machine -----
+
+		----- Download the Linux kernel update package -----
+		https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
+
+		===== Set WSL 2 as your default version =====
+
+		wsl --set-default-version 2
+
+
+		service --status-all
+		service docker status
+		
+	Step 4: Switch the user and login with admin2 and follow the setups
+		Search Computer Management 
+		Click on Local Users and Groups
+		Click on Groups 
+		You see Docker Group go to its properties and add the current user.
+		
+	Step 5:Now restart the system.
+
+    Step 6:Now login with current user and start docker desktop app.	
+	
+	

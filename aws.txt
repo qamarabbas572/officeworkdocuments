@@ -1,0 +1,17 @@
+					*******************AWS********
+					******************************
+	S3 Bucket Creation using CLI
+		Install aws cli
+			
+			aws configure
+			aws s3 ls 
+			aws s3 mb s3://azlaanabbas {create}
+			aws s3 rb s3://azlaanabbas {remove}
+			
+		Sync with local folder
+			cd d:
+			cd D:\CORVIT\AWS\test{save any files or folders in test folder}
+				aws s3 sync . s3://azlaanabbas
+			Delete the file from test folder
+		To recover the folder please type the command
+			aws s3 sync  s3://azlaanabbas .

@@ -1,0 +1,45 @@
+#!/bin/bash
+if [[ $1 =~ 5 ]]; then
+    sudo a2enmod php5 > /dev/null 2>&1;
+    sudo a2dismod php7 > /dev/null 2>&1;
+    sudo a2dismod php8 > /dev/null 2>&1;
+
+    if [[ $1 =~ 5.5 ]];then
+        echo 'LoadModule php5_module        /usr/lib/apache2/modules/libphp5.5.38.so' | sudo tee /etc/apache2/mods-available/php5.load
+    elif [[ $1 =~ 5.6 ]];then
+        echo 'LoadModule php5_module        /usr/lib/apache2/modules/libphp5.6.40.so' | sudo tee /etc/apache2/mods-available/php5.load
+    elif [[ $1 =~ 5.4 ]]; then
+        echo 'LoadModule php5_module        /usr/lib/apache2/modules/libphp5.4.45.so' | sudo tee /etc/apache2/mods-available/php5.load
+    fi
+    sudo service apache2 restart;
+elif [[ $1 =~ 7 ]]; then
+    sudo a2enmod php7 > /dev/null 2>&1;
+    sudo a2dismod php5 > /dev/null 2>&1;
+    sudo a2dismod php8 > /dev/null 2>&1;
+
+    if [[ $1 =~ 7.1 ]];then
+        echo 'LoadModule php7_module        /usr/lib/apache2/modules/libphp7.1.33.so' | sudo tee /etc/apache2/mods-available/php7.load
+    elif [[ $1 =~ 7.2 ]];then
+        echo 'LoadModule php7_module        /usr/lib/apache2/modules/libphp7.2.34.so' | sudo tee /etc/apache2/mods-available/php7.load
+    elif [[ $1 =~ 7.3 ]];then
+        echo 'LoadModule php7_module        /usr/lib/apache2/modules/libphp7.3.28.so' | sudo tee /etc/apache2/mods-available/php7.load
+    elif [[ $1 =~ 7.4 ]];then
+        echo 'LoadModule php7_module        /usr/lib/apache2/modules/libphp7.4.20.so' | sudo tee /etc/apache2/mods-available/php7.load
+    fi
+
+    sudo service apache2 restart;
+elif [[ $1 =~ 8 ]]; then
+    sudo a2enmod php8 > /dev/null 2>&1;
+    sudo a2dismod php5 > /dev/null 2>&1;
+    sudo a2dismod php7 > /dev/null 2>&1;    
+    if [[ $1 =~ 8.0 ]];then
+        echo 'LoadModule php_module        /usr/lib/apache2/modules/libphp8.0.20.so' | sudo tee /etc/apache2/mods-available/php8.load
+	elif [[ $1 =~ 8.1 ]];then
+        echo 'LoadModule php_module        /usr/lib/apache2/modules/libphp8.1.10.so' | sudo tee /etc/apache2/mods-available/php8.load	
+	elif [[ $1 =~ 8.2 ]];then
+        echo 'LoadModule php_module        /usr/lib/apache2/modules/libphp8.2.0.so' | sudo tee /etc/apache2/mods-available/php8.load
+	elif [[ $1 =~ 8.3 ]];then
+        echo 'LoadModule php_module        /usr/lib/apache2/modules/libphp8.3.1.so' | sudo tee /etc/apache2/mods-available/php8.load
+    fi
+    sudo service apache2 restart;
+fi

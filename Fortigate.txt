@@ -1,0 +1,24 @@
+Configure on port 1
+
+		show system interface;
+		
+	configure static ip on any interface
+	
+		config system interface
+		show
+		edit port1
+			set mode static
+			set ip 192.168.255.128/24
+			set allowaccess http https ping ssh
+			end
+			
+		show system interface
+		cmd
+		ping 192.168.255.128
+			
+			browser
+			
+			192.168.255.128
+			
+*****************************************************			
+		

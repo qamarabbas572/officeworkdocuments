@@ -1,0 +1,54 @@
+To direct open system properties or computer name change:
+	sysdm.cpl
+	
+Local group policy 
+	gpedit.msc
+	
+Domian group policy 	
+	gpmc.msc
+	
+How many & which policy apply
+		gpresult /r
+		
+		5:33
+		
+GRABON		129
+OC7         133
+DPF15       133
+HCHARGES    132
+BUSINESS10   129
+SPECIAL15   133
+BUSINESS10  129
+HA10         129
+HCHARGES   132
+BIZ10      129
+01NET      129
+BLOGGINGQNA 129
+TUTORIALS2022 129
+MRVYAS 129
+THETECHROOST 129
+
+HISHAMSARWAR 129
+ZOUTONS 129
+AliRazaMarketing 129
+HBASERVICES 129
+
+
+*******************************************
+To open active directory using command
+
+	dsa.msc
+****************************************	
+How to Allow Multiple RDP Sessions on Windows 10 and 11
+https://woshub.com/how-to-allow-multiple-rdp-sessions-in-windows-10/
+
+******************************************
+LAN SETTINGS shortcut
+
+	ncpa.cpl
+	
+*******************************************
+How to open controle panel using command
+	appwiz.cpl 
+	
+**********************************	

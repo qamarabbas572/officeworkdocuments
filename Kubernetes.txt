@@ -1,0 +1,765 @@
+*******************COMMANDS FOR DEMO*******************
+COMMANDS common for Master and Node 
+	
+		sudo su
+		apt-get update
+		apt-get install apt-transport-https
+
+
+		apt install docker.io -y
+		docker --version
+		systemctl start docker
+		systemctl enable docker
+
+		sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add 
+
+
+		nano /etc/apt/sources.list.d/kubernetes.list
+
+		deb http://apt.kubernetes.io/ kubernetes-xenial main
+
+
+		apt-get update
+
+		apt-get install -y kubelet kubeadm kubectl kubernetes-cni
+
+
+BOOTSTRAPPING THE MASTER NODE (IN MASTER)
+
+		kubeadm init
+		 
+
+		COPY THE COMMAND TO RUN IN NODES & SAVE IN NOTEPAD
+kubeadm join 172.31.45.51:6443 --token h0zrjw.c655lhocufyzi3y9 \ --discovery-token-ca-cert-hash sha256:f2166937c4518dfe05941f8d46bd6510878c97682ecde8f2b7306f3b9f853857
+		
+		
+		mkdir -p $HOME/.kube
+		cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+
+
+		chown $(id -u):$(id -g) $HOME/.kube/config
+
+		kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+		kubectl apply -f https://raw.githubusercontent.com/cor...
+
+		CONFIGURE WORKER NODES (IN NODES)
+
+		COPY LONG CODE PROVIDED MY MASTER IN NODE NOW LIKE CODE GIVEN BELOW
+
+		e.g- kubeadm join 172.31.6.165:6443 --token kl9fhu.co2n90v3rxtqllrs --discovery-token-ca-cert-hash sha256:b0f8003d23dbf445e0132a53d7aa1922bdef8d553d9eca06e65c928322b3e7c0
+
+		GO TO MASTER AND RUN THIS COMMAND
+		kubectl get nodes
+Cluster:
+	group of object.
+	 for example 3 nodes have in one group.
+**********************END************************************
+*****************YAML Files used in demo************************
+
+EXAMPLE OF LABELS
+
+
+	kind: Pod
+	apiVersion: v1
+	metadata:
+	  name: delhipod
+	  labels:                                                   
+		env: development
+		class: pods
+	spec:
+		containers:
+		   - name: c00
+			 image: ubuntu
+			 command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+
+
+		kubectl apply -f pod5.yml
+		kubectl get pods
+		kubectl get pods -o wide
+	show labels
+		kubectl get pods --show-labels
+	
+	Attach label using impertive method 
+		kubectl label pods podname myname=qamar
+		
+	Search pod using label
+		kubectl get pods -l myname=qamar
+		kubectl get pods -l myname!=qamar
+		
+	Search pod using multiple labels
+		kubectl get pods -l 'env in (development,testing)'
+		kubectl get pods -l 'env notin (development,testing)'
+		kubectl get pods -l class=pods,env=development
+		
+	How to delete pod
+		kubectl delete pods -l myname!=qamar
+		kubectl delete pods -l 'env in (development,testing)'
+		
+***************************************************************************
+NODE SELECTOR EXAMPLE
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nodelabels
+  labels:
+    env: development
+spec:
+    containers:
+       - name: c00
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+    nodeSelector:                                         
+       hardware: t2-medium
+	   
+	kubectl apply -f pod5.yml   
+	kubectl describe pod nodelabels
+	
+Error 
+	kubectl get nodes
+	kubectl label nodes minikube hardware=014F00000000
+	kubectl describe pod nodelabels{podname}
+Delete yml file 	
+	kubectl delete -f pod5.yml	
+	
+Delete pod
+		kubectl delete pod skdpod
+		
+		
+*****************************************************************************************************
+EXAMPLE OF REPLICATION CONTROLLER
+
+kind: ReplicationController               
+apiVersion: v1
+metadata:
+  name: myreplica
+spec:
+  replicas: 2            
+  selector:        
+    myname: Bhupinder                             
+  template:                
+    metadata:
+      name: testpod6
+      labels:            
+        myname: Bhupinder
+    spec:
+     containers:
+       - name: c00
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+
+	kubectl apply -f pod5.yml
+	kubectl get pods
+	kubectl get rc
+	kubectl describe rc myreplica
+	kubectl get pods --show-labels
+	kubectl delete -f pod5.yml
+Scale up and scale down 
+		kubectl scale --replicas=8 rc -l myname=Bhupinder
+		
+		
+****************************************************************************************************************
+EXAMPLE OF REPLICA SET
+
+
+kind: ReplicaSet                                    
+apiVersion: apps/v1                            
+metadata:
+  name: myrs
+spec:
+  replicas: 2  
+  selector:                  
+    matchExpressions:                             # these must match the labels
+      - {key: myname, operator: In, values: [Bhupinder, Bupinder, Bhopendra]}
+      - {key: env, operator: NotIn, values: [production]}
+  template:      
+    metadata:
+      name: testpod7
+      labels:              
+        myname: Bhupinder
+    spec:
+     containers:
+       - name: c00
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Technical-Guftgu; sleep 5 ; done"]
+
+	kubectl apply -f pod5.yml
+	kubectl get pods
+	kubectl get pods -A 
+	kubectl get rs
+	kubectl delete rs/myrs
+Scale up and scale down 
+		kubectl scale --replicas=8  rs/myrs	
+**************************************END****************************************************
+
+************************************************************Start**************************
+					Kubernetes Jobs,init container and pod lifecycle
+					************************************************
+====================
+ Install Docker
+sudo apt update && apt -y install docker.io
+
+ Install kubectl
+  curl -LO https://storage.googleapis.com/kubern... -s https://storage.googleapis.com/kubern... &&   chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
+
+ Install Minikube
+  curl -Lo minikube https://storage.googleapis.com/miniku... && chmod +x minikube && sudo mv minikube /usr/local/bin/
+
+ Start Minikube
+  apt install conntrack
+ minikube start --vm-driver=none
+  minikube status
+minikube start --driver=docker --force
+
+===========Job=====================================
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: testjob
+spec:
+  template:
+    metadata:
+      name: testjob
+    spec:
+      containers:
+      - name: counter
+        image: centos:7
+        command: ["bin/bash", "-c", "echo Technical-Guftgu; sleep 5"]
+      restartPolicy: Never
+	  
+	  kubectl apply -f job.yml
+	  kubectl get pods
+	  kubectl delete -f job.yml
+	  watch kubectl get pods
+	  
+--------------
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: testjob
+spec:
+  parallelism: 5                           # Runs for pods in parallel
+  activeDeadlineSeconds: 10  # Timesout after 30 sec
+  template:
+    metadata:
+      name: testjob
+    spec:
+      containers:
+      - name: counter
+        image: centos:7
+        command: ["bin/bash", "-c", "echo Technical-Guftgu; sleep 60"]
+      restartPolicy: Never
+	  
+	watch kubectl get pods
+-------------
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+ name: bhupi
+spec:
+ schedule: "* * * * *"
+ jobTemplate:
+   spec:
+     template:
+       spec:
+         containers:
+         - image: ubuntu
+           name: bhupi
+           command: ["/bin/bash", "-c", "echo Technical-Guftgu; sleep 5"]
+         restartPolicy: Never
+		 
+	  kubectl apply -f cron.yml
+	  kubectl get pods
+	  kubectl delete -f cron.yml		 
+	  watch kubectl get pods	
+--------------------------------
+Initcontainer
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: initcontainer
+spec:
+  initContainers:
+    - name: c1
+      image: centos
+      command: ["/bin/bash", "-c", "echo Technical-Guftgu > /tmp/xchange/testfile; sleep 30"]
+      volumeMounts:
+        - name: xchange
+          mountPath: "/tmp/xchange"
+  containers:
+    - name: c2
+      image: centos
+      command: ["/bin/bash", "-c", "while true; do echo `cat /tmp/data/testfile`; sleep 5; done "]
+      volumeMounts:
+        - name: xchange
+          mountPath: "/tmp/data"
+  volumes:
+     - name: xchange
+       emptyDir: {}
+
+	
+	kubectl apply -f init.yml
+	 watch kubectl get pods
+	 kubectl delete -f init.yml 
+	 kubectl logs -f pod/initcontainer
+=================
+**************************************END****************************************************
+************************************************************Start**************************
+							Deployment Object in Kubernetes
+					************************************************
+apt install conntrack
+
+minikube start --vm-driver=none
+minikube status
+kubectl version
+kubectl get nodes
+-------------------------
+					
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+   name: mydeployments
+spec:
+   replicas: 2
+   selector:     
+    matchLabels:
+     name: deployment
+   template:
+     metadata:
+       name: testpod
+       labels:
+         name: deployment
+     spec:
+      containers:
+        - name: c00
+          image: ubuntu
+          command: ["/bin/bash", "-c", "while true; do echo Technical-Guftgu; sleep 5; done"]
+
+		kubectl apply -f mydeploy.yml
+		kubectl delete pod podname
+
+minikube start --driver=docker --force
+
+To check deployment was created or not 
+	kubectl get deploy 
+	
+To check how deployment creates RS and pods 
+	kubectl describe deploy mydeployments
+	kubectl get rs 
+	kubectl get pods
+	
+To scale up or scale down
+	kubectl scale --replicas=1 deploy mydeployments
+	
+To check what is running inside container
+	kubectl logs -f podname
+	
+To check OS Release
+		kubectl exec podname -- cat /etc/os-release
+		
+		
+	kubectl rollout status deployment mydeployments
+	kubectl rollout history deployment mydeployments
+	kubectl rollout undo  deploy mydeployments
+====================
+
+**************************************END****************************************************
+
+************************************************************Start**************************
+							KUBERNETES NETWORKING
+					************************************************
+Commication between two containers with the same pod.
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod
+spec:
+  containers:
+    - name: c00
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+    - name: c01
+      image: httpd
+      ports:
+       - containerPort: 80
+
+minikube start --driver=docker --force
+	   
+	kubectl apply -f netpod.yml
+	kubectl get pods
+	
+How to enter in the container
+		kubectl exec testpod -it -c c00 -- /bin/bash
+			apt update && apt install  curl
+			curl localhost:80
+			
+	kubectl delete -f netpod.yml		
+================
+Commication between two containers with the different pods
+
+nano nginxpod.yml
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod1
+spec:
+  containers:
+    - name: c01
+      image: nginx
+      ports:
+       - containerPort: 80
+
+	kubectl apply -f nginxpod.yml
+	kubectl get pods -o wide
+	curl IP:80
+
+nano httpdpod.yml
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod2
+spec:
+  containers:
+    - name: c02
+      image: httpd
+      ports:
+       - containerPort: 80
+	   
+	kubectl apply -f httpdpod.yml
+	kubectl get pods -o wide
+	curl IP:80
+================
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+   name: mydeployments
+spec:
+   replicas: 1
+   selector:      # tells the controller which pods to watch/belong to
+    matchLabels:
+     name: deployment
+   template:
+     metadata:
+       name: testpod1
+       labels:
+         name: deployment
+     spec:
+      containers:
+        - name: c00
+          image: httpd
+          ports:
+          - containerPort: 80
+		  
+	kubectl apply -f deployhttpd.yml
+	kubectl get pods
+	kubectl get pods -o wide
+	curl IP:80
+====================
+kind: Service                             # Defines to create Service type Object
+apiVersion: v1
+metadata:
+  name: demoservice
+spec:
+  ports:
+    - port: 80                               # Containers port exposed
+      targetPort: 80                     # Pods port
+  selector:
+    name: deployment                    # Apply this service to any pods which has the specific label
+  type: ClusterIP                       # Specifies the service type i.e ClusterIP or 
+
+	kubectl apply -f service.yml
+	kubectl get svc
+	curl 10.96.237.67:80
+	kubectl delete  pods mydeployments-678dfc8577-gx2qh
+	
+NodePort	
+	kubectl describe svc demoservice
+	
+===========================
+volume labs
+===========================
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myvolemptydir
+spec:
+  containers:
+  - name: c1
+    image: centos
+    command: ["/bin/bash", "-c", "sleep 15000"]
+    volumeMounts:                                    # Mount definition inside the container
+      - name: xchange
+        mountPath: "/tmp/xchange"          
+  - name: c2
+    image: centos
+    command: ["/bin/bash", "-c", "sleep 10000"]
+    volumeMounts:
+      - name: xchange
+        mountPath: "/tmp/data"
+  volumes:                                                   
+  - name: xchange
+    emptyDir: {}
+
+	nano emptydir.yml
+	kubectl apply -f emptydir.
+	kubectl get pods
+	kubectl exec myvolemptydir -c c1 -it -- /bin/bash
+	cd /tmp/xchange
+		touch c1file 
+	kubectl exec myvolemptydir -c c2 -it -- /bin/bash
+	cd /tmp/data
+		ls
+		
+========================
+HOST PATH
+========================
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myvolhostpath
+spec:
+  containers:
+  - image: centos
+    name: testc
+    command: ["/bin/bash", "-c", "sleep 15000"]
+    volumeMounts:
+    - mountPath: /tmp/hostpath
+      name: testvolume
+  volumes:
+  - name: testvolume
+    hostPath:
+      path: /tmp/data 	
+
+		nano hostpath.yml
+		 kubectl delete -f hostpath.yml
+		kubectl get pods
+		kubectl exec myvolhostpath -c testc -it -- /bin/bash
+		kubectl exec myvolhostpath -- ls /tmp/data/testfile
+		kubectl exec myvolhostpath -- cat /tmp/data/testfile
+
+
+=================================
+PERSISTENT VOLUME
+================================
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: myebsvol
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  awsElasticBlockStore:
+    volumeID: vol-03fa004b3506e08db           # YAHAN APNI EBS VOLUME ID DAALO
+    fsType: 
+	
+	
+	nano pv.yml
+	kubectl apply -f pv.yml
+	kubectl get pv
+
+============
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myebsvolclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+	  
+	 nano mypvc.yml
+	kubectl apply -f mypvc.yml
+	kubectl get pvc
+==================================================================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pvdeploy
+spec:
+  replicas: 1
+  selector:      # tells the controller which pods to watch/belong to
+    matchLabels:
+     app: mypv
+  template:
+    metadata:
+      labels:
+        app: mypv
+    spec:
+      containers:
+      - name: shell
+        image: centos
+        command: ["bin/bash", "-c", "sleep 10000"]
+        volumeMounts:
+        - name: mypd
+          mountPath: "/tmp/persistent"
+      volumes:
+        - name: mypd
+          persistentVolumeClaim:
+            claimName: myebsvolclaim
+			
+	nano deploypvc.yml
+	kubectl apply -f deploypvc.yml
+	kubectl get pods
+	kubectl get deploy
+	kubectl get rs
+	kubectl exec pvdeploy-8556986f75-xgw6t  -it -- /bin/bash
+	cd /tmp/persistent
+		touch abac 
+		ls 
+	kubectl delete pod pvdeploy-8556986f75-xgw6t
+	kubectl get pods
+	kubectl exec pvdeploy-8556986f75-4jgn2  -it -- /bin/bash
+	cd /tmp/persistent/
+		ls
+**************************************END******************************************************************************************Start**************************************************
+							HEALTHCHECK/LIVENESSPROBE
+					************************************************		
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: mylivenessprobe
+spec:
+  containers:
+  - name: liveness
+    image: ubuntu
+    args:
+    - /bin/sh
+    - -c
+    - touch /tmp/healthy; sleep 1000
+    livenessProbe:                                          
+      exec:
+        command:                                         
+        - cat                
+        - /tmp/healthy
+      initialDelaySeconds: 5          
+      periodSeconds: 5                                 
+      timeoutSeconds: 30  
+	  
+minikube start --driver=docker --force
+	nano liveness.yml
+	kubectl apply -f liveness.yml
+	kubectl get pods
+	kubectl exec mylivenessprobe -it -- /bin/bash
+		 cat /tmp/healthy
+		 echo $?
+		 0 {application working fine}
+		 cat /tmp/healthy1
+		 echo $?
+		 1 {application not working }
+		 
+		 ls /tmp/healthy
+		 cat /tmp/healthy
+		 kubectl describe pod mylivenessprobe
+		 kubectl delete -f liveness.yml
+		 
+----------------------------------------		
+
+**************************************END****************************************************
+
+**************************************Start**************************************************
+							kubernetes configmap and secrets
+					************************************************	
+	nano sample.conf
+	kubectl create configmap mymap --from-file=sample.conf
+	kubectl get configmap
+	kubectl describe  configmap mymap
+	
+
+					
+configmap
+====================================================================
+ apiVersion: v1
+kind: Pod
+metadata:
+  name: myvolconfig
+spec:
+  containers:
+  - name: c1
+    image: centos
+    command: ["/bin/bash", "-c", "while true; do echo Technical-Guftgu; sleep 5 ; done"]
+    volumeMounts:
+      - name: testconfigmap
+        mountPath: "/tmp/config"   # the config files will be mounted as ReadOnly by default here
+  volumes:
+  - name: testconfigmap
+    configMap:
+       name: mymap   # this should match the config map name created in the first step
+       items:
+       - key: sample.conf
+         path: sample.conf
+		 
+	nano deployconfigmap.yml
+	kubectl apply -f deployconfigmap.yml
+	kubectl get pods
+	kubectl exec myvolconfig -it -- /bin/bash
+	cd /tmp/config
+		ls
+		sample.conf
+		
+	kubectl delete -f deployconfigmap.yml
+	
+
+==============================================================================
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myenvconfig
+spec:
+  containers:
+  - name: c1
+    image: centos
+    command: ["/bin/bash", "-c", "while true; do echo Technical-Guftgu; sleep 5 ; done"]
+    env:
+    - name: MYENV         # env name in which value of the key is stored
+      valueFrom:
+        configMapKeyRef:
+          name: mymap      # name of the config created
+          key: sample.conf  
+		  
+	nano deployenvconfigmap.yml
+	kubectl apply -f deployenvconfigmap.yml
+	kubectl get pods
+	kubectl exec myenvconfig -it -- /bin/bash
+	env 
+	echo $MYENV
+	kubectl delete -f deployenvconfigmap.yml
+	
+=========================================================
+ apiVersion: v1
+kind: Pod
+metadata:
+  name: myvolsecret
+spec:
+  containers:
+  - name: c1
+    image: centos
+    command: ["/bin/bash", "-c", "while true; do echo Technical-guftgu; sleep 5 ; done"]
+    volumeMounts:
+      - name: testsecret
+        mountPath: "/tmp/mysecrets"   # the secret files will be mounted as ReadOnly by default here
+  volumes:
+  - name: testsecret
+    secret:
+       secretName: mysecret  
+========================================================					
+
+**************************************END****************************************************					

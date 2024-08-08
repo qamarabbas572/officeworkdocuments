@@ -1,0 +1,33 @@
+
+
+# cd /opt/<project file name>
+Verify  " cache/images/ " and if executable files found, restrict file rights immediately and mention in remarks
+
+# chmod -R 444 
+
+
+"1- vi .htaccess
+# update below line
+RewriteRule (?i)^(cache|clients|data|examples|include|install|jssource|metadata|ModuleInstall|modules|soap|xtemplate)/.*\.(php|tpl|phar)$ - [F]"
+
+
+"2 -vi install/install_utils.php
+Go to ""function getForbiddenPaths()"" and update below line.
+'^(cache|clients|data|examples|include|install|jssource|metadata|ModuleInstall|modules|soap|xtemplate)/.*\.(php|tpl|phar)$',"
+
+
+"3- vi include/MVC/SugarApplication.php
+# Go to "" function loadUser() ""
+
+# Find "" $authController = AuthenticationController::getInstance(); "" and insert below code exactly above this line.        
+
+        //If there was a login error, we should not allow the further code execution and destroy the session
+        if (isset($_SESSION['login_error'])) {
+            if ($sess->getId()) {
+                $sess->destroy();
+            };
+            header('Location: ' . $this->getUnauthenticatedHomeUrl(true));
+            exit();
+        }
+
+"

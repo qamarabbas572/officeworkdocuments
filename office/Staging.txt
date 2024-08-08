@@ -1,0 +1,319 @@
+
+					*********************************
+						Staging 
+					
+					*********************************
+					
+Step 1:-
+		Open the Keypass 
+			Search the staging server {e.g rtlab prox} VPS Proxmos v3.4
+			Copy the Url and past on the browser {https://5.196.80.164:8006/}
+			Give the username and password
+			Check the last staging server ID
+
+Step 2:- 
+		Create a new Keypass and enter the title and username
+		Create a new password
+		
+Step 3:-
+		Create a vm or Container on rtlab prox
+		
+Step 4:-
+		General:-
+			vm id 
+			hostname
+			Resource pool: SugarCRM 7
+			password:
+			confirm password:
+			
+Step 5:- 
+		Template:-
+			Storage : local 
+			Select temp : Centos 7 or {according to the SugarCRM}
+			
+Step 6:- 
+		Resource:-
+			Mem:- 4096 {4GB}
+			Swap:- 512
+			Disk:- 10GB
+			CPU:- 2
+			
+Step 7:-
+		Network:-
+			Routed mode {venet}
+			IP 10.1.1.27/32
+			or old 
+			IP 10.1.1.27
+				If vm is 100-199 we use last 2 digit after 10.1.1.{e.g 10.1.1.27}
+				If vm is 200-255 we use 3 digit after 10.1.1.{e.g 10.1.1.223}
+			Gateway : 10.1.1.254	
+		
+Step 8:-
+			SSH the created vm or container
+				staging.rtlabs.co.uk
+				Give the username and password from the Keypass
+				
+Step 9:- 
+			Open the url on the browser with port 	
+			https://staging.rtlabs.co.uk:44327 { port is the id no of the server and give last 2 digit after 443}
+			
+Step 10:-
+			Install or Step the SugarCRM
+			For that follow the follow steps
+				cd /opt/
+				ls -l
+				 sugarcrmpro
+				ls -l
+				ln -s SugarPro8 /opt/sugarcrmpro
+				ls -l
+				unzip SugarPro-8.0.0.zip
+				ls -l
+				unlink sugarcrmpro
+				ls -l
+				ln -s SugarPro-Full-8.0.0 /opt/sugarcrmpro
+				ls -l
+				chmod -R 775 SugarPro-Full-8.0.0
+				chown -R apache:apache SugarPro-Full-8.0.0
+				ls -l
+				mysql -Vi
+				mysql
+				ls -l
+				vim /opt/SugarPro-Full-8.0.0/install/installSystemCheck.php
+				
+				@dmin111  username
+				@UGARcrm00700 or @UGARcrm00792 database password
+				
+				
+Step 11:
+				If you face .htaccess Error:
+                vim /opt/SugarPro-Full-8.0.0/install/installSystemCheck.php
+
+                Open : ====> 
+                vim /opt/sugarcrmpro/install/installSystemCheck.php
+
+                Comment this line: ====>    //if($res != "SUCCESS") {                        -----> comment this line
+
+                Add this line: ====>     if(false) {                                        -----> add this line	
+				
+				mysqldump -u root -p austin_prod_18072023 > austin_prod_18072023_bk.sql
+				scp -P 2230 sugarcrm1202.tar.gz root@149.202.64.41:/opt/
+				scp -P 2237 public_html_bk.tar.gz root@staging5.rolustech.com:/opt/
+				scp -i abc.pem  awscliv2.zip   root@10.0.1.166:/
+				scp -P 2224 root@51.254.94.159:/var/www/vhosts/SuiteCRM-7.11.12.tar.gz /share/Public/salman.tariq
+				
+Step 12 : sugarcrm key : 1a0848b4dba81062d28bdbb1e00fc6f4
+Step 13: database import
+		create database namedatabase;
+		use namedatabase
+        source /opt/ui.sql
+
+Step 14 database export 
+mysqldump --single-transaction  -u root -p tworld > tworld_bk.sql	
+
+scp -P 2219  root@staging5.rolustech.com:/opt/transworld.tgz  /opt	
+		
+133--AgustinParoli--Staging5--Instance Shutdown		
+****************************************************************  
+OAxv015ReFkzzjeRshsa
+
+WordpresstoSalesforce_db
+admin 
+admin123 
+
+******************************************
+Calander:
+	140-- Wein-und-Co --Staging5--Instance Shutdown 
+	
+**************************************************	
+Remove old php and install new 
+	apt-get purge 'php*'
+	apt-get autoclean
+	apt-get autoremove
+
+	apt install software-properties-common
+	add-apt-repository ppa:ondrej/php
+	apt update
+
+	apt install php7.2
+	apt-get install php7.2-bcmath php7.2-imap php7.2-intl php7.2-ldap php7.2-oauth
+	apt-get install php7.2-curl
+	apt-get install php7.2-dom
+	apt-get install php7.2-exif
+	apt-get install php7.2-gd
+	apt-get install php7.2-mbstring
+	apt-get install php7.2-mysqli
+	apt-get install php7.2-mysqlnd
+	apt-get install php7.2-pdo_mysql
+	apt-get install php7.2-SimpleXML
+	apt-get install php7.2-soap
+	apt-get install php7.2-xml
+	apt-get install php7.2-xmlreader
+	apt-get install php7.2-xmlwriter
+	apt-get install php7.2-xsl
+	apt-get install php7.2-zip
+	apt-get install php7.2-zlib
+	php -m
+	systemctl restart apache2
+
+	vi /etc/php/7.2/apache2/php.ini
+
+	"
+	[mcrypt]
+	extension=mcrypt.so
+
+	memory_limit = 512M
+	max_input_time = 600
+	max_execution_time = 1800
+	upload_max_filesize = 200M
+	post_max_size = 400M
+	max_file_uploads = 40
+	date.timezone = "UTC"
+	error_reporting = E_ALL & E_DEPRECATED & E_STRICT & E_WARNING & E_NOTICE
+	display_errors = Off
+	expose_php = Offcd S
+	"
+
+	systemctl restart apache2
+
+	error_reporting = E_ALL & E_DEPRECATED & E_STRICT & E_WARNING & E_NOTICE
+
+	Ya single line mai hai
+
+**************************************************************************************
+old sugarcrm
+https://support.sugarcrm.com/Documentation/Unsupported_Versions/Sugar_8.0/index.html#Supported_Platforms
+**********************************
+DB connection in suitecrm 8.2.x, for localhost:
+
+In the application directory, do the following:-
+
+vi .env.local
+DATABASE_URL="mysql://root:%40UGARcrm00700@localhost:3306/suite_8.2x_DB"
+
+************************************************************************
+Removing PHP
+=============
+
+sudo apt-get purge `dpkg -l | grep php8.1| awk '{print $2}' |tr "\n" " "`
+sudo apt-get purge php8.*
+sudo apt-get autoremove --purge
+whereis php
+sudo rm -rf /etc/php
+
+
+Installing PHP:
+===============
+
+
+apt install software-properties-common
+add-apt-repository ppa:ondrej/php
+apt update
+
+apt install php7.4
+apt-get install php7.4-bcmath php7.4-imap php7.4-intl php7.4-ldap php7.4-oauth
+apt-get install php7.4-curl
+apt-get install php7.4-dom
+apt-get install php7.4-exif
+apt-get install php7.4-gd
+apt-get install php7.4-mbstring
+apt-get install php7.4-mysqli
+apt-get install php7.4-mysqlnd
+apt-get install php7.4-pdo_mysql
+apt-get install php7.4-SimpleXML
+apt-get install php7.4-soap
+apt-get install php7.4-xml
+apt-get install php7.4-xmlreader
+apt-get install php7.4-xmlwriter
+apt-get install php7.4-xsl
+apt-get install php7.4-zip
+apt-get install php7.4-zlib
+apt-get install php7.4-pecl
+apt-get install php7.4-pear
+apt-get install php7.4-mcrypt
+
+php -m
+systemctl restart apache2
+
+=====================================
+
+Ports enable:
+iptables -t nat -A PREROUTING -i vmbr0 -p tcp -d 141.94.138.24 --dport 9000 -j DNAT --to 10.1.1.210:9000
+
+**********************************************************************************************************
+107 ZG6XH7wkKJ9bs48W8mar
+*******************************************************
+Mask Emails, Disable Cron Job, Empty Job queue:-
+
+use database;
+
+DB Queries:
+UPDATE `email_addresses` SET `email_address` = 'test@mailinator.com', `email_address_caps` = 'TEST@MAILINATOR.COM';
+truncate job_queue;
+truncate inbound_email;
+
+Disable schedulers:
+UPDATE schedulers set status = 'Inactive';
+
+*********************************
+https://141.94.138.24:44316
+ OR
+
+http://141.94.138.24:8016
+
+********************************************
+How to reset password of instance
+ 1 go to powershell of main staging instance and enter the commnad
+		pct enter <container id>
+		
+		passwd root
+		
+***********************************************		
+How to check db size in mysql 
+	SELECT table_schema "db_name",  SUM(data_length + index_length) / 1024 / 1024 "Size (MB)"  FROM information_schema.tables  GROUP BY table_schema;
+	
+**************************************************
+how to enable port on staging
+		first go to main staging terminal and run the command
+			iptables -t nat -A PREROUTING -i vmbr0 -p tcp -d 141.94.138.24 --dport 12831 -j DNAT --to 10.1.1.28:3100
+			
+		second go to the intance GUI and allow ports 
+		Go to the instance terminal and type 
+			netstat -tulp
+			
+Westeros 			
+		iptables -t nat -A PREROUTING -i vmbr0 -p tcp -d 51.254.45.138 --dport 3000 -j DNAT --to 10.1.1.12:3000
+*******************************************	
+Site Url Update 
+
+Old:  https://www.archcore.com/
+
+New: https://westeros.rolustech.com:44343/
+
+
+
+mysql -u root -p
+
+use ironcpanel_IBdb;
+
+UPDATE wp_options SET option_value = replace(option_value, 'https://www.archcore.com', 'https://westeros.rolustech.com:44343') WHERE option_name = 'home' OR option_name = 'siteurl';
+
+UPDATE wp_posts SET post_content = replace(post_content, 'https://www.archcore.com', 'https://westeros.rolustech.com:44343');
+
+UPDATE wp_posts SET guid = replace(guid, 'https://www.archcore.com', 'https://westeros.rolustech.com:44343');
+
+UPDATE wp_postmeta SET meta_value = replace(meta_value,'https://www.archcore.com', 'https://westeros.rolustech.com:44343');
+
+
+
+Verification:
+
+SELECT option_value FROM wp_options WHERE option_name = 'home' OR option_name = 'siteurl';
+
+SELECT guid FROM wp_posts WHERE post_type = 'post' OR post_type = 'page';
+
+**************************************************	
+how to skip a folder to compresss
+
+tar --exclude='uploads' -czvf file-name.tar.gz file-name
+
+**************************************

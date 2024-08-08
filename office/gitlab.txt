@@ -1,0 +1,54 @@
+Upgrading GitLab-CE (server) -- https://git.rolustech.com
+1. Must perform during off office hours and completely go through the release notes for each upgrade version in the supported path. 
+
+2. Add repo & keys for GitLab and verify it is working, run apt-get update after adding.
+
+Complete script:
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+
+3. Recommended to take Complete instance snapshot/backup before upgrading.
+
+( Note: A Proxmox snapshot took about 3 hours and 30 minutes for 124GB occupied space(in case of .tar.lzo), out of which instance suspended time(downtime) was nearly 20 minutes. Rest of the time was consumed by rsync.
+However, downtime can vairy depending on disk type or instance etc., it may have been upto 2.5 hours in case of a VM.  )
+
+4. Block new jobs (runners, CI/CD etc):
+
+- vi /etc/gitlab/gitlab.rb
+Append:
+nginx['custom_gitlab_server_config'] = "location ^~ /api/v4/jobs/request {\n deny all;\n return 503;\n}\n"
+- gitlab-ctl reconfigure
+
+5. Background migrations:
+
+Must wait until all background migrations are completed, before each upgrade.
+( Note: Just for an estimate, it took about 40 minutes for 7 migrations to complete. )
+
+6. Follow the official upgrade path and commands preferring automated installations/upgrades:
+For example, https://gitlab-com.gitlab.io/support/toolbox/upgrade-path/?current=14.9.3&auto=true&edition=ce
+
+7. Unblock jobs/runners:
+Once final upgrade & migrations are complete, don't forget to unblock new jobs by erasing below line:
+nginx['custom_gitlab_server_config'] = "location ^~ /api/v4/jobs/request {\n deny all;\n return 503;\n}\n"
+
+Then run: gitlab-ctl reconfigure
+
+8. gitlab-runners:
+Upgrade gitlab-runners to the same or latest version for better compatibility, also restart gitlab-runner.service.
+In our case, CentOS7:  
+- gitlab-runner --version
+- yum update
+- yum info gitlab-runner
+- yum install gitlab-runner
+- systemctl restart gitlab-runner.service
+
+Then verify active runners on GitLab
+
+9. Final step:
+Take a backup/snapshot of the latest GitLab instance.
+
+10. Optional steps:
+As GitLab package takes auto backups every time on upgrading, if needed to Skip backups in case of a minor version change, to save time:
+touch /etc/gitlab/skip-auto-backup
+
+Unplanned, runtime videos are available for reference, for ROLUSTECH-IT use only:
+\\192.168.99.11\Common\Sys admin\gitlab upgrade_rt

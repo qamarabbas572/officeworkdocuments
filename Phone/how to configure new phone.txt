@@ -1,0 +1,54 @@
+1. change vlan to 130
+2. connect the wire with ip phone LAN
+3. 192.168.130.43 hit 
+4. connect with dc   DHCP reserve ip
+5. web portal through ip 
+username: admin
+passwd: admin
+6. change login passwd : @dmin999
+7. go to accounts ---> enter the extension as per registery
+8. save the settings
+
+https://rolus.contegris.com/intellix/sipextension/sipProfile/117
+
+http://192.168.130.43/#page:status_account
+
+1. reserver ip address
+
+2. add entry in keypass
+
+3. tag the phone and add entry in inventry
+
+
+
+Restart SIP Server
+username: rolustech
+password: r0lu$teCh
+SSH port: 58779
+IP : 192.168.130.11
+sudo -i 
+path: /var/log/asterisk/
+
+For cache reset:
+asterisk  -rvvvvvvvvvvvvvm
+sip reload
+
+Command: 
+
+Pbx Command Run after Editing:
+
+===>asterisk  -rvvvvvvvvvvvvvm
+
+===>sip prune realtime peers all
+
+
+====> sip reload
+
+***********************************************
+To access sip enter the ip in hosts file
+
+	C:\Windows\System32\drivers\etc\hosts
+
+	192.168.130.11	rolus.contegris.com
+	
+***********************************************	

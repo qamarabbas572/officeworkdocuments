@@ -1,0 +1,18 @@
+
+****enter domain name on ----> domain lookup  ( search on google) to check details related to the unknown domain
+	url--> https://www.whois.com/whois/airtaceuropa.com
+
+
+*** open cmd and type
+# ping < domain name>
+
+to check ip address of unknown domain
+example:
+
+# ping airtaceuropa.com
+
+*** to check ip details of unknown domain type iplookup on google and enter the ip address of unknown domain
+	url -->  https://whatismyipaddress.com/ip-lookup
+
+** to check whether the unknown domain is blacklisted or not , enter the domain name in the below mention site
+	url --> https://mxtoolbox.com/

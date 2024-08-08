@@ -1,0 +1,52 @@
+docker run --name postgresql-container -p 5432:5432 -e POSTGRES_PASSWORD=1234 --restart always -d postgres:12
+docker exec -it postgresql-container bash
+psql --version
+
+psql -h localhost -p 5432 -U postgres -W
+SELECT datname FROM pg_database;
+
+
+localhost 5432 
+
+username : postgres
+passwd : 1234 
+
+----- Postgres Driver Update for Dbeaver -----
+
+Please get the jar folder from shared drive 
+Path = \\192.168.99.15\Public\softwares\Postgres Driver Dbeaver
+
+--> unzip this jar file
+--> edit the drviver libraries in dbeaver
+--> select the files 
+		--> postgis-geometry-2.5.0.jar
+		--> postgis-jdbc-2.5.0.jar
+		--> postgis-jdbc-jtsparser-2.2.1.jar
+		--> postgresql-42.2.11.jar
+
+--> you are done 
+
+
+=====>>>>> Installation of PostgresSQL 12 on ubuntu <<<<<=====
+apt -y install vim bash-completion wget
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
+apt update
+apt -y install postgresql-12 postgresql-client-12
+systemctl status postgresql.service
+systemctl enable postgresql.service
+systemctl restart postgresql.service
+systemctl status postgresql.service
+su - postgres
+postgres@RT-LT-409:~$ psql
+postgres=# exit
+SELECT datname FROM pg_database;
+
+\du
+
+ALTER USER postgres WITH PASSWORD '1234';
+
+=====>>>>> Known issues <<<<<=====
+debconf: DbDriver "config": /var/cache/debconf/config.dat is locked by another process: Resource temporarily unavailable
+
+Solution --->>> rm -rf /var/cache/debconf/*.dat

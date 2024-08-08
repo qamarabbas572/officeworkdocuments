@@ -1,0 +1,1494 @@
+1532359
+Zoom upgrade 
+	wget https://zoom.us/client/latest/zoom_amd64.deb
+
+	 sudo apt install ./zoom_amd64.deb
+	 
+----------------------------------------------
+My Sql 
+	Workbench now Working 
+		sudo snap connect mysql-workbench-community:password-manager-service :password-manager-service
+
+
+------------------------------------------------------
+how to change python default version to latest version in linux
+	python --version
+	sudo su
+	update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+	python --version
+	
+---------------------------------------------
+Install PyCharm from command line
+		$ sudo snap install pycharm-community --classic
+	OR
+		$ sudo snap install pycharm-professional --classic
+	OR
+		$ sudo snap install pycharm-educational --classic
+		
+You can start the PyCharm using the below command:
+		$ pycharm-community
+	OR
+		$ pycharm-professional
+	OR
+		$ pycharm-educational
+		
+---------------------------------------------------------
+Install Dbeaver using Snap
+		sudo apt update
+		sudo snap install dbeaver-ce
+		
+----------------------------------------------------------------
+To upgrade Elastic Search
+		apt-get update
+		service elasticsearch stop
+		apt purge elasticsearch
+		switch_java 11
+		wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.9.0-amd64.deb
+		dpkg -i packagename.deb
+
+To Check Elastic Search Version
+		curl -XGET localhost:9200
+----------------------------------------------------
+To change php version
+	phpbrew list -> root/user
+	phpbrew switch 7.3.28
+	
+or
+	set_apache_php 7.3
+---------------------------------------------
+your connection attempt failed for user 'root' to the mysql server at localhost 3306
+			sudo snap connect mysql-workbench-community:password-manager-service :password-manager-service
+			or 
+			sudo mysql -u root
+			ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+---------------------------------------------------------
+Install X-Debugger 
+		php -i | grep extension_dir
+		php -ini | grep Loaded
+		php -m 
+		locatug.ini
+	=============== xdebug ===========
+	
+https://xdebug.org/download/historical
+	phpbrew ext install xdebug
+
+
+		----- By compile method -----
+		1--> Download xdebug-2.6.0.tgz: wget http://xdebug.org/files/xdebug-2.6.0.tgz
+		2--> Unpack the downloaded file with tar -xvzf xdebug-2.6.0.tgz
+		3--> cd xdebug-2.6.0
+		4--> phpize
+		5--> ./configure
+		6--> make
+		7--> make install 
+		 
+
+
+[xdebug]
+zend_extension =  /opt/phpbrew/php/php-8.2.0/lib/php/extensions/no-debug-non-zts-20220829/xdebug.so
+xdebug.remote_enable=1
+xdebug.profiler_output_dir="/tmp/xdebug/"
+xdebug.profiler_enable=On
+xdebug.remote_host="127.0.0.1"
+xdebug.remote_port=9001
+xdebug.remote_handler="dbgp"
+xdebug.remote_connect_back=1
+xdebug.idekey="VSCode"
+
+or 
+[xdebug]
+zend_extension = /opt/phpbrew/php/php-8.2.10/lib/php/extensions/no-debug-non-zts-20220829/xdebug.so
+xdebug.output_dir="/tmp/xdebug/"
+xdebug.client_host="127.0.0.1"
+xdebug.client_port=9001
+xdebug.mode=debug
+xdebug.remote_handler="dbgp"
+xdebug.discover_client_host=1
+xdebug.idekey="PHPStorm"
+or 
+[xdebug]
+#zend_extension =/opt/phpbrew/php/php-7.4.18/lib/php/extensions/no-debug-zts-20190902/xdebug.so
+zend_extension = /opt/phpbrew/php/php-7.3.22/lib/php/extensions/no-debug-zts-20180731/xdebug.so
+xdebug.stopOnEntry = true
+xdebug.profiler_enable = off
+xdebug.profiler_enable_trigger = Off
+xdebug.profiler_output_name = cachegrind.out.%t.%p
+xdebug.profiler_output_dir ="/tmp"
+xdebug.show_local_vars=0
+xdebug.remote_enable = 1
+xdebug.remote_autostart = 1
+xdebug.remote_handler = "dbgp"
+xdebug.remote_host = "127.0.0.1"
+xdebug.remote_log = "tmp/xdebug.txt"
+xdebug.remote_port = 9003
+xdebug.trace_output_dir = "/tmp"
+
+or
+[xdebug]
+zend_extension=/usr/lib/php/20190902/xdebug.so
+xdebug.mode=debug
+xdebug.start_with_request=yes
+xdebug.remote_enable=1
+xdebug.profiler_output_dir="/tmp/xdebug/"
+xdebug.profiler_enable=On
+xdebug.remote_host="127.0.0.1"
+xdebug.remote_port=9003
+xdebug.remote_handler="dbgp"
+xdebug.idekey="PHPStorm,VSCODE"
+
+php -ini | grep Loaded
+nano /opt/phpbrew/php/php-7.4.20/etc/php.ini.
+
+
+		https://xdebug.org/download/historical
+		
+systemctl restart apache2		
+--------------------------------------------------
+install Newman 
+		npm install -g newman
+		newman -v
+---------------------------------------------
+Install 	Team viewer
+		wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+		sudo apt install ./teamviewer_amd64.deb
+		
+------------------------------------------
+Install GIT GUI On Linux
+			sudo apt-get install git -y
+		
+			git clone https://github.com/git/git
+			sudo apt-get install git-gui
+			git gui
+			or
+			sudo apt install git-all
+..............................................................
+Install Php Storm
+		 sudo snap install phpstorm --classic
+		 snap info phpstorm
+		 
+----------------------------------------------------
+Install Notepad++ 
+			sudo snap install notepad-plus-plus
+			sudo snap remove notepad-plus-plus
+			
+........................................
+Install Fileizilla 
+				sudo apt update
+				sudo add-apt-repository ppa:sicklylife/filezilla
+				sudo apt update
+				sudo apt install filezilla
+		
+-----------------------------------------------------
+wamp admin rights
+	C:\Windows\System32\runas.exe /user:rt-lt-269\administrator /savecred
+	C:\Windows\System32\runas.exe /user:rt-lt-269\administrator /savecred "C:\wamp\wampmanager.exe"
+
+---------------------------------------------
+Install Shutter Screenshot 
+			 sudo add-apt-repository -y ppa:linuxuprising/shutter
+			 sudo apt-get update
+			 sudo apt-get install -y shutter
+.................................................
+Install iPython
+			apt install python3-pip
+			pip install ipython
+.................................................
+Install skype
+	sudo snap install skype --classic
+	remove :
+	sudo apt-get --purge remove skypeforlinux
+	sudo snap remove skype 
+	Update:
+	snap refresh skype
+	sudo apt-get install skypeforlinux
+-----------------------------------------------
+Install Postman
+		sudo snap install postman 
+		sudo snap switch --channel=v7/stable postman
+        sudo snap refresh postman
+		
+---------------------------------------------
+Install Sublime 3
+			sudo apt update
+			sudo apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-common
+			curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+			sudo add-apt-repository "deb https://download.sublimetext.com/ apt/stable/"
+			sudo apt install sublime-text
+			or 
+			sudo snap install sublime-text --classic
+----------------------------------------------------------
+Install MySQL Workbench on Ubuntu 20.04
+				sudo apt update
+				sudo apt -y install wget
+				wget https://dev.mysql.com/get/mysql-apt-config_0.8.15-1_all.deb
+				sudo dpkg -i mysql-apt-config_0.8.15-1_all.deb
+				sudo apt update
+				sudo apt install mysql-workbench-community
+				or
+				sudo snap install mysql-workbench-community
+..............................................................
+----->>>>> Wamp <<<<<-----
+Login from admin2 and change administrator passwd and enable its
+cmd --> hostname 
+(copy the number)
+
+Login from the user 
+run wamp.exe and install the wamp accordingly
+
+create a new shortcut on desktop --> Give path to wamp64/wampmanager.exe
+
+--> Open the properties of same shortcut and modify the target.
+--> C:\Windows\System32\runas.exe /user:rt-lt-205\administrator /savecred "C:\wamp64\wampmanager.exe"
+......................................................
+	Install Visual Studio Code
+		
+				sudo snap install --classic code
+				or
+				sudo apt install software-properties-common apt-transport-https wget
+				wget –q https://packages.microsoft.com/key/microsoft.asc -O- | sudo apt-key add -
+				sudo add-apt-repository “deb[arch=amd64] https://packages.microsoft.com/repos/vscode stable main”
+				sudo apt install code 
+---------------------------------------------------------------				
+Open XML SDK Tool 2.5
+Microsoft has the Open XML SDK on their GitHub over here:
+https://github.com/OfficeDev/Open-XML-SDK
+
+If you use the Internet Archive and go to the download link you've mentioned, you can still download the Open XML SDK 2.5 .msi files:
+https://web.archive.org/web/20190116000204/https://www.microsoft.com/en-us/download/details.aspx?id=30425
+
+..............................................................
+How to Install Netbeans on Ubuntu
+			sudo apt update
+			sudo apt install openjdk-8-jdk
+			java -version
+			sudo snap install netbeans --classic
+--------------------------------------------------
+Install Commitizen on Ubuntu
+				npm install -g commitizen
+-------------------------------------------------
+install recordmydesktop for Ubuntu 
+				wget http://archive.ubuntu.com/ubuntu/pool/universe/p/pygtk/python-gtk2_2.24.0-5.1ubuntu2_amd64.deb
+				wget http://archive.ubuntu.com/ubuntu/pool/universe/g/gtk-recordmydesktop/gtk-recordmydesktop_0.3.8-4.1ubuntu1_all.deb
+
+				sudo apt-get install ./python-gtk2_2.24.0-5.1ubuntu2_amd64.deb ./gtk-recordmydesktop_0.3.8-4.1ubuntu1_all.deb
+				
+-----------------------------------------------------
+Install Robot Framework
+					pip3 --version
+					sudo apt update
+					sudo apt install python3-pip
+					sudo pip3 install --upgrade pip
+					pip3 install robotframework
+					source ~/.profile
+					robot --version
+-----------------------------------------------------------
+Installation of Global Protect
+						wget https://itsforms.wsu.edu/VPN/20210106/PanGPLinux-5.2.4-c14.tgz
+						tar -xvf PanGPLinux-5.3.0-c32.tgz
+						sudo dpkg -i GlobalProtect_deb-5.3.0.0-32.deb
+						
+						Error:
+						 sudo dpkg –i GlobalProtect_deb-5.3.0.0-32.deb
+						 sudo apt-get install -y libqt5webkit5
+						Or 
+						 sudo snap install globalprotect
+						 
+						 https://www.utep.edu/technologysupport/_Files/docs/NET_VPN_GlobalProtectforLinux.pdf
+						 
+						 sudo systemctl restart gpd
+						 globalprotect show –status
+					uninstall 
+						sudo dpkg -P globalprotect
+........................................................................
+Install Forticlient
+        wget -O - https://repo.fortinet.com/repo/6.4/ubuntu/DEB-GPG-KEY | sudo apt-key add - && echo "deb [arch=amd64] https://repo.fortinet.com/repo/6.4/ubuntu/ xenial multiverse" >> /etc/apt/sources.list && sudo apt-get update && sudo apt install -y forticlient	
+----------------------------------------------------------------
+Installing PyCharm
+			sudo snap install pycharm-professional --classic
+			sudo snap install pycharm-community --classic
+			sudo snap install pycharm-educational --classic
+			
+-------------------------------
+Intall Slack
+				sudo snap install slack --classic
+				
+--------------------------------------------------------------
+Install Microsoft Teams
+					curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+					sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
+					sudo apt update
+					sudo apt install teams
+					or
+					sudo snap install teams
+--------------------------------------------------------------
+How to Install Apache Maven on Ubuntu 20.04
+						apt-get install default-jdk -y
+						java -version
+						cd /opt wget https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+						tar xzf apache-maven-3.6.3-bin.tar.gz
+						mv apache-maven-3.6.3 apachemaven
+						nano /etc/profile.d/apachemaven.sh
+							export JAVA_HOME=/usr/lib/jvm/default-java
+							export M2_HOME=/opt/apachemaven
+							export MAVEN_HOME=/opt/apachemaven
+							export PATH=${M2_HOME}/bin:${PATH}
+						chmod +x /etc/profile.d/apachemaven.sh
+						source /etc/profile.d/apachemaven.sh
+						mvn -version
+						apt-get update -y
+						apt-get install maven -y
+						mvn -version
+--------------------------------------------------------------------------						
+install PuTTY on Ubuntu
+				sudo apt update
+				sudo apt install putty
+				or
+				sudo snap install putty-gtk --edge
+-----------------------------------------------------------------------
+Install Upwork clock on ubuntu
+					wget https://upwork-usw2-desktopapp.upwork.com/binaries/v5_6_8_0_836f43f6f6be4149/upwork_5.6.8.0_amd64.deb
+					sudo dpkg -i upwork_amd64.deb
+					or 
+---------------------------------------------------------	
+#To change php versions
+			phpbrew list 
+			phpbrew switch php-7.3.*
+			sudo set_apache_php		
+-----------------------------------------------------			
+install Angular on Ubuntu 20.04 
+			node --version
+			npm --versions
+			npm install -g @angular/cli
+			special version
+			npm install -g @angular/cli@7.3.9
+			ng version
+			
+			npm install --save-dev @angular-devkit/build-angular
+-----------------------------------	---------		
+npm install npm@6.14.8
+---------------------------------------------
+Install PHPUnit on Ubuntu
+			sudo apt-get install php-pear
+			sudo pear channel-discover pear.phpunit.de
+			sudo pear channel-discover pear.symfony-project.com
+			pear install phpunit/PHPUnit
+			or 
+			sudo apt-get install phpunit
+			or 
+			wget https://phar.phpunit.de/phpunit-9.6.20.phar
+			chmod +x phpunit-9.6.20.phar
+			sudo mv phpunit-9.6.20.phar /usr/local/bin/phpunit
+			phpunit --version
+--------------------------------------------------			
+Install MongoDB on Ubuntu 20.04
+			sudo apt update
+			sudo apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-common
+			wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+			sudo add-apt-repository 'deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse'
+			sudo apt install mongodb-org
+			sudo systemctl enable --now mongod
+			mongo --eval 'db.runCommand({ connectionStatus: 1 })'
+---------------------------------------
+Install google-cloud-sdk
+				sudo snap install google-cloud-sdk --classic
+---------------------------------------------------------------				
+Install Type Script 
+				npm install -g typescript@version
+				
+-------------------------------------------------------				
+Install Gnome Tweak Tools
+				sudo apt-get update
+				sudo apt-add-repository universe
+				sudo apt install gnome-tweak-tool
+-----------------------------------------------------------------				
+Install Spotify
+				sudo snap install spotify
+				or
+				sudo apt install curl
+				curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add -
+				echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+				sudo apt update
+				sudo apt install spotify-client
+--------------------------------------------------------				
+Install NVM
+				apt-get install curl -y
+				curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+				source ~/.profile
+				nvm --version
+----------------------------------------------------------
+install create-react-app
+				sudo apt install npm
+				npm --version
+				node --version
+				sudo npm -g install create-react-app
+				create-react-app --version
+-----------------------------------------------------------	
+How To Install Composer on Ubuntu 20.04
+				sudo apt update
+				sudo apt install php-cli unzip
+				cd ~
+				curl -sS https://getcomposer.org/installer -o composer-setup.php
+				HASH=`curl -sS https://composer.github.io/installer.sig`
+				php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+				sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+				composer
+				
+			Update :
+				composer self-update
+				Use composer self-update --rollback to return to version 2.1.3
+				composer self-update 1.10.15
+				
+			https://getcomposer.org/download/	
+			
+			or 
+			cd /usr/local/bin
+			rm -rf composer
+			wget https://getcomposer.org/download/1.10.15/composer.phar
+			mv composer.phar composer 
+			chmod -R 775 composer
+----------------------------------------------------
+Install Prospect Mail (Outlook Client)
+				sudo snap install prospect-mail
+--------------------------------------------------------		
+ Could not get lock /var/lib/dpkg/lock-frontend.
+	
+				sudo rm /var/lib/apt/lists/lock
+				sudo rm /var/cache/apt/archives/lock
+				sudo rm /var/lib/dpkg/lock*
+				sudo dpkg --configure -a
+				sudo apt update
+				
+				or 
+				sudo rm /var/cache/debconf/*.dat
+				apt-get install
+				apt --fix-broken install
+------------------------------------------------------------------------------
+How to Install Microsoft Edge Browser on Ubuntu 20.04
+					sudo apt install software-properties-common apt-transport-https wget
+					wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+					sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main"
+					sudo apt install microsoft-edge-dev
+					
+--------------------------------------------------------------------------------------					
+Install mediainfo on Ubuntu 20.04
+							
+sudo wget -qO /etc/apt/trusted.gpg.d/mediaarea.asc https://mediaarea.net/repo/deb/ubuntu/pubkey.gpg
+echo "deb https://mediaarea.net/repo/deb/ubuntu $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/mediaarea.list
+sudo apt update
+sudo apt install -y mediainfo
+	
+mediainfo --version
+-----------------------------------------------------------------
+Install Desktop app for Google chat
+on Ubuntu
+
+			sudo snap install google-chat-electron
+			
+--------------------------------------------------------
+Install Salesforce CLI
+
+				node --version
+				npm install sfdx-cli --global
+				npm install @salesforce/cli --global
+				sfdx --version
+--------------------------------------------------				
+Install Office Printer Driver - Ricoh
+	How to install an office printer driver...?
+	Please follow the following 10 steps to install the office printer driver:
+
+		1 --> Copy the driver from shared drive \\192.168.99.15\Public\softwares\Drivers\Ricoh-MP-C2051-PrinterDriver
+		2 --> Extract this in local system
+		3 --> Control panel -> Hardware & Sound -> Devices & Printers -> Add printer 
+		4 --> The printer that isn't listed
+		5 --> Select the Mannual settings option
+		6 --> Harddisk -> Browse to the path where the driver is extracted
+		7 --> Provide any name
+		8 --> Open printer properties
+		9 --> Ports -> Add port -> Standard TCP/IP -> 192.168.4.20
+		10--> Print a test page
+
+You are done :)
+
+-----------------------------------------------------------------
+How to install ESlint globally?
+		npm install -g eslint
+		eslint -v
+--------------------------------------		
+Install PhpStorm 2018.3 on Ubuntu
+			wget https://download-cf.jetbrains.com/webide/PhpStorm-2018.3.tar.gz
+			sudo tar xvf PhpStorm-2018.3.tar.gz
+			cd phpstorm/bin 
+			./phpstorm.sh
+-----------------------------------------------------------			
+Virtual Host:-
+
+			mkdir -p /var/www/azlaan.com 
+			chmod -R 775 /var/www/azlaan.com 
+			chown -R $USER:$USER /var/www/azlaan.com
+
+              sudo nano /var/www/azlaan.com/index.html
+                    <html>
+                        <head>
+                            <title>Welcome to azlaan.com</title>
+                        </head>
+                        <body>
+                            <h1>Success! The azlaan.com virtual host is working</h1>
+                            
+                        </body>
+                        
+                    </html>
+                    
+                  
+			cd /etc/apache2/sites-available/
+			vi azlaan.com.conf 
+	------------------------------
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        #ServerName www.example.com
+        
+        ServerName azlaan.com
+        ServerAlias www.azlaan.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html/azlaan.com
+
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+
+		---------------------
+sudo a2ensite azlaan.com.conf
+
+nano /etc/hosts
+
+127.0.0.1 azlaan.com
+
+
+phpbrew ext install imap -- --with-kerberos --with-imap-ssl
+
+http://localhost/azlaan.com
+
+*********************************************************************************
+Install GD
+	phpbrew ext install gd
+	
+	
+----------------------------------------------
+Install IMAP
+		phpbrew ext install imap -- --with-kerberos --with-imap-ssl
+		
+-------------------------------------------------------------		
+Install Virtual Box Special version
+		wget https://download.virtualbox.org/virtualbox/6.1.18/virtualbox-6.1_6.1.18-142142~Ubuntu~eoan_amd64.deb
+		dpkg -i virtualbox-6.1_6.1.18-142142~Ubuntu~eoan_amd64.deb
+		
+		or
+		apt install ./virtualbox-6.1_6.1.18-142142~Ubuntu~eoan_amd64.deb
+		
+-------------------------------------------------------------------------------	
+ Sub-process /usr/bin/dpkg returned an error code (1)
+				sudo mv /var/lib/dpkg/info /var/lib/dpkg/info_silent
+				sudo mkdir /var/lib/dpkg/info
+				sudo apt-get update
+				sudo apt-get -f install
+				sudo mv /var/lib/dpkg/info/* /var/lib/dpkg/info_silent
+				sudo rm -rf /var/lib/dpkg/info
+				sudo mv /var/lib/dpkg/info_silent /var/lib/dpkg/info
+				sudo apt-get update
+				
+----------------------------------------------------------------------------	
+phpmyadmin Error
+				ls -ltr /etc/apache2/conf-available/
+				a2enconf phpmyadmin.conf
+				systemctl reload apache2
+				sudo apt-get install libapache2-mod-php
+				sudo a2enmod php7
+				systemctl restart apache2
+				
+				or 
+				mysql -u root -p 
+				UPDATE mysql.user SET plugin = 'mysql_native_password' WHERE user = 'root' AND plugin = 'unix_socket';
+				FLUSH PRIVILEGES;
+				ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by '123';
+-----------------------------------------------------------------------				
+Jmeter
+https://sarkershantonu.github.io/2021/01/06/install-jmeter-plugins-cli/
+-----------------------------------------------------------------
+Switch java version in linux:
+			sudo apt-get install openjdk-11-jdk
+			java -version
+			update-java-alternatives --list
+			sudo update-alternatives --config java
+			sudo update-alternatives --config javac
+			java -version
+			https://stackoverflow.com/questions/52504825/how-to-install-jdk-11-under-ubuntu
+			
+------------------------------------------------------------------		
+Install Cypress on ubuntu
+			npm install -g cypress --unsafe-perm --silent
+			
+-----------------------------------------------------------	
+Install Tomcate 8 on ubuntu 20.04
+			https://www.vultr.com/docs/install-apache-tomcat-on-ubuntu-20-04-39123/
+			
+----------------------------------------------------
+Check the user in ubuntu to give access:
+				/etc/apache2/envvars
+				
+--------------------------------------------------		
+Install Stipe CLI 
+			https://github.com/stripe/stripe-cli/releases/download/v1.10.3/stripe_1.10.3_linux_amd64.deb
+			sudo dpkg -i stripe_1.10.3_linux_amd64.deb
+			stripe version
+			
+----------------------------------------------------------
+ubuntu upgrade:
+				sudo do-release-upgrade -d
+				
+ubuntu downgrade:
+				sudo do-release-upgrade -c
+				
+---------------------------------------------------------				
+Intall phantomjs
+		sudo npm install -g phantomjs@2.1.1 --unsafe-perm
+----------------------------------------------------
+PHP Storm Activation Key
+F5TRIB85C7-eyJsaWNlbnNlSWQiOiJGNVRSSUI4NUM3IiwibGljZW5zZWVOYW1lIjoiU2hhbmRvbmcgVW5pdmVyc2l0eSIsImFzc2lnbmVlTmFtZSI6ImFvIGxpIiwiYXNzaWduZWVFbWFpbCI6IjI4Njc4MTYyNjhAcXEuY29tIiwibGljZW5zZVJlc3RyaWN0aW9uIjoiRm9yIGVkdWNhdGlvbmFsIHVzZSBvbmx5IiwiY2hlY2tDb25jdXJyZW50VXNlIjpmYWxzZSwicHJvZHVjdHMiOlt7ImNvZGUiOiJEUE4iLCJwYWlkVXBUbyI6IjIwMjMtMDQtMTgiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IkRCIiwicGFpZFVwVG8iOiIyMDIzLTA0LTE4IiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJQUyIsInBhaWRVcFRvIjoiMjAyMy0wNC0xOCIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiSUkiLCJwYWlkVXBUbyI6IjIwMjMtMDQtMTgiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJTQyIsInBhaWRVcFRvIjoiMjAyMy0wNC0xOCIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJHTyIsInBhaWRVcFRvIjoiMjAyMy0wNC0xOCIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiRE0iLCJwYWlkVXBUbyI6IjIwMjMtMDQtMTgiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJTRiIsInBhaWRVcFRvIjoiMjAyMy0wNC0xOCIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJEUyIsInBhaWRVcFRvIjoiMjAyMy0wNC0xOCIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUEMiLCJwYWlkVXBUbyI6IjIwMjMtMDQtMTgiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJDIiwicGFpZFVwVG8iOiIyMDIzLTA0LTE4IiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJDTCIsInBhaWRVcFRvIjoiMjAyMy0wNC0xOCIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiV1MiLCJwYWlkVXBUbyI6IjIwMjMtMDQtMTgiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJEIiwicGFpZFVwVG8iOiIyMDIzLTA0LTE4IiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJSUzAiLCJwYWlkVXBUbyI6IjIwMjMtMDQtMTgiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJNIiwicGFpZFVwVG8iOiIyMDIzLTA0LTE4IiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJBQyIsInBhaWRVcFRvIjoiMjAyMy0wNC0xOCIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUlNWIiwicGFpZFVwVG8iOiIyMDIzLTA0LTE4IiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IkRDIiwicGFpZFVwVG8iOiIyMDIzLTA0LTE4IiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJSU1UiLCJwYWlkVXBUbyI6IjIwMjMtMDQtMTgiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IkRQIiwicGFpZFVwVG8iOiIyMDIzLTA0LTE4IiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IlBEQiIsInBhaWRVcFRvIjoiMjAyMy0wNC0xOCIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQV1MiLCJwYWlkVXBUbyI6IjIwMjMtMDQtMTgiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUFNJIiwicGFpZFVwVG8iOiIyMDIzLTA0LTE4IiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IlBQUyIsInBhaWRVcFRvIjoiMjAyMy0wNC0xOCIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQQ1dNUCIsInBhaWRVcFRvIjoiMjAyMy0wNC0xOCIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQR08iLCJwYWlkVXBUbyI6IjIwMjMtMDQtMTgiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUFBDIiwicGFpZFVwVG8iOiIyMDIzLTA0LTE4IiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IlBSQiIsInBhaWRVcFRvIjoiMjAyMy0wNC0xOCIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQU1ciLCJwYWlkVXBUbyI6IjIwMjMtMDQtMTgiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUlMiLCJwYWlkVXBUbyI6IjIwMjMtMDQtMTgiLCJleHRlbmRlZCI6dHJ1ZX1dLCJtZXRhZGF0YSI6IjAxMjAyMjA3MTVMUEFBMDA2MDA4IiwiaGFzaCI6IjMzMjc1MzQ1LzE2OTgzMDkyOjE3NTA1Njk2NTMiLCJncmFjZVBlcmlvZERheXMiOjcsImF1dG9Qcm9sb25nYXRlZCI6ZmFsc2UsImlzQXV0b1Byb2xvbmdhdGVkIjpmYWxzZX0=-EOufLPiykodPlQXl6v9pAd7geesvSLDca88HhDihCP5LSabX33BwTVfkSQaLUah0qyH84Shzp2NZv+LZK2dTXwwF1XCYq/9Lmt3iwlFovsrifhrfTGQCEXrlyzigZdwl+cpKysVKS9DdVKQIl64L0xQkX1ZrjOhofWUMFrgNwqie1xNn9iSSnbh/NiZ0/b7kdfMukFX995RFNkPMCvqwrGpNLFHnPoiEGqIKCh+2o8YQaO7AxPHckOLZLAF+l5dIkiM7tFdICOBT/GCEEPXG2CsVoufNvGmkdSUPr6j6+EuMAv+0iBscxQrkjfqH3wED6jXR9Pjl/+6OGaT6T4YhJg==-MIIETDCCAjSgAwIBAgIBDTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMB4XDTIwMTAxOTA5MDU1M1oXDTIyMTAyMTA5MDU1M1owHzEdMBsGA1UEAwwUcHJvZDJ5LWZyb20tMjAyMDEwMTkwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDCP4uk4SlVdA5nuA3DQC+NsEnZS9npFnO0zrmMWcz1++q2UWJNuGTh0rwi+3fUJIArfvVh7gNtIp93rxjtrQAuf4/Fa6sySp4c32MeFACfC0q+oUoWebhOIaYTYUxm4LAZ355vzt8YeDPmvWKxA81udqEk4gU9NNAOz1Um5/8LyR8SGsSc4EDBRSjcMWMwMkYSauGqGcEUK8WhfplsyF61lKSOFA6VmfUmeDK15rUWWLbOMKgn2cxFA98A+s74T9Oo96CU7rp/umDXvhnyhAXSukw/qCGOVhwKR8B6aeDtoBWQgjnvMtPgOUPRTPkPGbwPwwDkvAHYiuKJ7Bd2wH7rAgMBAAGjgZkwgZYwCQYDVR0TBAIwADAdBgNVHQ4EFgQUJNoRIpb1hUHAk0foMSNM9MCEAv8wSAYDVR0jBEEwP4AUo562SGdCEjZBvW3gubSgUouX8bOhHKQaMBgxFjAUBgNVBAMMDUpldFByb2ZpbGUgQ0GCCQDSbLGDsoN54TATBgNVHSUEDDAKBggrBgEFBQcDATALBgNVHQ8EBAMCBaAwDQYJKoZIhvcNAQELBQADggIBAB2J1ysRudbkqmkUFK8xqhiZaYPd30TlmCmSAaGJ0eBpvkVeqA2jGYhAQRqFiAlFC63JKvWvRZO1iRuWCEfUMkdqQ9VQPXziE/BlsOIgrL6RlJfuFcEZ8TK3syIfIGQZNCxYhLLUuet2HE6LJYPQ5c0jH4kDooRpcVZ4rBxNwddpctUO2te9UU5/FjhioZQsPvd92qOTsV+8Cyl2fvNhNKD1Uu9ff5AkVIQn4JU23ozdB/R5oUlebwaTE6WZNBs+TA/qPj+5/wi9NH71WRB0hqUoLI2AKKyiPw++FtN4Su1vsdDlrAzDj9ILjpjJKA1ImuVcG329/WTYIKysZ1CWK3zATg9BeCUPAV1pQy8ToXOq+RSYen6winZ2OO93eyHv2Iw5kbn1dqfBw1BuTE29V2FJKicJSu8iEOpfoafwJISXmz1wnnWL3V/0NxTulfWsXugOoLfv0ZIBP1xH9kmf22jjQ2JiHhQZP7ZDsreRrOeIQ/c4yR8IQvMLfC0WKQqrHu5ZzXTH4NO3CwGWSlTY74kE91zXB5mwWAx1jig+UXYc2w4RkVhy0//lOmVya/PEepuuTTI4+UJwC7qbVlh5zfhj8oTNUXgN0AOc+Q0/WFPl1aw5VV/VrO8FCoB15lFVlpKaQ1Yh+DVU8ke+rt9Th0BCHXe0uZOEmH0nOnH/0onD
+********************************************
+Copy from share drive to ubuntu:-
+	smbclient -U ROLUSTECH\\hudaib.farooq //192.168.99.15/Public --directory Imran.Qaisar/Sugarcrm/SugarEnt -c 'get "SugarEnt-12.0.0.zip"'
+	**********************************
+************************************************************
+How to take backup in ubuntu:
+	rsync -avzh -e 'ssh -p 2259' --progress ./destination-A/ root@141.94.138.24:/opt/destination-B
+	
+*****************************************************************	
+PHP extension ext-imagick:-
+	wget https://pecl.php.net/get/imagick-3.6.0.tgz
+	tar -xzf imagick-3.6.0.tgz
+	cd imagick-3.6.0/
+	phpize
+	./configure
+	make
+	make install
+	vi /opt/phpbrew/path/to/php.ini
+	-----
+	extension=imagick.so
+
+	apt-get install libmagickwand-dev libmagickcore-dev	
+---
+PHP extension ext-Sqlsrv	
+	sudo apt-get install unixodbc-dev
+	wget https://pecl.php.net/get/sqlsrv-5.10.1.tgz
+	tar -xzf sqlsrv-5.10.1.tgz
+	cd sqlsrv-5.10.1
+	phpize
+	./configure
+	make
+	make install
+	vi /opt/phpbrew/path/to/php.ini
+	-----
+	extension=sqlsrv.so
+	memcache.so
+**********************************************************
+Download php extension:-
+		https://pecl.php.net/
+	
+**************************************************	
+mysql version download:-
+			https://downloads.mysql.com/archives/community/
+			
+*****************************************************	
+Installing Memcached, Ubuntu for magento team:
+
+sudo apt update
+sudo apt install memcached
+sudo apt install libmemcached-tools -y
+sudo systemctl start memcached
+sudo systemctl enable memcached
+sudo systemctl status memcached
+**********************************************************
+How to install libsodium PHP extension using phpbrew on Ubuntu 20
+Please use the following commands to install the PHP extension using phpbrew
+
+First, match your PHP CLI and Apache version.
+
+phpbrew list
+php -v
+localhost/info.php
+
+apt update
+apt install libsodium-dev
+
+phpbrew  install 
+service apache2 restart
+
+php -m |grep sodium
+
+if it doesn't display in the PHP module list compile it manually.
+
+cd /opt/phpbrew/build/php-7.4.20/ext/sodium
+phpize
+./configure
+make
+make install
+
+php --ini
+
+
+
+uncomment the below line in the php.ini file.
+
+extension=sodium
+
+service apache2 restart
+***********************************************************
+Access To Registry Editor
+		Go to AD
+		  Move user from current department to Registry department.
+		  after that open cmd as admin and type 
+				gpupdate /force 
+				
+		restart the system 
+		
+		If error :
+		  rejoin domain
+****************************************		
+Error while loading shared libraries: libonig.so.4:
+ln -s /usr/lib/x86_64-linux-gnu/libonig.so /usr/lib/x86_64-linux-gnu/libonig.so.4
+
+*********************************************************
+npm error:
+E:\Users\<USERNAME>\AppData\Roaming\npm
+**************************
+
+https://docs.anaconda.com/anaconda/install/linux/
+
+\\192.168.99.15\Public\softwares\Anaconda\Anaconda for python 3.9
+https://docs.anaconda.com/anaconda/install/linux/
+
+**********************************************
+Localhost on https
+	a2enmod ssl
+    a2ensite default-ssl.conf
+    apachectl configtest
+	
+*******************************************	
+USB Access in Linux
+	chmod -R 777 /media/
+******************************************
+===== How to fix the “initramfs” error in Ubuntu =====
+df -h
+blkid
+fsck [partitian name (/dev/sdXX)]
+fsck /dev/mapper/vgubuntu-root -y
+reboot
+exit
+
+Username 
+L3tmeInNow
+*********************************************
+Create swap memory in linux
+
+sudo swapon --show
+free -h
+df -h
+sudo fallocate -l 8G /swapfile
+ls -lh /swapfile
+sudo chmod 600 /swapfile
+ls -lh /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo swapon --show
+free -h
+sudo cp /etc/fstab /etc/fstab.bak
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+*********************************************
+Install specific phpMyAdmin on Ubuntu
+	wget https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.zip 
+    unzip phpMyAdmin-5.2.0-all-languages.zip 
+    sudo mv phpMyAdmin-5.2.0-all-languages /usr/share/phpmyadmin 
+	sudo mkdir /usr/share/phpmyadmin/tmp 
+    sudo chown -R www-data:www-data /usr/share/phpmyadmin 
+   sudo chmod 777 /usr/share/phpmyadmin/tmp 
+   sudo vim /etc/apache2/conf-available/phpmyadmin.conf 
+		
+			Alias /phpmyadmin /usr/share/phpmyadmin
+			Alias /phpMyAdmin /usr/share/phpmyadmin
+			 
+			<Directory /usr/share/phpmyadmin/>
+			   AddDefaultCharset UTF-8
+			   <IfModule mod_authz_core.c>
+				  <RequireAny>
+				  Require all granted
+				 </RequireAny>
+			   </IfModule>
+			</Directory>
+			 
+			<Directory /usr/share/phpmyadmin/setup/>
+			   <IfModule mod_authz_core.c>
+				 <RequireAny>
+				   Require all granted
+				 </RequireAny>
+			   </IfModule>
+			</Directory>
+			
+	sudo a2enconf phpmyadmin 
+    sudo systemctl restart apache2 
+	
+	cd /usr/share/phpmyadmin
+	mv phpMyAdmin-5.2.0-all-languages ../
+	mv phpmyadmin phpmyadmin_old
+	
+	mv phpMyAdmin-5.2.0-all-languages phpmyadmin
+	
+***********************************************************	
+issue:- Deprecation Notice" error in PhpMyAdmin with ubuntu 20.04, php8.0
+
+		You can also disable notifications and warnings adding this line to config.inc.php
+		cd /usr/share/phpmyadmin
+		 $cfg['SendErrorReports'] = 'never';
+		 
+*****************************************************		 
+Alternate method to install PHP-Sodium extension using " phpbrew "
+Using this method, we don't bother about manually editing the php.ini file: -
+
+
+
+·  Select the relevant PHP version from "phpbrew list" and set for both cli and apache/apache2.
+
+·  If libsodium is already installed at system level then simply run command: " phpbrew -vvv ext install libsodium " 
+
+                                                    Otherwise,
+
+·  Install libsodium first by downloading a version from " https://download.libsodium.org/libsodium/releases/ " and run below commands in the extracted directory (e.g libsodium-1.0.18.):-
+
+./configure
+
+make && make check
+
+sudo make install 
+
+
+·  After that install php-sodium extension using command:  " phpbrew -vvv ext install libsodium "
+
+·  Once installation is successful, go to the path where "sodium.so" exists. ( e.g. /opt/phpbrew/php/php-7.4.20/lib/php/extensions/no-debug-non-zts-20180731 )
+
+·  Finally link sodium.so with libsodium.so i.e. " ln -s sodium.so libsodium.so ".
+
+ 
+
+You may verify extension using "php -m" and the info.php URL as well.
+
+
+
+ REF:
+https://doc.libsodium.org/installation#integrity-checking
+
+https://github.com/phpbrew/phpbrew/issues/949
+
+************************************************************
+Sugar13 Issue 
+vi /etc/php.ini
+
+#PHP SETTINGS
+memory_limit = 4028M
+max_execution_time = 1800
+upload_max_filesize = 200M
+post_max_size = 800M
+error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_WARNING & ~E_NOTICE
+display_errors = Off
+systemctl restart httpd
+******************************************************
+
+Forticlient Script
+
+#!/bin/bash
+sudo apt-get remove forticlient -y;
+sudo rm -rf /etc/forticlient;
+wget -O - https://repo.fortinet.com/repo/7.0/ubuntu/DEB-GPG-KEY | sudo apt-key add - ;
+echo "deb [arch=amd64] https://repo.fortinet.com/repo/7.0/ubuntu/ /bionic multiverse" >> /etc/apt/sources.list;
+sudo apt-get update -y;
+sudo apt install forticlient -y;
+
+.34-1ubuntu18.04
+https://askubuntu.com/questions/867/how-can-i-stop-being-prompted-to-unlock-the-default-keyring-on-boot
+*****************************************************
+SuiteCRM 8.x || Installation using the CLI
+Hi,
+
+Recently faced an issue, SuiteCRM 8.1 was generating random errors while proceeding installation on multiple web browsers. After providing admin, DB and URL details it was not updating the provided information. 
+As a work around, performed installation using the command line and issue was resolved: -
+
+1- Modify php.ini for CLI accordingly:
+vi /etc/php/8.0/cli/php.ini
+" upload_max_filesize = 200M "
+​
+2- Run below command on the root of extracted SuiteCRM directory after modifying the quoted values as per your requirement:
+./bin/console suitecrm:app:install -u "admin" -p "@dmin111" -U "root" -P "123" -H "localhost" -N "suite_8" -S "http://localhost/suitecrm8" -d "no"
+e.g 
+./bin/console suitecrm:app:install -u "admin" -p "admin123" -U "root" -P "@UGARcrm00792" -H "localhost" -N "suite8" -S "https://plugins.rolustech.com:44324/" -d "yes"
+
+
+Once installation is done, please open below link in the private browsing mode and try signing in.
+http://localhost/suitecrm8/public/#/Login
+or
+https://localhost/suitecrm8/public/#/Login
+( Note: In my case root directory for installation was /var/www/html/sugarcrm8, it can vary for others )
+
+REF:
+https://docs.suitecrm.com/8.x/admin/installation-guide/downloading-installing/
+Suitecrm8.x download:
+https://suitecrm.com/files/147/SuiteCRM-8.1/623/SuiteCRM-8.1.1.zipxde
+******************************************
+Memory limit
+
+memory_limit = 512M
+max_input_time = 600
+max_execution_time = 1800
+upload_max_filesize = 200M
+post_max_size = 400M
+max_file_uploads = 40
+date.timezone = "UTC"
+error_reporting = E_ALL & E_DEPRECATED & E_STRICT & E_WARNING & E_NOTICE
+display_errors = Off
+expose_php = Offcd S
+
+******************************************************
+-Install MySql 5.7
+sudo apt update
+sudo apt install wget -y
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.12-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.12-1_all.deb
+--Ubuntu Bionic and click Ok---
+--MySQL 8.0 chosen by default. Choose the first option and click OK---
+--select MySQL 5.7 server and click OK.---
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B7B3B788A8D3785C 
+sudo apt-get update
+sudo apt-cache policy mysql-server
+sudo apt install -f mysql-client=5.7* mysql-community-server=5.7*   mysql-server=5.7*
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by '@UGARcrm00792'; 
+sudo mysql_secure_installation
+mysql -u root -p 
+*********
+sudo systemctl stop mysql
+sudo apt-get remove --purge mysql-\*
+sudo apt-get purge mysql-server mysql-client mysql-common mysql-server-core- mysql-client-core-
+sudo rm -rf /etc/mysql /var/lib/mysql
+sudo apt autoremove
+sudo apt autoclean
+********************************************
+apt purge *mysql*
+apt purge *mariadb*
+****************************************************************************
+# Remove elasticsearch: 
+apt-get remove --purge elasticsearch
+sudo rm -rf /etc/elasticsearch
+sudo rm -rf /var/lib/elasticsearch
+updatedb
+locate elasticsearch
+sudo rm -rf /etc/default/https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.16.3-amd64.deb
+sudo rm -rf /usr/share/elasticsearch/
+sudo rm -rf /var/log/elasticsearch/
++
+service files:
+/etc/init.d/elasticsearch
+/etc/systemd/system/multi-user.target.wants/elasticsearch.service
+/usr/lib/systemd/system/elasticsearch.service
+*****************************************
+ElasticSearch not working
+
+Open the file /etc/elasticsearch/elasticsearch.yml
+
+#Set the name of your Elasticsearch Cluster
+cluster.name: statusengine
+
+# Set the name of the current node
+node.name: elastic01
+
+#Path where Elasticsearch should store data
+path.data: /var/lib/elasticsearch
+
+#Path where Elasticsearch should store log files
+path.logs: /var/log/elasticsearch
+
+#You need at least one master node inside
+#of your Elasticsearch Cluster
+node.master: true
+
+#You need at least one node inside
+#of your Elasticsearch Cluster, that holds your data
+node.data: true
+
+*******************************************************************************
+NPM permission
+
+/usr/local/bin/node,/usr/local/bin/n,/usr/bin/n,/usr/local/bin/npm
+
+**********************************************************************
+if imap does not install through phpbrew 
+phpbrew ext install imap -- --with-kerberos --with-imap-ssl
+
+*********************************************************************
+	
+cURL Certificate Problem - server certificate verification failed
+ sudo apt-get update && sudo apt-get install -y ca-certificates
+
+*************************************************************** 
+How to Manually Update Curl on Ubuntu Server
+	apt remove curl
+    apt purge curl
+	
+	apt-get update
+    apt-get install -y libssl-dev autoconf libtool make
+	
+	
+	cd /usr/local/src
+    rm -rf curl*
+	wget https://curl.haxx.se/download/curl-7.70.0.zip
+    unzip curl-7.70.0.zip
+	
+	cd curl-7.70.0     # enter the directory where curl was unpacked #
+    ./buildconf
+    ./configure --with-ssl 
+    make
+    make install
+	
+	mv /usr/bin/curl /usr/bin/curl.bak
+    cp /usr/local/bin/curl /usr/bin/curl
+	
+	curl -V
+--if you get a curl: symbol lookup error: curl: undefined symbol:--
+    sudo ldconfig
+	
+	https://curl.se/download.html
+	
+********************************************************	
+jmeter issue 
+https://askubuntu.com/questions/1156012/how-can-i-configure-things-so-that-jmeter-finds-the-jdk-of-java
+
+*********************************
+phpbrew ext install oci8 -- --with-oci8=instantclient,/opt/oracle/instantclient_12_2
+
+******************************************************
+Pear Extension
+
+	wget http://pear.php.net/go-pear.phar
+    php go-pear.phar
+	pear version
+	
+************************************************	
+Installing PredictionIO from Source Code
+	https://docs.huihoo.com/predictionio/docs.prediction.io/install/install-sourcecode/index.html
+	
+********************************************************************************	
+Install MongoDB Compass
+
+wget https://downloads.mongodb.com/compass/mongodb-compass_1.39.0_amd64.deb
+sudo dpkg -i mongodb-compass_1.39.0_amd64.deb
+mongodb-compass
+
+***************************************************************
+How to change mysql root password:-
+	
+		systemctl stop mysql.service
+		vi /etc/mysql/my.cnf
+			[mysqld] 
+            skip-grant-tables
+			
+		mysql -u root 
+		FLUSH PRIVILEGES;
+			use mysql 
+		ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by '@UGARcrm00792';
+		or
+		update mysql.user set password=PASSWORD('@UGARcrm00700') where user='root';
+
+        UPDATE mysql.user SET Password = PASSWORD('YOURNEWPASSWORD') WHERE User = 'root';
+		ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
+		
+*************************************************************************		
+Install phpdoc 
+	wget https://phpdoc.org/phpDocumentor.phar
+	chmod +x phpDocumentor.phar
+	mv phpDocumentor.phar /usr/local/bin
+	mv phpDocumentor.phar phpdoc.phar
+	cd /
+	phpdoc.phar 
+	
+***********************************************************	
+copy data from one staging to another:
+		scp -P 2231  root@staging5.rolustech.com:/home/rtftp-client1/AGSemi/agsemi_0622_12591505_20230809_044056.tar.gz /opt/
+		
+		run below command on destination:
+
+		# scp -P 2218  root@staging3.rolustech.com:/home/inet-process/sugarcrm.tgz /opt/sugarcrm
+
+		(source remote-side port#)   (remote side ip or hosname:source path)   (destination path
+*******************************************************		
+Install MySQL specific version with minor also 
+			
+			wget https://downloads.mysql.com/archives/get/p/23/file/mysql-server_8.0.31-1ubuntu22.04_amd64.deb-bundle.tar
+			
+			tar -xvf mysql-server_8.0.31-1ubuntu22.04_amd64.deb-bundle.tar
+			dpkg -i libmysqlclient21_8.0.31-1ubuntu22.04_amd64.deb
+			dpkg -i libmysqlclient-dev_8.0.31-1ubuntu22.04_amd64.deb
+			dpkg -i mysql-common_8.0.31-1ubuntu22.04_amd64.deb
+			dpkg -i mysql-community-client-core_8.0.31-1ubuntu22.04_amd64.deb
+			dpkg -i mysql-community-client-plugins_8.0.31-1ubuntu22.04_amd64.deb
+			dpkg -i mysql-community-client_8.0.31-1ubuntu22.04_amd64.deb
+			dpkg -i mysql-community-server-core_8.0.31-1ubuntu22.04_amd64.deb
+			dpkg -i mysql-client_8.0.31-1ubuntu22.04_amd64.deb
+			dpkg -i mysql-community-server_8.0.31-1ubuntu22.04_amd64.deb
+			
+			If needed
+			dpkg -i mysql-server_8.0.31-1ubuntu22.04_amd64.deb
+		
+******************************************************************************************		
+	sudo apt install gnome-control-center
+
+**************************************************	
+	snap install phpstorm --classic
+error: snap "phpstorm" has "install-snap" change in progress
+	snap changes 
+	snap abort 18
+	
+***************************************************	
+systemctl --user mask tracker-store.service tracker-miner-fs.service tracker-miner-rss.service tracker-extract.service tracker-miner-apps.service tracker-writeback.service
+tracker reset --hard
+sudo reboot
+*****************************************
+
+SuiteCRM conf.php file path
+
+	/opt/suitecrm84/public/legacy
+	'db_host_name' => 'localhost',
+		'db_host_instance' => '',
+		'db_user_name' => 'root',
+		'db_password' => '@UGARcrm00700',
+		'db_name' => 'suitecrm84_db',
+		'db_type' => 'mysql',
+		'db_port' => '3306',
+		'db_manager' => 'MysqliManager',
+		'collation' => NULL,
+		'charset' => NULL,
+***************************************************
+
+How to check mac address of any PC from DHCP Server:
+	arp -a 
+	
+How to relaese ip in windows:
+  ifconfig /release 	
+  
+ How to renew  ip in windows: 
+ 
+	ifconfig /renew
+	
+******************************************************	
+Sugarcli 
+
+		Install
+		Get the latest phar archive at https://github.com/inetprocess/sugarcli/blob/master/build/sugarcli.phar. Allow the execution and run it.
+
+		cd /usr/local/bin/
+		wget 'https://github.com/inetprocess/sugarcli/releases/download/v1.20.0/sugarcli.phar'
+		chmod +x ./sugarcli.phar
+		mv sugarcli.phar sugarcli
+		sugarcli help	
+**************************************************************  
+VMware licences:
+
+	MC60H-DWHD5-H80U9-6V85M-8280D < worked for me!
+	4A4RR-813DK-M81A9-4U35H-06KND
+	--unchecked
+	NZ4RR-FTK5H-H81C1-Q30QH-1V2LA
+	JU090-6039P-08409-8J0QH-2YR7F
+	4Y09U-AJK97-089Z0-A3054-83KLA
+	4C21U-2KK9Q-M8130-4V2QH-CF810
+	
+*******************************************************
+Install postgres on ubuntu
+		sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+		wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+		sudo apt-get update
+		sudo apt-get -y install postgresql
+		apt-get install postgresql-12
+		
+		psql --version
+		
+*************************************************************		
+MS SQL Extensions
+	apt-get install unixodbc-dev
+	version  odbcinst -j
+	
+	phpbrew ext install sqlsrv
+	phpbrew ext install pdo_sqlsrv
+	
+*********************************************************
+
+How to see login user 
+
+who -u
+
+********************************
+@dmin999
+
+*********************************************
+Create floder at share drive 
+		ip: 192.168.99.15  
+		login as admin2 with admin2 passwd
+		# sudo su   # login as a root user
+		===== Setting user quotas / shared drive =====
+		# quota -vs naeem.khan
+		# cd /share/Public/
+		# mkdir naeem.khan
+		# chown -R usman.bashir:domain\ users naeem.khan/
+		# setquota -u naeem.khan 8G 8G 0 0 /share
+		# chmod -R 2775 naeem.khan
+		# quota -vs naeem.khan
+		
+Add user in group in share drive
+
+usermod -a -G groupname username
+****************************************************************
+Error: need to remove only_full_group_by from mysql 8 using sql_mode
+	vi /etc/mysql/mysql.conf.d/mysqld.cnf
+	[mysqld]
+
+	sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+*******************************************************************************	
+Latest Sugar SDK Error Solution:- 
+	git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+	git config --global url."https://github.com/".insteadOf git@github.com:
+	git config --global url."https://".insteadOf ssh://
+	
+***********************************************************	
+How to Enable MySQL query log in linux
+	vi /etc/mysql/my.cnf
+		[mysqld]
+		general_log=on
+		general_log_file=/var/log/mysql/query.log
+		
+	chmod -R 775 	/var/log/mysql
+	chown -R username:username /var/log/mysql
+	
+	systemctl restart mysql
+	
+	tail -f /var/log/mysql/query.log
+	
+	cd /home 
+	su username 
+	tail -f /var/log/mysql/query.log
+	
+**************************************************************	
+
+how to empty query log
+truncate -s 0 /var/log/mysql/query.log
+
+*****************************************
+Search bar not working in windows 
+  cmd
+  cd Wndows
+  c:/Windows\System32
+  ctfmon.exe 
+  
+  Permenant solution 
+  windows+r 
+  shell:startup
+  go to this path c:/Windows\System32  and search ctfmon.exe and create a shotcut and move shortcut on shell:startup
+  
+**************************************** 
+Intall wkhtmltopdf on ubuntu
+
+		sudo wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb
+		sudo dpkg -i wkhtmltox_0.12.5-1.stretch_amd64.deb
+		sudo cp /usr/local/bin/wkhtmltopdf /usr/bin/
+		sudo cp /usr/local/bin/wkhtmltoimage /usr/bin/
+		
+		sudo apt-get install libjpeg62
+
+		Then running:
+		wkhtmltopdf -V
+
+		Returns:
+		wkhtmltopdf 0.12.5 (with patched qt)
+
+**************************************************
+Install magento 2 on ubuntu
+https://www.mageplaza.com/devdocs/how-install-magento-2-ubuntu.html#step-7-install-magento-2
+======================= Complete================
+./magento setup:install \
+--base-url=http://localhost/magento2 \
+--db-host=localhost \
+--db-name=magento2 \
+--db-user=root \
+--db-password=123 \
+--admin-firstname=admin \
+--admin-lastname=admin \
+--admin-email=ahmed.aftab@rolustech.net \
+--admin-user=admin \
+--admin-password=@dmin111 \
+--language=en_US \
+--currency=USD \
+--timezone=America/Chicago \
+--use-rewrites=1
+
+
+After installation run the following commands.cd
+
+bin/magento setup:upgrade
+bin/magento setup:di:compile
+bin/magento setup:static-content:deploy -f
+chmod -R 777 var pub generated
+=================================================================================
+
+php bin/magento setup:static-content:deploy -f
+
+php bin/magento cache:clean
+php bin/magento cache:flush
+php bin/magento indexer:reindex
+php bin/magento setup:upgrade
+php bin/magento setup:static-content:deploy -f
+php bin/magento setup:di:compile
+chmod -R 777 var pub generated
+**********
+If error in magento when hit on url use the following comannd
+	 mysql -u root -p 
+	 use database;
+	 update core_config_data set value = 'https://staging5.rolustech.com:44329' where path = 'web/unsecure/base_url'; 
+     update core_config_data set value = 'https://staging5.rolustech.com:44329' where path = 'web/secure/base_url';
+       change the url http://localhost/magento2/pub
+	   
+***********   
+if you want to change http://localhost/magento2/pub/admin-kf2 
+to http://localhost/magento2/pub/admin then change in file.
+
+  vi /var/www/html/magento2/app/etc/env.php 
+	
+**************************************************************************************************	
+Install pwa studio
+
+	yarn create @magento/pwa
+*********************************************************************************************
+template:
+	http://templates.rolustech.com/
+	
+	
+*****************************************************	
+apt update
+apt-get install libmagickwand-dev libmagickcore-dev
+phpbrew ext install imagick
+
+*******************************************
+SSH
+	ssh  -i abc.pem  ubuntu@10.0.1.85
+	
+***************************************	
+apt-get update --fix-missing
+************************************************
+Install python dependencies on ubuntu
+				#!/bin/bash
+
+		# Script to install all Python dependencies using pip in Ubuntu
+
+		# Check if pip is installed
+		if ! command -v pip &> /dev/null; then
+			echo "pip is not installed. Installing pip..."
+			# Install pip using apt-get
+			sudo apt-get update
+			sudo apt-get install -y python3-pip
+		fi
+
+		# Specify the requirements file
+		REQUIREMENTS_FILE="requirements.txt"
+
+		# Check if requirements file exists
+		if [ ! -f "$REQUIREMENTS_FILE" ]; then
+			echo "No requirements file found. Please provide a requirements.txt file."
+			exit 1
+		fi
+
+		# Install dependencies using pip
+		echo "Installing dependencies from $REQUIREMENTS_FILE..."
+		pip install -r "$REQUIREMENTS_FILE"
+
+		# Output success message
+		echo "All dependencies have been installed successfully."
+		
+		
+	If error
+		sudo apt-get install libmysqlclient-dev
+		sudo apt install default-libmysqlclient-dev
+*****************************************************************		
+Search file installed 
+	dpkg --get-selections | grep -i package-name-to-search
+
+	dpkg --get-selections | grep -i slack* 
+
+	apt-get list --installed | slack* 
+
+	cat /var/liv/dpkg/status | grep -i slack*
+	
+***************************************	
+Delete google backup
+	$ sudo apt-get purge google-chrome-stable
+$ mv ~/.config/google-chrome/ ~/.config/google-chrome.bak/
+
+****************************
+	For Surfshark (Ubuntu 20 and above):-
+	Download the package file inside /tmp directory to avoid permission errors: -
+		   :/tmp$   wget https://ocean.surfshark.com/debian/pool/main/s/surfshark-release_1.0.0-2.1_amd64.deb
+			(Or the latest release from official site)
+	:/tmp$   sudo apt install ./surfshark-release_1.0.0-2.1_amd64.deb
+	:~$ sudo apt update
+	:~$ sudo apt install surfshark
+	Further, the user will login and configure the VPN as per guide shared by the client/surfshark-vpn-Admin, using the GUI.
+
+	For Surfshark CLI, install the Legacy version by following steps in below link:
+	 " https://support.surfshark.com/hc/en-us/articles/360017418334-How-to-set-up-Surfshark-VPN-on-Linux-Legacy-version-  "
+ 
+ ************************************
+How to check which user in login 
+	who -u 
+	
+***************************	
+Extension Imap using compile method
+	wget https://pecl.php.net/get/imap-1.0.2.tgz
+	tar -xzf imap-1.0.2.tgz
+	cd imap-1.0.2/
+	phpize
+	./configure  --with-kerberos --with-imap-ssl
+	make
+	make install
+	vi /opt/phpbrew/path/to/php.ini
+	-----
+	extension=imap.so
+	
+***********************************************************	
+how to stop a running port in ubuntu 
+		ss -tunp | grep -i 3000
+		kill -9 pid 
+		
+************************************************		
+
+

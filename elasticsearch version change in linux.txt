@@ -1,0 +1,41 @@
+How to Switch Elasticsearch Version to 7.9 in Ubuntu 20
+First of all, you need to check the Java version.
+
+java -version
+
+Output:
+openjdk version "1.8.0_292"
+OpenJDK Runtime Environment (build 1.8.0_292-8u292-b10-0ubuntu1~20.04-b10)
+OpenJDK 64-Bit Server VM (build 25.292-b10, mixed mode)
+
+If your java version is 1.8.x then use the following command to switch it to JDK 11
+
+sudo switch_java
+Java version (8 or 11): 
+
+Write 11 and press Enter key.
+
+Once the Java version is switched to 11 then execute the following command
+
+sudo switch_elasticsearch
+Select elasticsearch version (1.7.5 , 5.4.0, 5.6.0, 6.2.0, 6.2.4, 7.6.0, 7.9.0)     
+-->
+Write any specific version from the above-mentioned versions.
+
+-:- Please note for older than 7.9 version of Elasticsearch JDK 8 is fine. -:-
+
+**************************************************************************
+# Remove elasticsearch: 
+apt-get remove --purge elasticsearch
+sudo rm -rf /etc/elasticsearch
+sudo rm -rf /var/lib/elasticsearch
+updatedb
+locate elasticsearch
+sudo rm -rf /etc/default/elasticsearch
+sudo rm -rf /usr/share/elasticsearch/
+sudo rm -rf /var/log/elasticsearch/
++
+service files:
+rm -rf /etc/init.d/elasticsearch
+rm -rf /etc/systemd/system/multi-user.target.wants/elasticsearch.service
+rm -rf /usr/lib/systemd/system/elasticsearch.service

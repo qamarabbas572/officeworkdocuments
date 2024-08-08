@@ -1,0 +1,209 @@
+version: '2.2'
+services:
+  apache2:
+    container_name: apache2-container-4
+    image: apache2-container-2
+    volumes:
+     - type: volume
+       source: mydata
+       target: /var/www/html
+       volume:
+         nocopy: true
+    environment:
+     - TZ=UTC
+    ports:
+     - 8000:80
+    networks:
+      customnetwork:
+        ipv4_address: 172.16.0.11
+networks:
+  customnetwork:
+    external: true
+  #    config:
+   #   - subnet: 172.16.0.0/16
+    #    gateway: 172.16.0.1
+volumes:
+  external:
+    name: mydata
+
+  elasticsearch:
+     image: elasticsearch-container-2
+ container_name: elasticsearch-container-4
+     environment:
+      - discovery.type=single-node
+     ulimits:
+             memlock:
+                     soft: -1
+                     hard: -1
+             nofile:
+                    soft: 65536
+                    hard: 65536
+     cap_add:
+       - IPC_LOCK
+     volumes:
+        - mydata:/usr/share/elasticsearch/data
+     ports:
+      - 9200:9200
+      - 9300:9300
+     networks:
+       customnetwork:
+         ipv4_address: 172.16.0.11
+
+volumes:
+  mydata:
+    driver: local
+
+networks:
+  customnetwork:
+    external: true
+     # config:
+      #- subnet: 172.16.0.0/16
+ # gateway: 172.16.0.1
+
+  mysql:
+    container_name: sugar-mysql-4
+    image: sugar-mysql-2
+    environment:
+     - MYSQL_ROOT_PASSWORD=123
+    ports:
+     - 3306:3306
+    networks:
+       customnetwork:
+         ipv4_address: 172.16.0.11
+networks:
+  customnetwork:
+    external: true
+      #config:
+      #- subnet: 172.16.0.0/16
+       # gateway: 172.16.0.1
+------------------------------------------------------------------------
+Correct one
+version: '3.3'
+services:
+    apache2-php80:
+        container_name: apache2-php80
+        network_mode: sugarnetwork
+        volumes:
+            - '/var/www/html:/var/www/html'
+        environment:
+            - TZ=UTC
+        ports:
+            - '80:80'
+        image: qamar572/apache2-php80
+
+    mysql-57:
+        container_name: mysql-57
+        network_mode: sugarnetwork
+        ports:
+            - '3306:3306'
+        environment:
+            - MYSQL_ROOT_PASSWORD=123
+        image: qamar572/mysql-57
+    elasticsearch-7161:
+        container_name: elasticsearch-7161
+        network_mode: sugarnetwork
+        ports:
+            - '9200:9200'
+            - '9300:9300'
+        environment:
+            - discovery.type=single-node
+        image: qamar572/elasticsearch-7161
+		
+------------------------------------------------------------------------	
+Imporment sugar compose file 
+
+version: '3.3'
+services:
+    apache2-php80:
+        container_name: apache2-php80
+        network_mode: sugarnetwork
+        volumes:
+            - '/var/www/html:/var/www/html'
+        environment:
+            - TZ=UTC
+        ports:
+            - '801:80'
+        image: qamar572/apache2-php80
+
+    mysql-57:
+        container_name: mysql-57
+        network_mode: sugarnetwork
+        ports:
+            - '3306:3306'
+        environment:
+            - MYSQL_ROOT_PASSWORD=123
+        volumes:
+            - '/var/www/html/sugar_db_backup:/var/lib/mysql'
+        image: qamar572/mysql-57
+    elasticsearch-7161:
+        container_name: elasticsearch-7161
+        network_mode: sugarnetwork
+        ports:
+            - '9200:9200'
+            - '9300:9300'
+        environment:
+            - discovery.type=single-node
+            - ES_JAVA_OPTS= -Xms750m -Xmx750m
+        image: qamar572/elasticsearch-7161
+    phpmyadmin:
+        container_name: phpmyadmin
+        network_mode: sugarnetwork
+        environment:
+            - PMA_ARBITRARY=1
+            - UPLOAD_LIMIT=5G
+        ports:
+            - '8080:80'
+        image: qamar572/phpmyadmin
+
+			
+				
+*********************************************
+Hit in the Browser 
+	http://localhost/SugarEnt-Full-12.0.0
+	or
+	http://192.168.7.145/SugarEnt-Full-12.0.0
+	
+Before start docker services please stop all services
+	
+To start docker services:
+		docker start apache2-php80
+		docker start mysql-57
+		docker start elasticsearch-7161
+		
+To stop docker services:
+		docker stop apache2-php80
+		docker stop mysql-57
+		docker stop elasticsearch-7161
+		
+	datbase name sugarcrm1200
+	username admin
+	password 123	
+-------------------------------------------------
+Give access to user 
+
+chmod +x /bin/restartdocker
+chmod +x /bin/startdocker
+chmod +x /bin/stopdocker
+chmod +x /bin/statusdocker
+
+nano /etc/sudoers.d/users
+
+,/bin/restartdocker,/bin/startdocker,/bin/stopdocker,/bin/statusdocker
+
+--------------------------------------------------------------------------
+Hi,
+
+Docker services access has been granted accordingly, PFB:
+
+sudo restartdocker
+sudo startdocker
+sudo stopdocker
+sudo statusdocker
+sugarcrm_db12
+For other docker commands, you already have all access. e.g. docker ps
+
+***************************************************************
+phpmyadmin issue fixed:
+	
+ https://github.com/phpmyadmin/docker/issues/386
+				

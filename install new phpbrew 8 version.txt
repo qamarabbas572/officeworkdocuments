@@ -1,0 +1,91 @@
+=====>>>>>Steps to install new phpbrew module and set up with running env <<<<<=====
+phpbrew update
+phpbrew known
+phpbrew install 8.2.0 +apxs2 +bcmath +bz2 +calendar +ctype +curl +dom +exif +fileinfo +filter +ftp +gd +gettext +hash +iconv +imap +inifile +inline +json +kerberos +libgcc +mbregex +mbstring +mcrypt +mhash +mysql +openssl +session +soap +sockets +sqlite +xml +xmlrpc +zip +zlib +zts +pdo -- --with-kerberos --with-imap-ssl --with-gd=shared --enable-gd-natf --with-jpeg-dir=/usr --with-png-dir=/usr --with-webp-dir=/usr
+cd /usr/lib/apache2/modules/
+ls -ltr
+mv libphp.so libphp8.2.0.so
+ls -ltr
+cp /bin/set_apache_php /bin/set_apache_php-bak
+ls -ltr /bin/set_apache_php*
+vim /bin/set_apache_php         -----> modify this script accordingly
+cd /etc/apache2/mods-available/
+ls -ltr
+mv php.load php8.load
+ls -ltr
+vim php8.load
+-----
+LoadModule php_module        /usr/lib/apache2/modules/libphp8.0.20.so
+-----
+vim php8.conf
+-----
+<FilesMatch ".+\.ph(ar|p|tml)$">
+    SetHandler application/x-httpd-php
+</FilesMatch>
+<FilesMatch ".+\.phps$">
+    SetHandler application/x-httpd-php-source
+    # Deny access to raw php sources by default
+    # To re-enable it's recommended to enable access to the files
+    # only in specific virtual host or directory
+    Require all denied
+</FilesMatch>
+# Deny access to files without filename (e.g. '.php')
+<FilesMatch "^\.ph(ar|p|ps|tml)$">
+    Require all denied
+</FilesMatch>
+
+# Running PHP scripts in user directories is disabled by default
+#
+# To re-enable PHP in user directories comment the following lines
+# (from <IfModule ...> to </IfModule>.) Do NOT set it to On as it
+# prevents .htaccess files from disabling it.
+<IfModule mod_userdir.c>
+    <Directory /home/*/public_html>
+        php_admin_flag engine Off
+    </Directory>
+</IfModule>
+-----
+
+chmod +x php8.load
+chmod +x php8.conf
+
+phpbrew switch php-8.0.20 && set_apache_php 8.0 &&  php -v
+php -v && set_apache_php
+
+verify all phpbrew versions accordingly
+
+******************************************************
+uninstall php 
+	phpbrew remove php-7.4.18
+	
+*************************************	
+Install php on centos
+
+yum -y remove php*
+yum list installed | grep php
+
+yum install epel-release
+yum-config-manager --enable remi-php80
+yum-config-manager --disable remi-php74
+
+yum install php php-cli php-soap php-bcmath php-imap php-intl php-ldap php-oauth php-curl php-dom php-exif php-gd php-mbstring php-mysqli php-mysqlnd php-pdo_mysql php-SimpleXML php-soap php-xml php-xmlreader php-xmlwriter php-xsl php-zip php-zlib
+
+
+php -m | grep -i soap
+
+yum-config-manager --disable 'remi-php*'
+*****************************************************
+<?php
+
+// Show all information, defaults to INFO_ALL
+phpinfo();
+
+// Show just the module information.
+// phpinfo(8) yields identical results.
+phpinfo(INFO_MODULES);
+
+?>
+
+**************************
+apache2 error 
+	apachectl configtest

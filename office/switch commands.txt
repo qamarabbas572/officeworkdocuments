@@ -1,0 +1,50 @@
+Please use following sudo command if you have ubuntu 16.04
+
+#For Permission 
+sudo changeperm 
+
+
+
+#For Apache Restart
+
+sudo restartapache
+/bin/restartapache
+
+#For MySql restart
+
+sudo restartmysql
+/bin/restartmysql
+
+#check MySql status
+sudo service mysql status
+
+#To change php versions
+
+sudo set_apache_php
+
+#To Switch Elasticsearch Version7
+
+sudo switch_elasticsearch
+curl -XGET 'http://localhost:9200'
+
+#To Stop Elasticsearch
+
+sudo stopelasticsearch
+
+#To Start Elasticsearch
+
+sudo startelasticsearch
+
+#To Switch Mysql Server Version
+
+sudo switch_mysql
+apt-cache policy mysql-server
+
+Best Regards,
+sudo switch_java
+
+Update Composer:
+		 composer self-update 2.4.1
+		 composer
+Downgrade Composer		 
+		composer self-update --rollback 

@@ -1,0 +1,705 @@
+					RED Hat
+			************************
+			
+MAN & HELP	:-
+		
+	Manual update
+		mandb
+
+	show only description of any command in manual: 
+	
+		e.g whatis route
+	
+	location of any man
+
+		whereis cd[option]
+		
+	Particular session of any man
+		man 5 passwd
+		
+	options of the commands
+		lsblk --help
+	
+***********************	
+
+PWD , CD , LS
+
+	current working directory
+		pwd {present working directory}
+		 **************
+		 
+	Return to home directory
+		cd ~
+		
+	Return to previous directory
+		cd -
+		
+	Current directory
+		.
+	Parent directory
+		..
+		
+	Absulot path
+		cd /log 
+		
+	Relative path
+		cd log 
+		
+	Back to previous path
+		cd -
+		************
+		
+	List without go inside of the folder
+		ls /var/log 
+		
+	List hidden files
+		ls -a 
+		
+	List long listing 
+		ls -l 
+		
+	List long listing  and hidden files
+		ls -al 
+		
+	List long listing with human readable
+		ls -lh 
+		
+******************************************		
+MKDIR
+
+	To create a directory 
+		mkdir sample
+		
+	To create a directory with in directory (parent-child)
+		e.g mkdir /test/test1/index {Its can't because test test1 can't exacts }
+		for create for such type please type the command
+			
+				mkdir -p /test/test1/index
+				
+	To delete a directory
+		rmdir /test/test1/index
+		
+	To save a calender in any directory
+		mkdir -p /test/test1/
+		cal > /test/test1/cal.txt
+		cat /test/test1/cal.txt
+		
+		To remove this folder its never delete because its have data
+			rmdir /test/test1/cal.txt
+			
+		To forcefully delete
+			rm -f  /test/test1/cal.txt {Its delete if parent dir is empty}
+			rm -rf  /test/test1/cal.txt {Its delete if parent dir is not empty}
+			
+**************************************			
+	In terminal from any tab to move specific tab 
+				alt + 1{option}
+			
+	Close any tab
+		ctrl+shift+w
+			
+	new tab open
+		ctrl+shift+t 
+		
+	new terminal window open
+		ctrl+shift+n 
+		
+	switch one window to another window
+		alt+tab+arrow key
+		
+	Close open window
+		ctrl+shift+q
+		
+	which user login 
+		whoami
+		
+	To check security context
+		ls -Z
+		
+	To get help of any commands	
+		ls --help
+		
+	Short Description of  any command
+		whatis ls {command}
+		
+	To search any thing in the large files
+		less filename
+		/search
+			press n for more 
+			
+		To go bottom of any file 
+			shift+g 
+		
+		To go top of any file 
+			p
+			
+		To go bottom to up of any file 
+			?word 
+
+		View a content page by page 
+			more filename
+			
+		Show or Read top number of lines in file
+			head -5 filename
+			
+		Show or Read bottom number of lines in file
+			tail -5 filename	
+			
+		Sort the content from a file
+			sort filename
+				reverse sort 
+				sort -r filename
+				
+			do not show the duplicate content
+					sort filename | uniq
+					
+		Split file in 3 differnt file 
+			split -l 3 filename
+			
+		Search multiple words and display matching
+			egrep "word1 | word2" filename
+			
+		Create a 10 number files in one command
+			touch file{1..10}
+			
+		Count number of lines in a file
+			wc -l file
+			
+		Compare files
+			cmp file1 file2
+			
+		Find any in linux
+			find /path -name filename
+			
+**********************************************
+UTILITY	COMMANDS
+			
+		Display previously used command
+			history
+		HELP
+		MAN
+		WHICH
+		
+		How to use calculator 
+			bc 
+		show calender
+			cal 
+			in ubuntu first install 
+				apt install ncal
+			show any year calender
+				cal 2020
+				or cal jan 2020
+				
+		How long server has been running
+			uptime 
+		How to record your activity on terminal
+			script
+			ctrl+d 
+			cat typescript
+		How to create a shortcut command of a long commnad 
+			alias l="ls -ltrh"
+			
+			check existing alias
+				alias -p
+				
+		How to compress multiple files
+			zip filename.zip file file1
+			
+		How to check how many files in the zip file
+			unzip -l filename.zip 
+			
+		How to check a software is installed or not  in ubuntu
+			sudo apt list --installed | grep appname
+			
+		How to list available packages to install
+			apt search name
+			yum list available | grep packagename 
+			
+		List all services
+			systemctl list-units --type=service --all
+			
+		List env variable list 
+			printenv 
+			
+		Display starting two char
+			cut -c1-2{first,second line } filename
+			
+		Display a specific line from a file 
+			sed -n '5p' filename
+			
+		Replace a word within a specific file 
+			sed -n 's/from/to/g' filename
+				e.g  sed  's/A/T/g' file1
+				 sed  's/word1/word2/g' file1
+			
+		Change upper to lower and lower to upper 
+			tr [:upper:] [:lower:] <filename
+			tr [:lower:] [:upper:] <filename
+			tr "A" "a" < filename
+			
+		Delete any word from the file 
+			tr -d word <filename
+		
+		How to extend or shrink size of a file
+			truncate -s 100M filename
+*******************************************
+Memory Info
+	How to check free RAM space 
+		free 
+		free -h 
+		free -th 
+		
+	How to check % memory and cpu utilization
+		top
+		
+	How to check disk  utilization
+		du -h filename
+		
+	How to check file system available and disk space  allocated
+		df -h
+**************************************************
+System info
+			How to check hostname 
+				hostname
+				
+			How to check cpu/core/thread info 
+				lscpu 
+				
+			How to check  type of architect
+				arch 
+			List of storage devices
+				lsblk
+				
+			how to check OS and OS version 
+				uname -a
+****************************************
+Process Management 
+		Check process is running or not 
+			ps -ef 
+			ps -ef | grep java
+			
+		How to get PID of a process
+			pgrep chron 
+			
+		Stop process by name 
+			pkill name 
+			
+		Check running jobs
+			jobs 
+			sleep 10s
+			ctrl+z 
+			jobs
+			
+		resume a job in backgroud
+			bg 
+			
+		resume a job in foreground
+			fg 
+		How to check if a IP:Port is accessable and open or not 
+			telnet IP Port
+			
+		How to check if a port is open or not 
+			netstat -putan | grep 80 
+			
+		check all hubs in network 
+			traceroute www.google.com 
+***********************************
+User Creation 
+		useradd name {its only create user}
+		adduser name {its create user and also its home dir}
+		
+	show user 
+		id name
+	
+	create a group
+		groupadd name
+		
+		show group
+			cat /etc/group
+			
+		add user in the group
+			usermod -G testing azlaan
+			
+*********************************************************
+
+User Account Management:
+				adduser username
+			Manualy add user 
+				useradd -g test -s /bin/bash -c "part of test" -m -d /home/test5 test5
+				
+			Add user in the group
+				usermod -G test1 test5
+				
+			Change default group of user 
+				usermod -g test1 test5
+				
+			Rename or copy home folder
+				usermod  -m -d /home/newname oldname
+				
+			**************************	
+		Password aging 
+			change password details 
+				chage -M(Max day) 90 -W{warning} 10 username
+				
+			Set a password setting for new user
+				nano /etc/login.defs
+				grep username /etc/shadow
+				
+			*******************************
+		SU & SUDO
+				su username {switch user but exist in the current directory}
+				su - username {switch user and move to the home directory of switch user}
+			Sudo access 
+				usermod -aG sudo username
+			Remove from sudo group or any group
+				sudo gpasswd -d username group
+************************************************
+Firewall:
+		Listing Adding Deleting firewalld rules
+			check if firewalld ser is installed
+				rpm or -qa | grep firewalld
+				
+			Install firewalld
+				apt install firewalld
+				
+			Start,Stop, Restart , Status service
+				systemctl status firewalld.service
+				
+			Check the rules of firewalld
+				firewall-cmd --list-all
+				
+			Listing of all the services firewalld is aware of 
+				firewall-cmd --get-services
+				
+			To reload the config of firewalld
+				
+				firewall-cmd --reload 
+				
+			Firewall has multiple zones , to get list 
+				firewall-cmd --get-zones
+				
+			To see the list of active zones
+				firewall-cmd --get-active-zones
+				
+			To get firewall rules for a specific zone	
+				firewall-cmd --zone=public --list-all
+				
+			To add or remove a service temporary
+				firewall-cmd --add-service=servicename 
+				firewall-cmd --remove-service=servicename
+				firewall-cmd --reload 
+				
+			To add or remove a service permanently
+				firewall-cmd --add-service=servicename --permanent
+				firewall-cmd --remove-service=servicename --permanent
+				firewall-cmd --reload 	
+				
+			To add or remove a port 
+				firewall-cmd --add-port=20201/tcp
+				firewall-cmd --remove-port=20201/tcp
+				firewall-cmd --reload 	
+				
+			To block incoming traffic from an ip
+				firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="192.168.0.0" reject'
+				
+			To block outgoing traffic to a ip or url 
+				ping www.google.com
+				host -t a  www.google.com
+				firewall-cmd --direct --add-rule ipv4 filter OUTPUT 0 -d 172.217.18.132/32  -j REJECT
+			To block iCMP incoming traffic
+				firewall-cmd --add-icmp-block-inversion 
+				
+******************************************************
+Linux Log Monitoring
+					Log directory in linux
+						/var/log
+					Important log files
+						.boot /var/log/
+						.chron /var/log/syslog
+						.secure /var/log/auth.log
+						.mailing
+						.apache2 or httpd
+						.messages
+						
+					less boot.log.7
+					/search
+					? search from the end of file
+					press n for next
+					press p to go top 
+					
+					tail -f  /var/log/syslog {live monitoring}
+					
+					grep -i "error" /var/log/apache2/error.log {for search any}
+					
+					egrep -i "error|warning" /var/log/apache2/error.log
+					
+					cat /var/log/apache2/error.log | grep -i "error"
+					
+					cat /var/log/apache2/error.log | grep -i "error" | wc -l
+					
+*****************************************************************
+Linux POSTFIX
+	Installation
+		apt install postfix
+		sudo apt-get install bsd-mailx
+	
+	Configuration 
+		sudo dpkg-reconfigure postfix
+			Internet Site
+			mail.example.com
+			qamar
+			mail.example.com, localhost.localdomain, localhost
+			No
+			127.0.0.0/8 \[::ffff:127.0.0.0\]/104 \[::1\]/128 192.168.0.0/24
+			0
+			+
+			all
+		systemctl reload postfix
+		
+				nano main.cf 
+					Add the following lines
+
+					relayhost = [smtp.gmail.com]:587
+					myhostname= your_hostname
+				Location of sasl_passwd we saved
+				smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd
+
+				Enables SASL authentication for postfix
+				smtp_sasl_auth_enable = yes
+				smtp_tls_security_level = encrypt
+
+				Disallow methods that allow anonymous authentication
+				smtp_sasl_security_options = noanonymous
+				
+			Create a file under /etc/postfix/sasl/
+
+				Filename: sasl_passwd
+
+				Add the below line
+				[smtp.gmail.com]:587 email@gmail.com:password	
+				
+			Convert the sasl_passwd file into db file 
+				postmap /etc/postfix/sasl/sasl_passwd
+				
+			To send an email using Linux terminal
+
+				echo "Test Mail" | mail -s "Postfix TEST" paul@gmail.com
+*********************************************************************	
+Linux Package Management 
+	info about config file for a package in ubuntu
+		 cat /var/lib/dpkg/info/zip.list
+		 
+		 apt autoremove {to remove the dependenices}
+		 apt-cache search apache2 { package related info}
+		 
+********************************
+How to Change Default Permission in Linux with UMASK
+			umask
+				permission = 0777 -022 = 0775 
+							1 execute
+							2 write 
+							4 read 
+			To check default permission
+				umask 
+				umask -S
+				
+			To change default permission temporary
+				umask u=rwx,g=rx,o=rx
+				or 
+				umask u+rwx,g+rx,o-r
+				
+			To change default permission permanent
+				add permission in .bashrc file 
+					nano  ~/.bashrc
+						#Set umask mode
+						umask 0027
+						or 
+						umask o-r 
+					source  ~/.bashrc
+
+******************************************
+LVM {Logical Volume Manager}
+		
+		Setups of LVM for adding new space
+			1 Install a new hard disk drive
+			2 Make a partition to use it 
+			3 Designate physical volume (PV)
+			4 Manage volume group (VG)
+			5 Manage local volume (LV)
+			6 Apply a file system
+			7 Set a mount point 	
+		setup 1-2	
+			fdisk -l
+			fdisk /dev/sdb
+			n {add a new partition}
+			p 
+			1	
+			:
+			:
+			t
+			L
+			8e 
+			w 
+			
+		Setup 3 
+			pvcreate /dev/sdb1
+			pvdisplay
+			
+		Setup 4
+			vgcreate vgapps /dev/sdb1
+			vgdisplay
+			
+		Setup 5
+			lvcreate -L 512M -n app1-lv vgapps
+			lvcreate -L 512M -n app2-lv vgapps
+			lvdisplay
+		Setup 6
+			mkfs.ext4 /dev/vgapps/app1-lv
+			mkfs.ext4 /dev/vgapps/app2-lv
+			
+		Setup 7 
+			mkdir /app1
+			mkdir /app2 
+			mount  /dev/vgapps/app1-lv /app2/
+			mount  /dev/vgapps/app2-lv /app1/
+			
+		df -Th
+
+		Perminant mount
+			cat /etc/mtab
+			
+			nano /etc/fstab 
+				/dev/mapper/vgapps-app2--lv /app1 ext4 rw,relatime 0 0
+				/dev/mapper/vgapps-app1--lv /app2 ext4 rw,relatime 0 0
+				
+			 change 
+				/dev/mapper/vgapps-app2--lv /app1 ext4 rw,user,noauto,exec,utf8 0 0
+				/dev/mapper/vgapps-app1--lv /app2 ext4 rw,user,noauto,exec,utf8 0 0
+				
+			mount -av
+
+		Extending a disk using LVM 
+			vgextend vgapps /dev/sdc1
+			lvextend -L +1000M /dev/vgapps/app1-lv
+			e2fsck -f /dev/vgapps/app2-lv
+			resize2fs /dev/vgapps/app1-lv 1000M
+			xfs_growfs /dev/vgapps/app1-lv
+			
+***********************************************
+Network troubleshooting using Netstat command
+		
+		To identify no. of connection on a given port or ip 
+			netstat -putan | grep port/ip 
+				netstat -putan | grep :22
+				
+		To see all the sockets 
+			netstat -a
+		List all the tcp ports
+			netstat -at
+		List all the tcp v6 ports
+			netstat -6at	
+		List all the tcp UDP ports
+			netstat -au 
+		List all listing ports
+			netstat -l 	
+		To view the numerical address
+			netstat -ln 
+		To view the PID of the programme of connection
+			netstat -p
+		To view the routing table 
+			netstat -r 
+		To check no. of connection from a specific IP 
+			netstat -an | grep IP 
+		To get the list of all the interface
+			netstat -i 
+		which port a process is using 
+			netstat -ap | grep processname 
+		
+*******************************************************
+Cookpit 
+		A user-friendly interface to manage and administer servers
+			sudo apt install cockpit -y
+			sudo systemctl start cockpit
+			sudo systemctl status cockpit
+***********************************
+NFS Network File System
+	A network protocol for distributed file system
+		we need to setup into parts 
+			server side config
+					sudo apt install nfs-kernel-server
+					sudo systemctl status nfs-kernel-server.service
+					sudo ufw status 
+					sudo ufw enable
+					sudo ufw allow from client_ip_addr
+				create a directory for nfs and give all permissions
+					cd /
+					mkdir server
+					cd server/
+					mkdir apps
+					cd apps/
+					cd ../..
+					chmod 777 /server/apps/
+					ls -ld  /server/apps/
+				Edit the /etc/exports file.
+					vi /etc/exports
+						 /server/apps client_ip_addr(rw,sync,no_subtree_check)
+					sudo exportfs -a
+					 sudo exportfs -v
+					 
+				sudo systemctl restart nfs-kernel-server
+				
+			client side config
+					sudo apt install nfs-common
+				show mount from NFS server
+					showmount -e serverip 
+				Create a mount point (a directory)
+					mkdir /mnt/apps
+				Mout the NFS file system
+					mount <ip_server>:/server/apps /mnt/apps
+					or 
+					mount -o v3  192.168.171.128:/server/apps /mnt/apps
+					cd /mnt/apps/
+					ls 
+			Both server and client side
+				/server/apps
+				ls
+				touch file1 
+				cd /mnt/apps/ {on client}
+				ls 
+				you can see the file1 on client side 
+				now create a file on client 
+				touch clientfile
+				
+			you can see clientfile on server
+
+*************************************************************
+How to Use Linux TraceRoute for Network Troubleshooting
+	tracks the route packets on how the data travels on internet from your computer to destination.
+		apt install inetutils-traceroute
+		traceroute 192.168.171.129
+		*** means iCMP is not configure 
+		
+		Default packets length is 60bytes to change it 
+			traceroute 192.168.171.129 100
+			
+		Default no. of packets is 3 to change it 
+			traceroute -q 1 192.168.171.129
+		Default port is 33434 to change it 
+			traceroute -p 21101 192.168.171.129
+		To use ipv4or 6 
+			traceroute -4/6 192.168.171.129
+		To route through gate 
+			traceroute -g  192.168.171.129 google.com 
+******************************************			
+			
+			
+				
+				
+				 
+					
+					
+			
+			
+			
+			
+			

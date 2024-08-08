@@ -1,0 +1,62 @@
+
+
+node -v 
+npm -v 
+nvm -v 
+
+which node 
+
+nvm ls
+nvm deactivate
+nvm uninstall 8.8.1
+
+which node
+
+
+npm install -g n
+sudo n stable
+sudo n latest
+n [version.number]
+or
+sudo n 16.16.0
+
+n list 
+n ls-remote
+n ls-remote --all
+
+----- Remove these from root user as well as the specific user -----
+rm -rf ~/.nvm && rm -rf ~/.npm && rm -rf ~/.bower
+
+----- Update NPM -----
+npm install -g npm@latest
+
+npm install -g npm@next
+
+
+nvm ls-remote
+nvm install [version.number]
+
+
+To give sudo access
+	nano /etc/sudoers
+then add this 
+/usr/local/bin/node
+
+apache 2 access 
+	sudo restartapache
+	
+********************************
+NPM permission
+
+/usr/local/bin/node,/usr/local/bin/n,/usr/bin/n,/usr/local/bin/npm
+
+**********************************************	
+→ Node and NPM:
+To check node version: sudo node -v 
+To check npm version: sudo npm -v
+To check installed version: sudo n ls
+To check available versions for download: sudo n --all lsr
+To switch node version via n: sudo n {version-number}  → sudo n 16.15.1
+To install package via npm: sudo npm install {package-name}
+
+******************************************************

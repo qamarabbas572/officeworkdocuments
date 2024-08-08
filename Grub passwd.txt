@@ -1,0 +1,11 @@
+
+black screen issue in linux
+username : admin2
+Grub Password:
+L3tmeInNow 
+
+long press power key to forcefully shutdown the system then start and go to the advance options then select root 
+
+# systemctl disable sssd
+# reboot
+

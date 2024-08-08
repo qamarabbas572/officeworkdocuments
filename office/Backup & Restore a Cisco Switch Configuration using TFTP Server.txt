@@ -1,0 +1,67 @@
+Backing up a Cisco IOS Device
+
+
+1. First you have to setup a TFTP server, and know the IP address of the machine it’s on!
+
+2. Connect to the device, either via console cable, Telnet or SSH.
+
+3. Log in > Go to enable mode > issue a “copy running-config tftp”* command > Supply the IP address of the TFTP server > Give the backup file a name.
+
+Note: You can also use startup-config to copy the config saved in NVRAM rather than the running-config.
+=======================================================================================
+User Access Verification
+
+
+Password:*******
+
+SWR-4#enable
+SWR-4#copy running-config tftp
+Address or name of remote host []? 192.168.6.56
+Destination filename [SWR-4-confg]? sw4A_311023
+!!
+7400 bytes copied in 0.548 secs (13504 bytes/sec)
+
+SWR-4#
+
+
+4. If you keep an eye on the TFTP server you can see the file coming in logs.
+
+=======================================================================================
+
+
+Restoring a Cisco Cisco IOS Device
+
+
+1. As above have your TFTP server up and running with the file you want to restore in its root directory.
+
+2. Connect to the device either via console cable, Telnet or SSH.
+
+
+3. Log in > Go to enable mode > issue a “copy tftp running-config”* command > Supply the IP address of the TFTP server > Give the backup file a name.
+
+Note: You can also use startup-config to restore the config saved in NVRAM rather than the running-config.
+
+=======================================================================================
+
+User Access Verification
+
+
+Password: *******
+
+SWR-4#enable
+SWR-4#copy tftp running-config
+Address or name of remote host []? 192.168.6.56
+Source filename []? SWR-4_Backup
+Destination filename [running-config]? {Enter}
+Accessing tftp://1/SWR-4_Backup...
+Loading SWR-4_Backup from 192.168.6.56 (via GigabitEthernet0/0): !
+[OK - 7400 bytes]
+
+7400 bytes copied in 0.440 secs (16818 bytes/sec)
+
+SWR-4#
+=======================================================================================
+
+4. Remember you have restored the running-config you would need to issue a “copy run start” command to make this config persistent (i.e. after a restart or reload of the router). If you issued a “copy tftp startup-config”, you would need to reboot for the restored config to be loaded into memory.
+
+=======================================================================================

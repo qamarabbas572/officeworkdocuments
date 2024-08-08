@@ -1,0 +1,193 @@
+1 Change the php versions
+		sudo apt install software-properties-common
+		sudo add-apt-repository ppa:ondrej/php
+		sudo apt update
+		sudo apt install -y php5.6
+		or
+		sudo apt install -y php7.4
+		sudo update-alternatives --config php
+		
+	
+----------------------------------------------------
+2 Change the python versions
+			sudo apt install software-properties-commonm
+		    sudo add-apt-repository ppa:deadsnakes/ppa
+			sudo apt update
+			sudo apt install -y python3.8
+			or 
+			sudo apt install -y python3.9
+			or 
+			sudo apt install -y python2.7  etc
+			sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+			sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.5 2
+			
+			sudo update-alternatives --config python
+------------------------------------------------------------------------------------
+3 To change node versions
+				curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+				sudo apt install nodejs
+			    node --version
+			or
+				sudo snap install node --channel=14/stable --classic
+							-------------------------
+				sudo apt install curl 
+				curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash 			
+				source ~/.profile 
+				nvm install {node version}
+---------------------------------------------------------------------------
+4 To change mysql versions
+				To uninstall my sql server
+					sudo apt-get remove --purge mysql*
+					sudo apt-get autoremove
+					sudo apt-get autoclean
+				sudo rm -rf /etc/mysql /var/lib/mysql	
+				or
+					sudo apt-get remove --purge mysql-server mysql-client mysql-common
+					sudo apt-get purge mysql-server mysql-client mysql-common mysql-server-core-* mysql-client-core-*
+					sudo apt-get autoremove
+					sudo apt-get autoclean
+					sudo rm -rf /var/lib/mysql
+					sudo rm -rf /etc/mysql
+					
+			To install MySQL version 5.7 or 8
+				Step 1: Add MySQL APT repository in Ubuntu
+						sudo apt update
+						sudo apt install wget -y
+						wget https://dev.mysql.com/get/mysql-apt-config_0.8.12-1_all.deb
+						sudo dpkg -i mysql-apt-config_0.8.12-1_all.deb
+					In the prompt, choose Ubuntu Bionic and click Ok
+					The next prompt shows MySQL 8.0 chosen by default. Choose the first option and click OK
+					In the next prompt, select MySQL 5.7 server and click OK.
+					The next prompt selects MySQL5.7 by default. Choose the last otpion Ok and click OK
+					
+				Step 2: Update MySQL Repository on Ubuntu
+						sudo apt-get update
+					Now search for MySQL 5,7 using apt-cache as shown below:
+					sudo apt-cache policy mysql-server	
+					
+				Step 3: Install MySQL 5.7 on Ubuntu 20.04 Linux machine
+						sudo apt install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7*
+					Hit the y key to start installation of MySQL 5.7 on Ubuntu 20.04 Linux.
+					Enter and re-enter root password when prompted	
+					
+				Step 4: Secure MySQL 5.7 Installation on Ubuntu 20.04
+						sudo mysql_secure_installation
+					Press Enter. When prompted for password, provide the root password set above.
+					Answer the prompts as below:
+						Enter current password for root (enter for none): <Enter password>
+						VALIDATE PASSWORD PLUGIN can be used to test passwords 
+						and improve security. It checks the strength of password 
+						and allows the users to set only those passwords which are 
+						secure enough. Would you like to setup VALIDATE PASSWORD plugin? 
+
+						Press y|Y for Yes, any other key for No: Y 
+
+						There are three levels of password validation policy: 
+
+						LOW    Length >= 8 
+						MEDIUM Length >= 8, numeric, mixed case, and special characters 
+						STRONG Length >= 8, numeric, mixed case, special characters and dictionary                 
+
+						Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG: 1 
+						Using existing password for root. 
+						Estimated strength of the password: 25  
+						Change the password for root ? ((Press y|Y for Yes, any other key for No) : d
+						Remove anonymous users? [Y/n] Y 
+						Disallow root login remotely? [Y/n] Y 
+						Remove test database and access to it? [Y/n] Y 
+						Reload privilege tables now? [Y/n] Y 
+						Thanks for using MariaDB!
+				Step 5: Check MySQL 5.7 version on Ubuntu 20.04
+						mysql -u root -p 
+						SELECT VERSION();
+				Step 6: If you want to install mysql workbench
+							sudo apt install mysql-workbench-community
+						or 
+							sudo snap install mysql-workbench-community
+							
+						Uninstall MySQL Workbench
+							sudo apt remove mysql-workbench-community
+						
+-------------------IF previous code not run then do this 
+smbclient -U ROLUSTECH\\hudaib.farooq //192.168.99.15/Public --directory softwares -c 'get "mysql-server_5.7.37-1ubuntu18.04_amd64.deb-bundle.tar"'
+----->>>>> Install the new mysql <<<<<-----
+copy from the shared drive path = \\192.168.99.15\Public\softwares\mysql-server_5.7.37-1ubuntu18.04_amd64.deb-bundle.tar
+tar -xzvf mysql-server_5.7.37-1ubuntu18.04_amd64.deb-bundle.tar
+
+dpkg -i mysql-common_5.7.37-1ubuntu18.04_amd64.deb
+dpkg -i libmysqlclient20_5.7.37-1ubuntu18.04_amd64.deb
+dpkg -i mysql-community-client_5.7.37-1ubuntu18.04_amd64.deb mysql-client_5.7.37-1ubuntu18.04_amd64.deb
+dpkg -i mysql-community-server_5.7.37-1ubuntu18.04_amd64.deb
+dpkg -i mysql-server_5.7.37-1ubuntu18.04_amd64.deb
+systemctl status mysql.service
+mysql -V
+systemctl enable mysql.service						
+							 
+-----------------------------------------------------------------------------------------------------------------------
+5 To switch apache2 versions
+		To check apache2 version
+			apache2 -v
+		To check apache2 location/path
+			type -a apache2
+			
+--------------------------------------------------------------------------------------
+6 Install xampp 
+				wget https://www.apachefriends.org/xampp-files/8.0.0/xampp-linux-x64-8.0.0-2-installer.run
+				sudo chmod 755 xampp-linux-x64-8.0.0-2-installer.run
+				ls - l xampp-linux-x64-8.0.0-2-installer.run 
+				sudo ./xampp-linux-x64-8.0.0-2-installer.run 
+  	How to Uninstall XAMPP
+			To Uninstall XAMPP server you need to open terminal and go to the installation directory /opt/lampp.
+				cd /opt/lampp
+				sudo ./uninstall
+				sudo rm –r /opt/lamp
+				
+-------------------------------------------------------------------------------------------------
+7 To check ubuntu version
+					lsb_release -a
+				or
+					cat /etc/lsb-release
+
+----------------------------------------------------------------
+8 To install phpmyadmin with mysql server
+				sudo apt update
+				sudo apt install mysql-server
+					mysql
+					SHOW VARIABLES LIKE 'validate_password'
+					use mysql
+					select user,plugin,host from mysql.user;
+					ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '123'
+					FLUSH PRIVILEAGES
+					\q or exit
+				mysql -u root -p 
+					select user,authentication_string,plugin,host from mysql.user;
+					\q
+				sudo apt install phpmyadmin		
+				
+----------------------------------------------------------------------
+9 To upgrade google chrome 
+						sudo apt update
+						sudo apt upgrade
+						wget --version
+						sudo apt install wget
+						wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+						sudo dpkg -i google-chrome-stable_current_amd64.deb
+						google-chrome --version
+					or
+						
+					sudo apt-get --only-upgrade install google-chrome-stable
+---------------------------------------------------------------------------	
+10 To install postman
+					sudo snap install postman
+	Switch versions
+					sudo snap switch --channel=v7/stable postman
+					sudo snap refresh postman
+.................................................................................					
+11 To update thunderbird
+						
+					sudo add-apt-repository ppa:ubuntu-mozilla-security/ppa 
+					sudo apt-get update
+					sudo apt-get install thunderbird
+----------------------------------------------------------------------		
+Zoom out TightVNC
+				Ctrl+Alt+Shift+F

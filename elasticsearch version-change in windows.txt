@@ -1,0 +1,25 @@
+	****** go to cmd run as administrator 	*****
+
+
+
+
+
+
+
+C:\elasticsearch-6.2.0\bin>elasticsearch-service.bat remove
+     The service 'elasticsearch-service-x64' has been removed
+
+C:\elasticsearch-6.2.0\bin>services.msc
+
+C:\elasticsearch-6.2.0\bin>cd C:\elasticsearch-7.16.3\bin
+
+C:\elasticsearch-7.16.3\bin>elasticsearch-service.bat install
+
+          The service 'elasticsearch-service-x64' has been installed.
+
+C:\elasticsearch-7.16.3\bin>elasticsearch-service.bat start
+          The service 'elasticsearch-service-x64' has been started
+
+services.msc
+    run as administrator and do it automatic
+

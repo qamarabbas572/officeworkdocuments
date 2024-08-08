@@ -1,0 +1,7 @@
+connection name : Rolustech_vpn
+
+remote gateway : 110.93.205.18
+or  203.130.20.90
+customize port : 8899
+username : 
+passwd: 

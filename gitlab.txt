@@ -1,0 +1,23 @@
+mkdir sugar12
+  136  mkdir sugar_12
+  137  cd sugar_12/
+  138  git clone https://qamar.abbas@git.rolustech.com/rtdockerized/rtdockerized.git
+  139  ls
+  140  cd rtdockerized/
+  141  git checkout -b qamar
+  142  git reset --hard origin/master
+  143  git reset --hard origin/main
+  144  cd ../../
+  145  cd sugar12
+  146  ls
+  147  cp sugar12-php80.txt ../sugar_12/rtdockerized/
+  148  cd ../sugar_12/rtdockerized/
+  149  ls
+  150  mv sugar12-php80.txt docker-compose.yml
+  151  ls
+  152  git status
+  153  git add docker-compose.yml
+  154  git status
+  155  git commit -m 'Sugar12 php80 docker file'
+  156  git push origin qamar:qamar
+  157  history

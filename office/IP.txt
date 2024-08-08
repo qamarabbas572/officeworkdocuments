@@ -1,0 +1,90 @@
+IPv4 Classes:-
+
+	Class A
+		1.0.0.0 to 126.0.0.0
+		
+	Class B
+		128.0.0.0 to 191.255.0.0
+		
+	Class C 
+		192.0.0.0 to 223.255.255.0
+		
+	Class D
+		224-239  use for multi cast
+		
+	Class E 
+		240-255  use for research purpose 
+		
+	Network ID
+
+	Class A :- N H H H
+	Class B :- N N H H
+	Class C :  N N N H
+	
+	Network Bit Represent with 1
+	Host Bit Represent with 0
+	
+	IP 115.10.0.5
+	Network ID 115.0.0.0
+	
+	IP 196.10.10.10
+	Network ID 192.10.10.0
+	
+	IP 150.10.10.100
+	Network ID 150.10.0.0
+	
+	********************************
+	Private IP'S
+		Class A 10.0.0.0
+		
+		Class B 172.16.0.0 - 172.31.0.0
+		
+		Class C 192.168.0.0 -192.168.255.255
+		
+******************************************************
+How many computers you connect in one IP
+
+			IP :- 150.10.20.30
+			Network ID :- 150.10.0.0
+			Broadcast IP :- 150.10.255.255
+			No of useable host:- 
+				No of host bits = 16
+				formula = 2^16 - 2 = 65,536 -2 
+				
+				     -2 means one for Network ID and another for broadcast ip.
+				             
+							  = 65534 
+*******************************************************							  
+
+Subnetting 
+	Network within 	network 
+	acc to host req 
+	acc to network req
+	
+	How to calculate subnetting 
+		1 write an IP 197.10.10.0
+		2 convert into binary 197.10.10.00000000
+		3 2 power n - 2 >- 40 max number of host 
+		  2 power 6 -2 =62 
+		  62 >- 40
+		  n =6
+		4 197.10.10.00000000
+		  197.10.10.11000000 6 bit for host 2 bit for network (network rep 1 host rep 0 )
+          197.10.10.192 convert into decimal
+		 
+		5 255.255.255.192 subnet mask 
+        6 197.10.10.0/26 		subnet 1
+		  197.10.10.63/26 broadcast id 
+		  
+		  197.10.10.64/26       subnet 2
+		  197.10.10.127/26 broadcast id 
+		  
+          197.10.10.128/26      subnet 3
+		  197.10.10.191/26 broadcast ip 
+		  
+		  197.10.10.192/26      subnet 4
+          197.10.10.255/26 broadcast id 
+ 		  
+                   add 64 to make subnet because the bit given to network is 128,64, we use first bit from right side.
+        				   
+******************************************************						   

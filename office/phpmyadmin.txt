@@ -1,0 +1,96 @@
+----->>>>> phpmyadmin <<<<<-----
+
+/etc/apache2/conf-available/phpmyadmin.conf
+/etc/apache2/conf-enabled/phpmyadmin.conf
+
+ln -s /etc/apache2/conf-available/phpmyadmin.conf /etc/apache2/conf-enabled/phpmyadmin.conf
+
+sudo apachectl configtest
+
+systemctl restart apache2.service
+
+
+=====>>>>>> phpmyadmin installation on Debian 10 / Ubuntu <<<<<======
+
+https://www.phpmyadmin.net/downloads/
+
+wget https://files.phpmyadmin.net/phpMyAdmin/4.9.10/phpMyAdmin-4.9.10-all-languages.tar.gz
+tar -xzvf phpMyAdmin-4.9.10-all-languages.tar.gz
+
+mv phpMyAdmin-4.9.10-all-languages/* /usr/share/phpmyadmin/
+chown -R www-data:www-data /usr/share/phpmyadmin/
+
+mkdir -p /var/lib/phpmyadmin/tmp
+chown -R www-data:www-data /var/lib/phpmyadmin/tmp
+
+ls /etc/apache2/conf-available/
+vim /etc/apache2/conf-available/phpmyadmin.conf
+-----
+
+Alias /phpmyadmin /usr/share/phpmyadmin
+<Directory /usr/share/phpmyadmin>
+    Options SymLinksIfOwnerMatch
+    DirectoryIndex index.php
+    <IfModule mod_php5.c>
+        <IfModule mod_mime.c>
+            AddType application/x-httpd-php .php
+        </IfModule>
+        <FilesMatch ".+\.php$">
+            SetHandler application/x-httpd-php
+        </FilesMatch>
+        php_value include_path .
+        php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
+        php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/usr/share/doc/phpmyadmin/:/usr/share/php/phpseclib/
+        php_admin_value mbstring.func_overload 0
+    </IfModule>
+    <IfModule mod_php.c>
+        <IfModule mod_mime.c>
+            AddType application/x-httpd-php .php
+        </IfModule>
+        <FilesMatch ".+\.php$">
+            SetHandler application/x-httpd-php
+        </FilesMatch>
+        php_value include_path .
+        php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
+        php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/usr/share/doc/phpmyadmin/:/usr/share/php/phpseclib/
+        php_admin_value mbstring.func_overload 0
+    </IfModule>
+</Directory>
+# Disallow web access to directories that don't need it
+<Directory /usr/share/phpmyadmin/templates>
+    Require all denied
+</Directory>
+<Directory /usr/share/phpmyadmin/libraries>
+    Require all denied
+</Directory>
+<Directory /usr/share/phpmyadmin/setup/lib>
+    Require all denied
+</Directory>
+--------
+
+apachectl configtest
+
+a2enconf phpmyadmin.conf
+systemctl reload apache2
+
+
+verify --> http://url/phpmyadmin
+
+
+=====>>>>> Access remote server via PhpMyAdmin client <<<<<=====
+
+Just add below lines to your /usr/share/phpmyadmin/config.inc.php file in the bottom :
+
+cp config.sample.inc.php config.inc.php
+vi config.inc.php
+-----
+$i++;
+$cfg['Servers'][$i]['host'] = 'HostName:port'; //provide hostname and port if other than default
+$cfg['Servers'][$i]['user'] = 'userName';   //user name for your remote server
+$cfg['Servers'][$i]['password'] = 'Password';  //password
+$cfg['Servers'][$i]['auth_type'] = 'config';       // keep it as config
+-----
+
+ls -ltr config.*
+chown -R www-data:www-data config.inc.php
+

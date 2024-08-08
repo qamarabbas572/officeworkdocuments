@@ -1,0 +1,43 @@
+
+First pipeline:-
+
+pipeline{
+    agent any 
+    stages{
+        
+        stage("Code Checkout"){
+            
+            steps{
+                git 'https://github.com/qamarabbas572/dockerfirstapp.git'
+            }
+        }
+
+        stage("images build"){
+            
+            steps{
+                sh ' docker image build -t qamar572/dockerfirstapp:v$BUILD_ID .'
+                sh ' docker image tag qamar572/dockerfirstapp:v$BUILD_ID qamar572/dockerfirstapp:latest'
+            }
+        }
+        stage("image push"){
+            
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'user')]) {
+				
+                    sh "docker login -u ${user} -p ${pass}"
+                    sh 'docker image  push  qamar572/dockerfirstapp:v$BUILD_ID'
+                    sh 'docker image  push  qamar572/dockerfirstapp:latest'
+                    sh 'docker image  rmi  qamar572/dockerfirstapp:v$BUILD_ID qamar572/dockerfirstapp:latest'
+                }
+            }
+        }
+        stage("container creating"){
+            
+            steps{
+                sh 'docker run -itd --name dockerfirstapp -p 3000:3000 qamar572/dockerfirstapp:latest'
+            }
+        }    
+        }
+    }
+	
+**********************************************************	

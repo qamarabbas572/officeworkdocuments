@@ -1,0 +1,1135 @@
+                            Docker 
+		Docker :
+			it is tool to create virtual machine 
+			it is a ecosystem { To create requires lots of thing is called ecosystem}
+					set of softwares or packages 
+			
+		Container: 
+			its just like a virtual machine
+			when image in running condition is called container
+			you can change any thing in the container
+			its a layer file system{in sequence }
+			
+		Image :
+			When image in stop/pause condition is called image.
+			unable to change any thing
+			screen shot or template of your machine 
+			
+		Docker file :
+			Dependencies and require softwares 
+			
+		Docker Ecosystem
+			1 Docker Client
+			2 Docker Daemon or Server or Docker Engine
+			3 Docker Hub or Registry 
+			4 Docker Images {Template}
+			5 Docker Compose {mange multiple containers}
+			
+****************************************Theory Part End********************
+								Basic Commands in Docker
+	To see all images present in your machine
+			docker images
+			
+	To find out images in docker hub
+			docker search jenkins{name of software}
+			
+	To download image from docker hub to local machine
+			docker pull jenkins
+			
+	To give name to container
+			docker run{create+start} -it{i->interactive mode , t-> terminal } --name qamar ubuntu /bin/bash
+			
+	To check service is start or not 
+			service docker status 
+			
+	To start container
+			docker start qamar {container name}
+			
+	To go inside container
+			docker attach qamar
+			
+	To see all containers
+			docker ps -a{all} 
+			
+	To see only running containers
+			docker ps {process status}
+			
+	To stop container
+			docker stop qamar
+			
+	To delete container
+			docker rm qamar
+			
+	To check o.s in the container
+			cat /etc/os-release  
+-------------------------------------------------------------			
+Images important commands			
+			docker image ls
+			docker image ls -a
+			docker image inspect php:7.4
+			docker image inspect php:7.4 --format "{{.Architecture}}"
+			docker image inspect php:7.4 --format "{{.Architecture}} {{.Os}}"
+	The images can't reference to any container etc 
+			docker image prune 
+		*******************************************************************
+							Dockerfile , Components and diff command
+							
+docker file ->build->image -> container 							
+
+ 1 Pull the image from the docker hub and makes a container, add some thing in the container and makes image 
+   from this container and again create container from the changes container image
+   
+			Login into aws account and start your EC2 instance access it 
+			Now we have to create container from own image
+					docker run -it --name qamar ubuntu /bin/bash
+					cd tmp/
+			Now create one file inside this tmp directory 
+					touch myfile
+			Now if you want to see the difference b/w the base image and changes on it then 
+					docker diff qamarcontainer 
+					
+					o/p-> c /root              {C -> change }
+						  A /root/.bash_history {A -> append or addition}
+						  C /tmp
+						  A /tmp/myfile
+						  D                    {D -> Deletion}
+			Now create image of this container
+					docker commit newcontainer updateimage
+					docker images
+			Now create container from this image 
+					docker run -it --name abbas updateimage /bin/bash
+					ls 
+					cd /tmp
+					ls
+				o/p-> myfile { you will get all files back}	
+				
+				****************************************
+				
+ 2 Dockerfile
+		dockerfile is basically a text file. It contains some set of instruction
+		Automation of docker image creation
+		
+		                  Docker Components
+						  
+			FROM :- For base image this command must be on top of the dockerfile
+			RUN  :- To execute commands , it will create a layer in image
+			MAINTAINER :- Author/Owner/Description
+			COPY :- Copy file from local system {docker vm} we need to provide source , destination
+					we can't download file from internet and any remote repo 
+			ADD :- Similar to COPY but , it provides a feature to download file from internet , also we
+				   extract file at docker image side
+			EXPOSE :- To expose ports such as port 8080 for tomcat , port 80 for nginx etc	
+			WORKDIR :- To set working directory for a container
+			CMD :- Execute commands but during container creation
+			ENTRYPOINT :- Similar to CMD but has higher priority over CMD,
+						  first commands will be executed by ENTRYPOINT only
+			ENV :- Environment Variables
+			ARG :- 	
+					
+					*********************************
+							LAB
+					*********************************
+		1 Create a file named Dockerfile
+		2 Add instruction in Dockerfile
+		3 Build dockerfile to create image
+		4 Run image to create container
+				
+				nano Dockerfile
+				
+				FROM ubuntu : version 
+				RUN echo "Baltee Collections" >/tmp/testfile
+				
+		To create image out of dockerfile
+				docker build -t {tag} myimg .{current directory }
+				
+				docker ps -a 
+				docker images
+				
+		Now create container from the above image 
+				docker run -it --name mycontainer myimg /bin/bash
+				
+			cat /tmp/testfile	
+			
+				**********************
+				Dockerfile Example
+				***********************
+				vi Dockerfile
+				
+				FROM ubuntu
+				WORKDIR /tmp
+				RUN echo "Subscribe Baltee Collections" > /tmp/sbc
+				ENV myname Qamar
+				COPY sbc /tmp
+				ADD sbc.tar.gz /tmp
+				
+				echo $myname
+				
+			*****************************************************************
+				Docker Volumes and How to share it
+			***************************************
+			
+		Volume is simply a directory inside our container 
+		You can mapped volume in two ways
+				container <-> container
+				host <->container
+				
+				***************
+					LAB
+				***************
+		Creating volume from dockerfile
+			create a dockerfile and write
+				FROM ubuntu
+				VOLUME ["/myvolume1"]
+			Then create image from this dockerfile
+				docker build -t myimage .
+				
+			Now create a container from this image and run 
+				docker run -it --name container1 myimage /bin/bash
+				
+			Now do ls , you can see myvolume1
+			
+			Now share volume with another container
+					container <-> container
+				docker run -it --name container2 --privileged = true --volume-from container1 ubuntu /bin/bash	
+			
+			Now after creating container2 , myvolume1 is visible whatever you do in one volume, Can see from other volume
+				touch /myvolume1/samplefile
+				docker start container1
+				docker attach container1
+				ls /myvolume1
+			you can see samplefile here 
+
+				___________8_________________________
+				
+			Now try to create volume by using command
+				docker run -it --name container3 -v /myvolume2 ubuntu /bin/bash
+				ls
+				cd /myvolume2
+				
+			Now create one file 
+				touch con3file1
+				
+			Now create one more container and share myvolume2
+				docker run -it --name container4 --privileged=true --volumes-from container3 ubuntu /bin/bash
+				
+			Now you are inside container , do ls , you can see myvolume2
+			Now create one file inside this volume and then exit in container3 , you can see that file
+			
+			*******************************************************
+					Volumes {Host to Container}
+			*****************************************
+			verify files in /home/ec2-user
+				docker run -it --name hostcontainer -v /home/ec2-user:/qamar --privileged=true ubuntu /bin/bash
+				
+				cd /qamar
+			Do ls , now you can see all files of host machine
+			
+			Now check in EC2 machine, you can see this file 
+			
+			*******************************************
+			Some other commands
+			*************************************
+				docker volume ls 
+				docker volume create <volumename>
+				docker volume rm <volumename>
+				docker volume prune { it removed all unused docker volume}
+				docker volume inspect <volumename>
+				docker container inspect <containername>
+				
+	******************************************************************************
+						Docker Port Expose
+						******************
+	*******
+		LAB
+	********	
+		Login into aws account and create one linux instance
+		Now access it then do this
+			sudo su
+			yum update -y
+			yum install docker -y 
+			service docker start 
+			docker run -td{d for daemon} --name techserver -p 80{host port}:80{container port} ubuntu
+			docker ps 
+			docker port techserver
+				o/p 80/tcp 0.0.0.0/80
+			docker exec -it techserver /bin/bash
+					{attach and exec are same but when attach its point to existing process but exec creates new process}
+			apt-get update
+			apt-get install apache2
+			cd /var/www/html
+			echo "Baltee Collections" > index.html
+			service apache2 start
+			docker run -td --name myjenkins -p 8080:8080 jenkins	
+			
+************************************************************************************************
+						How to push docker image in DockerHub
+						**************************************
+		Docker pull Docker ID , Image Name 				
+		
+			Login into aws account and create one linux instance
+		Now access it then do this
+			sudo su
+			yum update -y
+			yum install docker -y 
+			service docker start 
+			docker run -it ubuntu /bin/bash
+			
+		Now Create some files inside Container
+		Now Create image of this container   
+			docker commit container1 image1
+		Now Create account in hub.docker.com 
+		
+		Now go to EC2 instance
+			docker login
+			enter your username and password 
+		
+		Now give tag to your image 
+			docker tag image1 dockerid/newimage {save image from this name in hub}
+			docker push dockerid/newimage
+			
+		Now you can see this image in docker hub account
+		
+		Now create one instance in any region and pull image from hub
+			docker pull dockerid/newimage
+			docker run -it --name mycontainer dockerid/newimage /bin/bash
+			
+			
+***********************************************************************************
+					Important Commmands 
+					
+		Stop all running Containers
+			docker stop $(docker ps -a -q)
+			
+		Delete all Stopped Container
+			docker rm $(docker ps -a -q)
+			
+		Delete all images 
+			docker rmi -f $(docker images -q)
+			
+----------------------------------------------------------------
+MYSQL CONTAINER 
+				docker run --name sugar-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123 -d mysql:5.7
+				
+-----------------------------------------------------------------
+APACHE2 CONTAINER
+					
+				docker run -d --name apache2-container -v /var/www/html:/var/www/html -e TZ=UTC -p 8000:80 ubuntu/apache2
+------------------------------------------------------------------	
+ELASTICSEARCH CONTAINER
+				docker run -d --name elasticsearch-container -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.16.1 
+				docker exec -it elasticsearch-container /bin/bash
+				curl http://localhost:9200
+				curl -X PUT http://localhost:9200/newindex
+				curl -X GET http://localhost:9200/newindex
+				curl -X GET  http://localhost:9200/newindex?pretty
+				
+-----------------------
+Define static IP for container
+					docker network create --subnet=172.16.0.0/16 customnetwork
+					docker run --name sugar-mysql-2 --network customnetwork --ip 172.16.0.10 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123 -d mysql:5.7
+					docker run -d --name apache2-container-2 --network customnetwork --ip 172.16.0.11  -v /var/www/html:/var/www/html -e TZ=UTC -p 8000:80 ubuntu/apache2
+					elasticsearch :172.16.0.12
+					
+					docker run -d --name sugar-mysql-3 --network customnetwork --ip 172.16.0.10 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123 sugar-mysql-2   
+					docker run -d --name apache2-container-3 --network customnetwork --ip 172.16.0.11 -v /var/www/html:/var/www/html -e TZ=UTC -p 8000:80 apache2-container-2   
+					docker run -d --name elasticsearch-container-3 --network customnetwork --ip 172.16.0.12 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch-container-2   
+
+SugarPro_11_db
+Sugarcrm task:-
+---------------------------------------------------------------------------------
+Create new user 
+				usermod -a -G docker username
+				
+---------------------------------------------------------------
+Restart Container 
+					--restart no -> Never restart the container
+					--restart on-failure ->  only if the container fail
+					--restart always -> always restart the container succeds or fail
+					--restart unless-stopped -> always restart the container succeds or fail
+					                           unless the container was manually stopped
+											   
+------------------------------------------------------------------------------------------
+Downgrade and upgrade docker version
+					systemctl stop docker
+					apt-get remove -y docker-ce docker-ce-cli
+					apt-get update
+					sudo apt-get install -y docker-ce=5:18.09.4~3~0~ubuntu-bionic docker-ce-cli==5:18.09.4~3~0~ubuntu-bionic
+--------------------------------------------------------------------
+Configuring logging drivers
+					docker info | grep Logging
+					
+-------------------------------------------------------------------
+Docker swarm 
+						 docker swarm init --advertise-addr 192.168.3.149
+						 docker node ls 
+						 docker swarm join-token worker
+						 docker swarm join --token SWMTKN-1-32zf995nj43k04bod98kk0b7qtwkre4h5assbtkub9vk8vwkim-7w1836yzvnddg52i0i0xs05ws 192.168.3.149:2377
+						 
+------------------------------------------------------------------------
+Docker swarm backup
+						systemctl stop docker
+						tar -zvcf backup.tar.gz /var/lib/docker/swarm	
+						
+					Restore from backup
+						systemctl stop docker
+						rm -rf /var/lib/docker/swarm/* 
+						tar -zxvf backup.tar.gz -C /var/lib/docker/swarm/
+						systemctl start docker
+						
+-----------------------------------------------------------------	
+List the layers used to build an image
+						docker image history imagename
+						
+--------------------------------------------------------------------	
+Dockerfile example
+						
+#Simple nginx image
+
+FROM ubuntu:bionic
+
+ENV NGINX_VERSION 1.14.0-0ubuntu1.3
+
+RUN apt-get update && apt-get install -y curl
+RUN apt-get update && apt-get install -y nginx=$NGINX_VERSION
+
+CMD "nginx","-g","daemon off;"
+----------------------------------------------------------
+Copy from one dir to another dir 
+				 cp ../inefficient/Dockerfile ./
+------------------------------------------------
+Flattening an image
+	multi layer image  convert into sigle image:-
+			mkdir alpine-hello
+			cd  alpine-hello
+			nano Dockerfile
+				FROM alpine:3.9.3
+				RUN echo "Hello, World" > message.txt
+				CMD cat message.txt
+				
+			docker build -t nonflat .	
+			docker image history nonflat
+			docker run -d --name flat_container nonflat
+			docker export flat_container > flat.tar
+			cat flat.tar | docker import - flat:latest
+			docker image ls
+			docker image history flat
+----------------------------------------------------------------------	
+Create your own docker registry
+					docker run -d -p 5000:5000 --restart=always --name own_Registry registry:2
+					docker logs own_Registry
+					docker container stop own_Registry && docker container rm -v own_Registry
+					docker run -d -p 5000:5000 --restart=always --name own_Registry -e REGISTRY_LOG_LEVEL=debug registry:2
+					docker logs own_Registry
+					docker container stop own_Registry && docker container rm -v own_Registry
+					
+					Security 
+					mkdir ~/registry
+					cd ~/registry
+					mkdir auth
+					docker run --entrypoint htpasswd registry:2 -Bbn testuser password > auth/htpasswd
+					ls auth/htpasswd
+					cat auth/htpasswd
+						testuser:$2y$05$w1/1kZQhJ1qt/ZIXaMwzuON69VsGapOrpARTfekYb/0OvKEDwgyoC
+					mkdir certs 
+					openssl req \
+					> 	-newkey rsa:4096 -nodes -sha256 -keyout certs/domain.key \
+					>    -x509 -days 365 -out certs/domain.crt
+					
+					docker run -d -p 443:443 --restart=always --name registry \
+					-v /home/qamar/registry/certs:/certs \
+					-v /home/qamar/registry/auth:/auth \
+					-e REGISTRY_HTTP_ADDR=0.0.0.0:443 \
+					-e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
+					-e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
+					-e REGISTRY_AUTH=htpasswd \
+					-e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
+					-e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
+					registry:2.7.0
+					
+					curl -k https://localhost:443
+					
+		Login into our private registry method 1
+					docker login qamar
+					username testuser
+					password 
+					
+				turn off certification verification
+					sudo nano /etc/docker/daemon.json
+						{
+							"insecure-registries": ["qamar"]
+						}
+
+		Login into our private registry method 2
+					sudo mkdir -p /etc/docker/cert.d/172.17.0.1[hostname]
+					sudo scp qamar@172.17.0.1:/home/qamar/registry/certs/domain.crt /etc/docker/cert.d/172.17.0.1
+					docker login hostname
+					
+		how to push image on private registry
+					docker tag ubuntu hostname/imagename 
+					docker push  ubuntu hostname/imagename 
+					docker pull  ubuntu hostname/imagename 
+---------------------------------------------------------------------------					
+Docker swarm autolock
+				docker swarm update --autolock=true/false {turn on or off}
+					SWMKEY-1-YpKPDO0vOpmXh+5lb6cJRYEdcjepj77RVqCxFGuMIos
+				docker node ls 	
+				systemctl restart docker
+				docker node ls 	
+				docker swarm unlock
+				docker node ls
+			Find unlock key 
+				docker swarm unlock-key 
+			new key 
+				docker swarm unlock-key --rotate 
+					SWMKEY-1-oJpo3KOgn2J7JiMH0KFTl08G3R+ygejuwwFYlWY1298
+-------------------------------------------------------------------------------
+Docker swarm Services or Docker Services
+				docker service create nginx	
+				docker service create --name nginx --replicas 3 -p 8080:80 nginx	
+				curl localhost:8080
+				
+			how we can use templates
+				docker service create --name node-hostname --env NODE_HOSTNAME="{{.Node.Hostname}}" --replicas 3  nginx
+				docker ps 
+				docker exec db8984843159 printenv
+				
+			How to manage services
+				docker service ls 
+				docker service ps nginx {show all of the tasks that are part our service}
+				docker service inspect nginx
+				docker service inspect --pretty nginx
+				
+			How to update services
+				docker service update --replicas 2 nginx
+
+			How to delete the service
+				docker service rm nginx
+				
+			Replicated vs Global Services:-
+				docker service create --name nginx --mode global nginx
+					its creates a services in all the available nodes
+					
+			Scaling Services
+				docker service scale nginx=4
+	
+------------------------------------------------------------------------	
+Docker Inspect 
+		To get all the info about the images , container etc
+				docker inspect imagename or containername or nameof service
+				or 
+				docker container inspect containername
+				or 
+				docker service inspect servicename 
+				or 
+				docker service inspect --pretty servicename 
+				or
+				docker container  inspect --format='{{.ID}}' sugar-mysql
+				
+------------------------------------------------------------------------		
+Docker Compose
+				sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+				sudo chmod +x /usr/local/bin/docker-compose
+				docker-compose version
+				
+				
+				mkdir nginx-compose
+				cd nginx-compose
+				nano docker-compose.yml
+					version: '3'
+					services:
+						web:
+							image: nginx
+							ports:
+							- "8080:80"
+						redis:
+							image: redis:alpine
+				
+                docker-compose up -d
+				docker-compose ps
+				docker-compose down
+-----------------------------------------------------------------------------
+Docker Stacks 
+				 nano simple_stack.yml
+					version: '3'
+					services:
+					  web:
+						image: nginx
+					  busybox:
+						image: radial/busyboxplus:curl
+						command: /bin/sh -c "while true; do echo AOA!; sleep 10; done"
+						
+				docker stack deploy -c simple_stack.yml simple		
+				docker stack ls
+				docker stack ps simple
+				docker stack services  simple
+				docker service logs simple_web
+				
+					version: '3'
+					services:
+					  web:
+						image: nginx
+					  busybox:
+						image: radial/busyboxplus:curl
+						command: /bin/sh -c "while true; do echo $MESSAGE!; sleep 10; done"
+						environment:
+						- MESSAGE=WAS...!
+						
+				docker stack deploy -c simple_stack.yml simple	
+				docker service logs simple_web
+
+				docker stack rm simple
+----------------------------------------------------------------------------				
+Node Labels 
+				docker node ls
+				docker node update --label-add availability_zone=east qamar
+				docker node inspect --pretty qamar
+				docker service create --name nginx-east --constraint node.labels.availability_zone==east --replicas 3 nginx
+				docker service ps nginx-east
+				docker service create --name nginx-west --constraint node.labels.availability_zone!=east --replicas 3 nginx
+				docker service ps nginx-spread
+				
+				LAB
+				docker service update --replicas 5 products-fruit
+				docker service scale products-fruit=5
+				docker service create --name products-vegetables -p 8081:80 --replicas 3 linuxacademycontent/vegetable-service:1.0.0
+				
+				curl localhost:8081
+--------------------------------------------------------------------------------------
+Docker volume 
+		mount syntax/bind mount
+				cd ~/
+				mkdir message
+				echo Hello,World! > message/message.txt 
+                cat message/message.txt
+				docker run --mount type=bind,source=/root/message,destination=/root,readonly busybox cat /root/message.txt
+				
+		mount volume/bind volume
+				docker run --mount type=volume,source=my-volume,destination=/root  busybox sh -c 'echo hello > /root/message.txt && cat /root/message.txt'
+                
+				
+				docker run -v /root/message:/root:ro busybox cat /root/message.txt
+				docker run -v my-volume:/root: busybox cat /root/message.txt
+				
+				docker run --mount type=volume,source=shared-volume,destination=/root  busybox sh -c 'echo I wrote this! > /root/message.txt && cat /root/message.txt'
+ 
+        another syntax
+				docker volume create test-volume
+				docker volume ls
+				docker volume inspect test-volume
+				docker volume rm  test-volume
+				
+---------------------------------------------------------------------------				
+Image Cleanup
+			how much using storage space of images containers etc
+				docker system df 
+			Individual things taking a space
+				docker system df -v
+				
+			any image that are no refer any container etc	
+				docker image prune
+			Remove all unuse images 		
+				docker image prune -a 	
+------------------------------------------------------------------------------------
+Storage in a  Cluster
+			Install on manager and all nodes 
+				docker plugin install --grant-all-permissions vieux/sshfs 
+				
+				docker volume create --driver vieux/sshfs \
+				> -o sshcmd=qamar@192.168.3.149:/home/qamar/external \
+				> -o password=azlaan \
+				> sshvolume
+				
+				docker volume ls
+				
+				docker service create \
+				> --replicas=3 \
+				> --name storage-service \
+				> --mount volume-driver=vieux/sshfs,source=cluster-volume,destination=/root,volume-opt=sshcmd=qamar@192.168.3.149:/home/qamar/external,volume-opt=password=azlaan busybox cat /root/message.txt
+
+				docker service logs storage-service
+
+				
+			Setup on 4th server {external storage}
+				mkdir /home/username/external
+				ls 
+				cd external
+				echo External Storage ! > /home/username/external/message.txt 
+-----------------------------------------------------------------------------------
+Network Drivers
+			Host Network Driver
+				docker run -d --net host --name host_busybox radial/busyboxplus:curl sleep 3600
+				docker run -d --net host --name host_nginx nginx
+				ip add | grep eth0
+				or 
+				ip add | grep  enp0s3
+				docker exec host_busybox  ip add | grep  enp0s3
+				docker exec host_busybox curl localhost:80
+
+			Bridge Network Driver
+				ip link 
+				docker network create --driver bridge my-bridge-net
+				ip link 
+				docker run -d --name bridge_nginx --network my-bridge-net nginx
+				docker run --rm  --name bridge_busybox --network my-bridge-net radial/busyboxplus:curl curl bridge_nginx:80
+				
+			Overlay Network Driver
+				docker network create --driver overlay my-overlay-net
+				docker service create --name overlay-nginx --network my-overlay-net nginx
+				docker service create --name overlay_busybox --network my-overlay-net radial/busyboxplus:curl sh -c ' curl overlay_nginx:80 && sleep 3600'
+				docker service logs overlay_busybox
+				
+			MACVLAN NetworkDriver
+				docker network create -d macvlan --subnet 192.168.0.0/24 --gateway 192.168.0.1 -o parent=eth0 or enp0s3  my-macvlan-net
+				docker run -d --name macvlan_nginx --net my-macvlan-net nginx
+				docker run --rm --name macvlan_busybox --net my-macvlan-net radial/busyboxplus:curl curl 192.168.0.2:80
+				
+			None Network Driver
+				docker run --net none -d  --name none_nginx nginx
+				docker run --rm  radial/busyboxplus:curl curl none_nginx:80
+
+--------------------------------------------------------------------------------------
+Creating a Bridge Network:
+				docker network create my-net
+				docker run -d --name my-net-busybox --network my-net radial/busyboxplus:curl sleep 3600
+				docker run -d --name my-net-nginx nginx
+				docker network connect my-net my-net-nginx
+				docker exec my-net-busybox curl my-net-nginx:80
+				
+				Alias:
+					docker run -d --name my-net-nginx2 --network my-net --network-alias my-nginx-alias  nginx
+					docker exec my-net-busybox curl my-nginx-alias:80
+					or 
+					docker run -d --name my-net-nginx3 nginx
+					docker network connect --alias another-alias my-net my-net-nginx3
+					docker exec my-net-busybox curl another-alias:80
+					
+-----------------------------------------------------------------------------
+Managing Networks:
+				docker network ls 
+				docker network inspect my-net
+				docker network disconnect my-net my-net-nginx
+				docker network rm  my-net
+			Error:	
+				docker network inspect  my-net
+				docker network disconnect my-net my-net-busybox
+				docker network rm  my-net
+				
+--------------------------------------------------------------------------
+Overlay Network:
+			The ability to network across multiple docker hosts.
+				docker network create --driver overlay --attachable my-overlay
+				docker service create --name overlay-service --network my-overlay --replicas 3 nginx
+				docker run --rm{delete container when is finish running} --network my-overlay radial/busyboxplus:curl curl overlay-service:80
+				
+-------------------------------------------------------------------------------
+Exposing Containers Externally:
+					docker run -d -p 8080:80 --name nginx_pub nginx
+					curl localhost:8080
+					docker port nginx_pub
+					
+				publishing ports for services:
+					docker service create -p 8081:80 --name nginx_ingress_pub nginx
+					curl localhost:8081
+					docker service ps nginx_ingress_pub
+					curl localhost:8081
+				or
+					docker service create -p mode=host,published=8082,target=80 --name nginx_host_pub nginx
+					docker service ps nginx_host_pub
+					curl localhost:8082
+					
+				check on node 	
+					curl localhost:8082
+						its going to fail bcz we have no routing mesh 
+						
+--------------------------------------------------------------------------------
+Network Troubleshooting:
+				docker run  --name log-container busybox echo Here is my container log!
+				docker logs log-container
+				docker service create --name log-srv --replicas 3 -p 8080:80 nginx
+				curl localhost:8080
+				docker service logs log-srv
+				
+			docker daemon logs 
+				sudo journalctl -u docker
+				
+			Netshoot:-
+				Its an image that comes with a variety of network troubleshooting
+					docker network create custom-net
+					docker run -d --name custom-net-nginx --network custom-net nginx
+					docker run --rm --network custom-net nicolaka/netshoot curl custom-net-nginx:80
+					docker run --rm --network container:custom-net-nginx  nicolaka/netshoot curl localhost:80
+					curl localhost:80
+					
+-----------------------------------------------------------------------	
+External DNS:
+			nano /etc/docker/daemon.json
+				{
+					"dns":["8.8.8.8"]
+				}
+				
+			systemctl restart docker
+			docker run nicolaka/netshoot nslookup google.com
+
+			overide the default dns 
+				docker run --dns 8.8.4.4  nicolaka/netshoot nslookup google.com
+				
+--------------------------------------------------------------------------------
+                                  Security:-				
+								----------------
+		Signing Images:-
+			Docker Content Trust(DCT):
+				Its provide a secure way to verify the integrity of images 
+				before you pull or run on your system.
+				
+					docker login
+					docker trust key generate qamar572
+					docker trust signer add --key qamar572.pub qamar572 qamar572/dct-test
+					mkdir dct-test
+					cd dct-test/
+					nano Dockerfile
+						
+						FROM busybox:latest
+
+						CMD echo Its worked!
+				Unsign Image		
+					docker build -t qamar572/dct-test:unsigned .
+					docker push  qamar572/dct-test:unsigned
+					docker run qamar572/dct-test:unsigned
+				Now Enable Docker Content Trust
+					export DOCKER_CONTENT_TRUST=1
+					docker run qamar572/dct-test:unsigned
+
+				Sign Image:
+					docker build -t qamar572/dct-test:signed .
+					docker trust sign qamar572/dct-test:signed
+					docker run qamar572/dct-test:signed
+					
+				Now Disable
+					export DOCKER_CONTENT_TRUST=0
+					docker run qamar572/dct-test:unsigned
+					
+----------------------------------------------------------------------------
+		Encrypting overlay networks :-
+				docker network create --opt encrypted --driver overlay my-encrypted-net
+				docker service create --name encrypted-overlay-nginx --network my-encrypted-net --replicas 3 nginx
+				docker service create --name encrypted-overlay-busybox --network my-encrypted-net radial/busyboxplus:curl sh -c 'curl  encrypted-overlay-nginx:80 && sleep 3600'
+				docker service logs encrypted-overlay-busybox
+				
+----------------------------------------------------------------------------------------
+Securing the docker daemon HTTP Socket
+			openssl genrsa -aes256 -out ca-key.pem 4096
+			openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem -subj "/C=US/ST=Texas/L=Keller/O=Linux Academy/OU=Content/CN=$HOSTNAME"
+			openssl genrsa -out server-key.pem 4096
+			openssl req -subj "/CN=$HOSTNAME" -sha256 -new -key server-key.pem -out server.csr
+			echo subjectAltName = DNS:$HOSTNAME,IP:<server private IP>,IP:127.0.0.1 >> extfile.cnf
+			echo extendedKeyUsage = serverAuth >> extfile.cnf
+			openssl x509 -req -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem \
+            -CAcreateserial -out server-cert.pem -extfile extfile.cnf
+				
+		Then generate the client certificates:
+			openssl genrsa -out key.pem 4096
+			openssl req -subj '/CN=client' -new -key key.pem -out client.csr
+			echo extendedKeyUsage = clientAuth > extfile-client.cnf
+			openssl x509 -req -days 365 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem \
+			-CAcreateserial -out cert.pem -extfile extfile-client.cnf
+			
+		Set appropriate permissions on the certificate files:
+			chmod -v 0400 ca-key.pem key.pem server-key.pem
+			chmod -v 0444 ca.pem server-cert.pem cert.pem
+			
+		Configure your Docker host to use tlsverify mode with the certificates that were created earlier:
+			sudo vi /etc/docker/daemon.json
+			{
+				"tlsverify": true,
+				"tlscacert": "/home/cloud_user/ca.pem",
+				"tlscert": "/home/cloud_user/server-cert.pem",
+				"tlskey": "/home/cloud_user/server-key.pem"
+				}
+			
+			sudo vi /lib/systemd/system/docker.service
+			
+		Look for the line that begins with ExecStart and change the -H so that it looks like this:
+			ExecStart=/usr/bin/dockerd -H=0.0.0.0:2376 --containerd=/run/containerd/containerd.sock
+			sudo systemctl daemon-reload
+			sudo systemctl restart docker
+			
+		Copy the CA cert and client certificate files to the client machine:
+			scp ca.pem cert.pem key.pem cloud_user@<client private IP>:/home/cloud_user
+			
+		On the client machine, configure the client to securely connect to the remote Docker daemon:
+			mkdir -pv ~/.docker
+			cp -v {ca,cert,key}.pem ~/.docker
+			export DOCKER_HOST=tcp://<docker server private IP>:2376 DOCKER_TLS_VERIFY=1
+		
+		Test the connection:
+			
+---------------------------------------------------------			
+                   --------------------
+				     Docker Enterprice
+				   --------------------
+				   
+	        sudo visudo
+			cloud_user ALL=(ALL) NOPASSWD: ALL
+			ssh-keygen -t rsa
+			ssh-copy-id cloud_user@<manager private IP>
+			ssh-copy-id cloud_user@<worker private IP>
+			ssh-copy-id cloud_user@<dtr private IP>
+			wget https://github.com/Mirantis/launchpad/releases/download/0.14.0/launchpad-linux-x64
+			
+			mv launchpad-linux-x64 launchpad
+            chmod +x launchpad
+			./launchpad version
+			
+			./launchpad register
+			
+			vi cluster.yaml
+			apiVersion: launchpad.mirantis.com/v1beta3
+			kind: DockerEnterprise
+			metadata:
+			name: launchpad-ucp
+			spec:
+			ucp:
+			version: 3.3.2
+			installFlags:
+			- --admin-username=admin
+			- --admin-password=secur1ty!
+			- --default-node-orchestrator=kubernetes
+			hosts:
+			- address: <manager private IP>
+			privateInterface: ens5
+			role: manager
+			ssh:
+			user: cloud_user
+			keyPath: ~/.ssh/id_rsa
+			- address: <worker private IP>
+			privateInterface: ens5
+			role: worker
+			ssh:
+			user: cloud_user
+			keyPath: ~/.ssh/id_rsa
+
+
+			./launchpad apply
+---------------------------------------------------------------------	
+Docker Swam
+		active or inactive
+			docker info | grep -i swarm
+			
+		To makes a manager:
+			docker swarm init
+			
+		To makes a node or worker
+			docker swarm join --token SWMTKN-1-2of5103d18t7vjqgpb24im1ilb0oa76ocas6u3rx6izjm6u7fv-0dnh0yq2o0270jpom21wb6mfj 172.31.13.150:2377
+			
+			
+		Creating a service:
+			docker service create --name <name> --replicas <#> -p<HP:CP> image
+			
+		  Example:
+			docker service create --name web -p 80:80 nginx
+			docker service create --name web --replicas 2  -p 80:80 nginx
+			
+			docker service ls
+			docker service ps 
+			
+		  Scaling up and Scaling down
+			docker service scale web=3
+			
+		  Details about a service	
+			docker service inspect --pretty <servicename>
+			
+		  Deleting a service
+			docker service rm servicename
+			
+		  Managing Nodes:-
+			docker node inspect --pretty <node>
+			docker node promote
+			docker node demote
+			docker node update --availability drain <node>
+			docker node update --availability active <node>
+			
+		  Rolling update or Images change already running service:
+			docker service update --image nginx:1.17.10 web 
+			
+		  Rollback :
+			docker service update --rollback web 
+			
+		  Global:-
+			docker runs one replica per node on all the nodes in the swarm.
+				docker service create -p 80:80 --name web --mode global nginx
+		  Deploy the stack{collection of services} on the swarm
+			docker stack deploy -c docker-compose.yml <stackname>
+			docker stack ls
+			docker stack ps <stackname>
+			docker stack services <stackname>
+			docker stack rm <stackname>
+				
+				
+*********************************************************************************
+Create your own private docker registry:
+					mkdir -p /docker_data/certs 
+					openssl
+					apt -y install openssl
+					openssl req -newkey rsa:4096 -nodes -sha256 -keyout /docker_data/certs/domain.key -x509 -days 365 -out /docker_data/certs/domain.crt
+					Common Name (e.g. server FQDN or YOUR name) []: docker-registry.rolustech.net 
+					ll /docker_data/certs/
+					mkdir -p /docker_data/images
+					docker search registry
+					docker run -d -p 5000:5000 \
+					-v /docker_data/images:/var/lib/registry \
+					-v /docker_data/certs:/certs \
+                    -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
+					-e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
+					--restart on-failure \
+					--name rolustechregistry \
+					docker.io/registry	
+					
+				Now push images on your private registry:
+					docker images
+					docker tag qamar572/apache2-php71 localhost:5000/apache2-php71
+					docker push localhost:5000/apache2-php71
+					
+				Now check the images push or not 
+					ll /docker_data/images/docker/registry/v2/repositories/
+					
+				Now configure 	the docker client use our certificate:
+					scp -r /docker_data/certs/domain.crt docker-host1:/root/ 
+					
+				Now go to client 
+					ssh docker-host1 
+					docker images 
+					cd /etc/docker/certs.d/
+					or 
+					mkdir -p /etc/docker/certs.d/
+					ls
+					mkdir -p docker-registry.rolustech.net:5000
+					cp -rf /root/domain.crt docker-registry.rolustech.net\:5000/
+					ll
+					cd
+					docker images
+					docker pull docker-registry.rolustech.net:5000/apache2-php71
+					*****************************
+			with username and password
+				docker run -d -p 5000:5000 --name dockerregistry -v /opt/docker_registry:/opt/docker_registry -e REGISTRY_HTTP_TLS_CERTIFICATE=/opt/docker_registry/cert.pem -e REGISTRY_HTTP_TLS_KEY=/opt/docker_registry/key.pem  -e REGISTRY_AUTH=htpasswd -e REGISTRY_AUTH_HTPASSWD_PATH=/opt/docker_registry/htpasswd -e REGISTRY_AUTH_HTPASSWD_REALM="Registry Realm" --restart always registry:2
+					
+	****************************************************************	
+add user in windows
+		net localgroup docker-users "your-user-id" /ADD
+		
+***************************************************
+Container ssh:
+			https://www.youtube.com/watch?v=GicWz2OF0sk
+			
+***********************************************************			
+					
+						********************************
+									2024 Corvit
+						********************************			
+# Docker - Essential Commands
+
+- https://www.mygreatlearning.com/blog/top-essential-docker-commands/
+
+- The below are the list of essential commands we are in need 
+
+|     Commands                 |    Description                                  |
+| ------------------------------- | --------------------------------------------- |
+| docker ps | List all running containers |
+| docker ps -a | List all containers stopped, running |
+| docker stop container-id | Stop the container which is running |
+| docker start container-id | Start the container which is stopped |
+| docker restart container-id | Restart the container which is running |
+| docker port container-id | List port mappings of a specific container |
+| docker rm container-id or name | Remove the stopped container |
+| docker rm -f container-id or name| Remove the running container forcefully |
+| docker pull image-info | Pull the image from docker hub repository |
+| docker pull stacksimplify/springboot-helloworld-rest-api:2.0.0-RELEASE | Pull the image from docker hub repository |
+| docker exec -it container-name /bin/sh | Connect to linux container and execute commands in container |
+| docker rmi image-id | Remove the docker image |
+| docker logout | Logout from docker hub |
+| docker login -u username -p password | Login to docker hub |
+| docker stats | Display a live stream of container(s) resource usage statistics |
+| docker top container-id or name | Display the running processes of a container |
+| docker version | Show the Docker version information |
+
+*******************************************************************
+# Flow-1: Pull Docker Image from Docker Hub and Run it
+
+## Step-1: Verify Docker version and also login to Docker Hub
+```
+docker version
+docker login
+```
+
+## Step-2: Pull Image from Docker Hub
+```
+docker pull stacksimplify/dockerintro-springboot-helloworld-rest-api:1.0.0-RELEASE
+```
+
+## Step-3: Run the downloaded Docker Image & Access the Application
+- Copy the docker image name from Docker Hub
+```
+docker run --name app1 -p 80:8080 -d stacksimplify/dockerintro-springboot-helloworld-rest-api:1.0.0-RELEASE
+http://localhost/hello
+
+## Step-4: List Running Containers
+```
+docker ps
+docker ps -a
+docker ps -a -q
+```
+
+## Step-5: Connect to Container Terminal
+```
+docker exec -it <container-name> /bin/sh
+```
+
+## Step-6: Container Stop, Start 
+```
+docker stop <container-name>
+docker start  <container-name>
+```
+
+## Step-7: Remove Container 
+```
+docker stop <container-name> 
+docker rm <container-name>
+```
+
+## Step-8: Remove Image
+```
+docker images
+docker rmi  <image-id>
+```
+
+*********************************************************************************			Container Linking	
+		Download the Jenkins image, if it is not already present, using the Jenkins pull command
+		docker pull jenkins/jenkins
+
+		Once the image is available, run the container, but this time, you can specify a name to the container by using the –-name option. This will be our source container.
+		docker run --name=jenkingscontainer -d jenkins/jenkins
+
+		Next, it is time to launch the destination container, but this time, we will link it with our source container. For our destination container, we will use the standard Ubuntu image.
+		docker run --name=ubuntucontainer --link=jenkingscontainer:alias-src -it ubuntu:latest /bin/bash 
+
+		Then run the env command. You will notice new variables for linking with the source container.
+		env	
+				
+*********************************************************************************
+Mongo DB 
+		docker pull mongo
+		docker run --name mymongocontainer -d mongo
+		docker exec -it mymongocontainer mongosh
+		use tempdb
+		
+*************************************		
+					
+					
+			
+
+			
+
+
+				
+
+					
+											   

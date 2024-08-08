@@ -1,0 +1,187 @@
+install node on ubuntu 20.04
+============================
+
+apt-get update -y
+apt-get install curl gnupg2 -y
+curl -sL https://deb.nodesource.com/setup_14.x | bash -
+apt-get update -y
+apt-get install nodejs -y
+node -v
+npm -v
+
+#when we install node, npm (node package manager) also installs with it.
+
+update the npm to the latest version
+npm install npm@latest -g
+npm install npm@7.19.1 -g
+npm install npm@10.2.5 -g 
+
+#clearing node cache.
+--------------------
+#clear cache:
+rm -rf /.nvm && rm -rf /.npm && rm -rf ~/.bower
+run it on both root and user
+
+How to Manage NodeJS Versions with n in Ubuntu 20.04
+====================================================
+
+we have 2 node version managers. 1 is n and 2 is nvm. nvm is profile based and n is installed globally. 
+
+
+install n
+https://www.howtoforge.com/how-to-manage-nodejs-versions-with-n-in-ubuntu-20-04/ (use this one)
+================================================================================
+
+=======================================================================================================================================
+while installing n, n requires a node version. if it slready exists then it throws an error. it better, if we wanna install node or n then it is recommended to install using this method. 
+=======================================================================================================================================
+
+There are several ways to install n on Linux.
+
+method#1:
+npm install -g n
+ 
+If npm is not installed in your system, you can install it by downloading the n script from GitHub:
+
+method#2:
+curl -L https://git.io/n-install | bash
+source ~/.bashrc
+
+If you want to uninstall n from your system, run the following command:
+n-uninstall
+
+To update n to the latest version, run the following command:
+n-update
+
+To check the version of n, run the following command:
+n --version
+
+To check all options available with n, run the following command:
+n --help
+
+Manage Node.js Versions
+=======================
+
+To install the latest Node.js version, run the following command:
+n latest
+
+To install the Node.js lts version, run the following command:
+n lts
+
+To install the specific Node.js version, run the following command:
+n 14.15.0
+
+To download the specific Node.js version, run the following command:
+n -d 14.8.0
+
+To use the downloaded Node.js version, run the following command:
+n run 14.8.0
+Next, exit from the Node.js shell with the following command:
+> .exit
+
+To list all installed versions of Node.js, run the following command:
+n ls
+
+To list all available Node.js versions, run the following command:
+n ls-remote
+
+The above command will list only 20 available versions. If you want to list all available Node.js versions, run the following command:
+n ls-remote --all
+
+To find the location of a specific Node.js version, run the following command:
+n which node/14.8.0
+
+To switch between different Node.js versions, run the following command:
+n
+You will be asked to select the Node.js version that you want to switch:
+    node/14.8.0
+    node/14.15.0
+  ο node/14.17.1
+    node/16.4.0
+Use up/down arrow keys to select a version, return key to install, d to delete, q to quit
+Select your desired Node.js version and hit Enter to set it as a default version.
+
+# Remove Node.js Version with n
+===============================
+
+To remove a specific downloaded Node.js version, run the following command:
+n rm node/16.4.0
+To remove all downloaded Node.js versions, run the following command:
+n prune
+To remove all installed Node.js versions, run the following command:
+n uninstall
+
+==============================================================================================================================================================================================================================================================================
+
+Installing NVM (Node Version Manager) by downloading and running a script
+
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+The command above will clone the NVM repository from Github to the ~/.nvm directory:
+
+Close and reopen your terminal to start using nvm or run the following to use it now:
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+Once the script is in your PATH, verify that nvm was properly installed by typing:
+
+nvm --version
+which should give this output:
+
+0.34.0
+Installing Node.js and npm
+
+nvm install node
+nvm install --lts
+Once the installation is completed, verify it by printing the Node.js version:
+
+node --version
+should give this output:
+
+v12.8.1
+Npm should also be installed with node, verify it using
+
+npm -v
+should give:
+
+6.13.4
+==============================================================================================================================================================================================================================================================================
+
+completely uninstall / purge nodejs, npm and node in Ubuntu 20.04
+=================================================================
+
+apt-get remove nodejs npm node
+apt-get purge nodejs
+
+Now remove .node and .npm folders from your system
+
+rm -rf /usr/local/bin/npm 
+rm -rf /usr/local/share/man/man1/node* 
+rm -rf /usr/local/lib/dtrace/node.d 
+rm -rf ~/.npm 
+rm -rf ~/.node-gyp 
+rm -rf /opt/local/bin/node 
+rm -rf opt/local/include/node 
+rm -rf /opt/local/lib/node_modules  
+rm -rf /usr/local/lib/node*
+rm -rf /usr/local/include/node*
+rm -rf /usr/local/bin/node*
+
+or
+
+rm -rf /usr/local/bin/npm  && rm -rf /usr/local/share/man/man1/node* && rm -rf /usr/local/lib/dtrace/node.d && rm -rf ~/.npm && rm -rf ~/.node-gyp && rm -rf /opt/local/bin/node && rm -rf opt/local/include/node && rm -rf /opt/local/lib/node_modules  && rm -rf /usr/local/lib/node* && rm -rf /usr/local/include/node* && rm -rf /usr/local/bin/node*
+
+==============================================================================================================================================================================================================================================================================
+
+Install ReactJS on Ubuntu 20.04
+
+ReactJS is a free and open-source JavaScript library used for building reusable UI components. It was developed by Facebook in 2011.
+
+
+node and npm are the pre-requistes. if not installed then do first.
+
+https://bobbyhadz.com/blog/npm-warn-deprecated-tar-2-2-2-this-version-of-tar
+https://www.howtoforge.com/how-to-install-reactjs-on-ubuntu-20-04/
+
+==============================================================================================================================================================================================================================================================================

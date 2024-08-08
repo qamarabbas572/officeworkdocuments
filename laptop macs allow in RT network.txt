@@ -1,0 +1,3 @@
+go to run and type \\192.168.99.11\Common\Sys admin\Laptop-Macs.docx
+
+** here in this document we have all mac addresses of laptop that are allowed in RT network.

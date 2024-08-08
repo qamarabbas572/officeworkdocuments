@@ -1,0 +1,13 @@
+BS degree in Computer Science/Software Engineering or similar relevant field
+Minimum 1-2 years of related experience in the professional industry
+DevOps - familiarity with DevOps practices and automation tooling
+Virtualization - Facility with the techniques used to virtualize servers, applications, and desktops. Knowledge of the data center requirements to implement each technology
+Must have experience with the open-source tools, i.e. Jenkins, Kubernetes, Dockers, Ansible, Chef, Terraform, etc
+Experience with infrastructure tools like Terraform and Cloud Formation
+Must have exposure working with any of the Cloud platforms - Azure, GCP or AWS
+Basic level scripting experience (Python, Ruby, Bash, Powershell)
+Experience with Linux distributions (Rhel 8, CentOS, Ubuntu, and Amazon Linux)
+Excellent verbal and written English communication skills
+Flexible attitude and versatile personality
+
+hammad.hassan@rolustech.com

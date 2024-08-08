@@ -1,0 +1,300 @@
+----- SugarCRM-9.x Supported Platforms for Server Requirements -----
+Apache --> 2.4
+PHP Version --> 7.1, 7.3
+MySql Version --> 5.7
+Elasticsearch --> 6.3
+---------------------------------
+Networks:-
+		docker network create --subnet=172.16.0.0/16 sugarnetwork
+Containers:-
+		docker run -d --name apache2-php71 --network sugarnetwork --ip 172.16.0.11 -v /var/www/html:/var/www/html -e TZ=UTC -p 80:80 ubuntu/apache2
+		docker run -d --name elasticsearch-63 --network sugarnetwork --ip 172.16.0.12 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch
+		docker run -d --name mysql-57 --network sugarnetwork --ip 172.16.0.10 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123 qamar572/sugar-mysql-2
+-------------------------------------------------------------------------------
+
+----- SugarCRM-10.x Supported Platforms for Server Requirements -----
+Apache --> 2.4
+PHP Version --> 7.3
+MySql Version --> 5.7
+Elasticsearch --> 6.3
+---------------------------
+        docker run -d --name apache2-php73 --network sugarnetwork --ip 172.16.0.14 -v /var/www/html:/var/www/html -e TZ=UTC -p 80:80 ubuntu/apache2:2.4-22.04_beta
+		docker run -d --name elasticsearch-63 --network sugarnetwork --ip 172.16.0.15 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch
+		docker run -d --name mysql-57 --network sugarnetwork --ip 172.16.0.16 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123 qamar572/sugar-mysql-2
+
+********************************************************************
+
+----- SugarCRM-11.0.x Supported Platforms for Server Requirements -----
+Apache --> 2.4
+PHP Version --> 7.3, 7.4
+MySql Version --> 5.7 , 8.0
+Elasticsearch --> 7.16.1  --> 11.0.0 - 11.0.3
+----------------------------
+docker run -d --name mysql-80 --network sugarnetwork --ip 172.16.0.17 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123 mysql:8.0
+docker run -d --name elasticsearch-7161 --network sugarnetwork --ip 172.16.0.18 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e - ES_JAVA_OPTS: -Xms750m -Xmx750m qamar572/elasticsearch-7161
+**************************************************************************
+----- SugarCRM-12.0.x Supported Platforms for Server Requirements -----
+Apache --> 2.4
+PHP Version --> 7.4, 8.0
+MySql Version --> 5.7 , 8.0
+Elasticsearch --> 7.16.3  --> 12.0.0
+java 11
+
+Permission
+please increase the size in php.ini 
+	post_max_size = 400M
+	upload_max_filesize = 200M
+    max_file_uploads = 80
+	memory_limit = 512M
+	max_input_time = 600
+-------------------
+docker run -d --name apache2-php74 --network sugarnetwork
+ --ip 172.16.0.19 -v /var/www/html:/var/www/html -e TZ=UTC -p 80:80 
+ qamar572/apache2-container-2
+docker run -d --name apache2-php80 --network sugarnetwork --ip 172.16.0.20 -v /var/www/html:/var/www/html -e TZ=UTC -p 80:80 ubuntu/apache2:2.4-22.04_beta
+
+****************************************************************************
+PHP Extension and setups in sugar:-
+	apt install php8.2-common php8.2-mysql php8.2-xml php8.2-xmlrpc php8.2-curl php8.2-gd php8.2-imagick php8.2-cli php8.2-dev php8.2-imap php8.2-mbstring php8.2-opcache php8.2-soap php8.2-zip php8.2-intl -y
+	apt install php7.0-bcmath
+	
+	sudo a2enmod rewrite
+	
+	nano /etc/apache2/sites-available/000-default.conf
+	
+		<Directory /var/www/html>
+        AllowOverride all
+		Require all granted
+		</Directory>
+		
+******************************************************************************	
+Elasticsearch Versions
+https://www.docker.elastic.co/r/elasticsearch?limit=50&offset=100&show_snapshots=false&ordering=name
+
+************************************************************	
+
+					Important Commmands 
+					
+		Stop all running Containers
+			docker stop $(docker ps -a -q)
+			
+		Delete all Stopped Container
+			docker rm $(docker ps -a -q)
+			
+		Delete all images 
+			docker rmi -f $(docker images -q)
+			
+		Start all the stop containers
+			docker start $(docker ps -a)
+			
+			
+***********************************************************************************		
+
+Create a compose file
+		https://www.composerize.com/
+		
+		https://github.com/esimonetti/SugarDockerized/blob/master/stacks/sugar12/php80.yml
+		https://github.com/esimonetti/SugarDockerized
+************************************************************	
+phpmyadmin container:-
+		docker run --name phpmyadmin --network sugarnetwork --ip 172.16.0.21 -d -e PMA_ARBITRARY=1 UPLOAD_LIMIT: 100000000 -p 8080:80 phpmyadmin
+		docker run --name phpmyadmin --network sugarnetwork --ip 172.16.0.21  --network-alias phpmyadmin  -d -e PMA_ARBITRARY=1 -e upload_limit:300m -p 8080:80 qamar572/phpmyadmin
+		docker run --name phpmyadmin --network sugarnetwork --ip 172.16.0.21  --network-alias phpmyadmin  -d -e PMA_ARBITRARY=1 -e 'post_max_size:3699985' -e 'upload_max_filesize:5000m' -p 8080:80 qamar572/phpmyadmin
+************************************************************		
+
+Copy file from host to container:
+		docker cp  /home/qamar/sugarcrm11.sql  d6312329af29:/
+		
+******************************************************	
+Import database
+		mysql -u root -p sugarcrm11 <sugarcrm11.sql
+		
+Export database
+		mysql -u root -p sugarcrm12 > sugarcrm12.sql
+				
+******************************************		
+docker run -d --name elasticsearch-1100 --network sugarnetwork --network-alias elasticsearch-1100  --ip 172.16.0.22 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node"
+
+*******************************************************************************
+				SuiteCRM
+				********
+Version 8.2.0:-				
+	docker run -d --name apache2-php80 --network sugarnetwork --ip 172.16.0.20 -v /var/www/html:/var/www/html -e TZ=UTC -p 80:80 	qamar572/apache2-php80	
+	docker run -d --name mysql-80 --network sugarnetwork --ip 172.16.0.17 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123 qamar572/mysql-80
+------------------------------------------------------------------------
+MySql Data backup:
+		Floder in container:
+			backup_mysql
+		Volume in host 
+			backup_mysql
+			
+		mysql-57:
+        container_name: mysql-57
+        network_mode: sugarnetwork
+        ports:
+            - '3306:3306'
+        environment:
+            - MYSQL_ROOT_PASSWORD=123
+        image: qamar572/mysql-57
+        volumes:
+            - '/home/db_backup:/var/lib/mysql'
+**********************************************************************	
+Sugar latest compose file:
+
+version: '3.3'
+services:
+    apache2-php80:
+        container_name: apache2-php80
+        network_mode: sugarnetwork
+        volumes:
+            - '/var/www/html:/var/www/html'
+        environment:
+            - TZ=UTC
+        ports:
+            - '801:80'
+        image: qamar572/apache2-php80
+
+    mysql-57:
+        container_name: mysql-57
+        network_mode: sugarnetwork
+        ports:
+            - '3306:3306'
+        environment:
+            - MYSQL_ROOT_PASSWORD=123
+        volumes:
+            - '/var/www/html/sugar_db_backup:/var/lib/mysql'
+        image: qamar572/mysql-57
+    elasticsearch-7161:
+        container_name: elasticsearch-7161
+        network_mode: sugarnetwork
+        ports:
+            - '9200:9200'
+            - '9300:9300'
+        environment:
+            - discovery.type=single-node
+            - ES_JAVA_OPTS= -Xms750m -Xmx750m
+        image: qamar572/elasticsearch-7161
+    phpmyadmin:
+        container_name: phpmyadmin
+        network_mode: sugarnetwork
+        environment:
+            - PMA_ARBITRARY=1
+            - UPLOAD_LIMIT=5G
+        ports:
+            - '8080:80'
+        image: qamar572/phpmyadmin
+		
+***********************************************************
+Docker private Registry private file 
+
+version: '3'
+
+services:
+    docker-registry:
+        image: registry:2
+        container_name: docker-registry
+        ports:
+            - 5000:5000
+        restart: always
+        volumes:
+            - ./volume:/var/lib/registry
+    docker-registry-ui:
+        image: konradkleine/docker-registry-frontend:v2
+        container_name: docker-registry-ui
+        ports:
+            - 8080:80
+        environment:
+            ENV_DOCKER_REGISTRY_HOST: docker-registry
+            ENV_DOCKER_REGISTRY_PORT: 5000
+			
+			https://www.youtube.com/watch?v=8gEs_zefNYA
+			
+latest:
+---
+version: '3'
+
+services:
+    dockerhubrt:
+        image: registry:2
+        container_name: dockerhubrt
+        ports:
+            - 5000:5000
+        environment:
+             REGISTRY_AUTH: htpasswd
+             REGISTRY_AUTH_HTPASSWD_REALM: Registry
+             REGISTRY_AUTH_HTPASSWD_PATH: /auth/registry.password
+        volumes:
+            - ./data:/var/lib/registry
+            - ./auth:/auth
+    dockerhubrt-ui:
+        image: konradkleine/docker-registry-frontend:v2
+        container_name: dockerhubrt-ui
+        ports:
+            - 8080:80
+        environment:
+            ENV_DOCKER_REGISTRY_HOST: dockerhubrt
+            ENV_DOCKER_REGISTRY_PORT: 5000			
+			
+****************************************************
+192.168.99.92
+Landscape --> ssh port = 222 
+admin2 / Rolus321
+----------------------------
+Troubshooting docker
+				sudo dockerd --debug
+				
+__________________________________				
+Copy from host to container
+	docker cp foo.txt container_id:/foo.txt
+*************************************************	
+windows compose file
+
+---
+version: '3.3'
+services:
+    apache2-php80:
+        container_name: apache2-php80
+        network_mode: sugarnetwork
+        volumes:
+            - 'D:\DevOps\Docker\windows:/var/www/html'
+        environment:
+            - TZ=UTC
+        ports:
+            - '801:80'
+        image: dockerhub.rolustech.com/apache2-php80
+
+
+    mysql-57:
+        container_name: mysql-57
+        network_mode: sugarnetwork
+        ports:
+            - '3306:3306'
+        environment:
+            - MYSQL_ROOT_PASSWORD=123
+        volumes:
+            - 'D:\DevOps\Docker\windows\docker_db_backup:/var/lib/mysql'
+        image: dockerhub.rolustech.com/mysql-57
+    elasticsearch-7161:
+        container_name: elasticsearch-7161
+        network_mode: sugarnetwork
+        ports:
+            - '9200:9200'
+            - '9300:9300'
+        environment:
+            - discovery.type=single-node
+            - ES_JAVA_OPTS= -Xms750m -Xmx750m
+        image: dockerhub.rolustech.com/elasticsearch-7161
+    phpmyadmin:
+        container_name: phpmyadmin
+        network_mode: sugarnetwork
+        environment:
+            - PMA_ARBITRARY=1
+            - UPLOAD_LIMIT=5G
+        ports:
+            - '8080:80'
+        image: dockerhub.rolustech.com/phpmyadmin
+		
+*****************************************************************		
+
+	
+	

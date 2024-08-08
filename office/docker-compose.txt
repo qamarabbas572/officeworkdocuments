@@ -1,0 +1,61 @@
+services:
+  Apache:
+    image: ubuntu/apache2
+    ports:
+      - 80:80
+    volumes:
+      - /var/www/html:/var/www/html
+
+  PHP:
+    image: php:7.4
+
+  MYSQL:
+    image: mysql:5.7
+
+  ELASTICSERCH:
+    image: elasticsearch:7.16.1
+	
+	
+#############################
+   Compose yml file
+#############################
+
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: Database
+    volumes:
+      - ./db_data:/var/lib/mysql
+    environment:
+      - MYSQL_TCP_PORT=3360
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DBUSER=kt
+      - MYSQL_DBPASS=kevin
+    ports:
+      - "3360:3360"
+    networks:
+      - myweb2
+  web:
+    container_name: Webmaster
+    build: .
+    volumes:
+      - ./html:/var/www/html
+      - ./config:/usr/local/etc/php
+    ports:
+      - "80:80"
+    environment: 
+      - MYSQL_DBHOST=db
+      - MYSQL_DBPORT=3360
+      - MYSQL_DBUSER=kt
+      - MYSQL_DBPASS=kevin
+      - MYSQL_DBNAME=processDatas
+    depends_on:
+      - db
+    networks:
+      - myweb2
+networks:
+  myweb2:
+    ------------------------------------------	
+	
