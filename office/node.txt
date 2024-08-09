@@ -13,7 +13,6 @@ nvm uninstall 8.8.1
 which node
 
 
-npm install -g n
 sudo n stable
 sudo n latest
 n [version.number]

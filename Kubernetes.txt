@@ -784,7 +784,8 @@ spec:
 
 **************************************Start**************************************************
 							Namespaces and Resource Quota
-					************************************************	
+					************************************************
+minikube start --driver=docker --force					
 ==============================NAMESPACES===================================
 apiVersion: v1
 kind: Namespace
@@ -793,6 +794,14 @@ metadata:
    labels:
      name: dev
 
+	kubectl get pods
+	kubectl get pods -n dev
+	kubectl get namespaces
+	
+	nano devns.yml
+	kubectl apply -f devns.yml
+	kubectl get namespaces
+	
 =================================to create a pod=================
 vi pod.yml
 
@@ -806,11 +815,23 @@ spec:
     - name: c00                     
       image: ubuntu              
       command: ["/bin/bash", "-c", "while true; do echo Technical Guftgu; sleep 5 ; done"]
-  restartPolicy: Never       
-==============================================================================================
+  restartPolicy: Never 
 
-$ kubectl config set-context $(kubectl config current-context) --namespace=dev
-$ kubectl config view | grep namespace:
+	nano  pod.yml
+	kubectl apply -f pod.yml -n dev 
+	kubectl get pods -n dev
+	kubectl delete -f pod.yml {error}
+	kubectl delete -f pod.yml -n dev {success}
+	
+==============================================================================================
+if you want to change default namespace
+	
+	nano  pod.yml
+	kubectl apply -f pod.yml -n dev
+	kubectl config set-context $(kubectl config current-context) --namespace=dev
+	kubectl get pods
+	kubectl config view | grep namespace:
+	kubectl delete -f pod.yml
 ==============================================================================================
 apiVersion: v1
 kind: Pod
@@ -829,6 +850,12 @@ spec:
         memory: "128Mi"
         cpu: "200m"
 
+
+	nano podresources.yml
+	kubectl apply -f podresources.yml
+	kubectl get pods
+	kubectl describe pod resources
+	kubectl delete  -f podresources.yml
 ============RESOURCEQUOTA========================================
 
 apiVersion: v1
@@ -841,6 +868,10 @@ spec:
     limits.memory: "400Mi"
     requests.cpu: "200m"
     requests.memory: "200Mi"
+	
+	nano resourcequota.yml
+	kubectl apply -f resourcequota.yml
+	kubectl delete -f resourcequota.yml
 ===========================================================
 kind: Deployment
 apiVersion: apps/v1
@@ -864,6 +895,15 @@ spec:
          resources:
             requests:
               cpu: "200m"
+			  
+	nano testpod.yml
+	kubectl apply -f  testpod.yml
+	kubectl get deploy
+	kubectl get pods
+	kubectl get rs
+	kubectl describe  rs deployments-55684b4879
+	kubectl delete -f  testpod.yml
+
 ============================================================
 apiVersion: v1
 kind: LimitRange
@@ -877,7 +917,15 @@ spec:
       cpu: 0.5
     type: Container
 
+	nano cpudefault.yml
+	kubectl apply -f  cpudefault.yml
+	kubectl apply -f  pod.yml
+	kubectl get pods
+	kubectl describe pod testpod
+	kubectl delete -f  pod.yml
 ==============cpu2.yml======================================
+Limit Define
+
 apiVersion: v1
 kind: Pod
 metadata:
@@ -889,7 +937,14 @@ spec:
     resources:
       limits:
         cpu: "1"
+		
+    nano cpu2.yml
+	kubectl apply -f  cpu2.yml
+	kubectl describe pod default-cpu-demo-2
+	kubectl delete -f  cpu2.yml
 =================================================================================================
+Request define 
+
 apiVersion: v1
 kind: Pod
 metadata:
@@ -901,6 +956,11 @@ spec:
     resources:
       requests:
         cpu: "0.75"
+		
+	nano cpu3.yml
+	kubectl apply -f  cpu3.yml
+	kubectl describe pod default-cpu-demo-3
+	kubectl delete -f  cpu3.yml	
 ===============================================
 
 **************************************END****************************************************					
