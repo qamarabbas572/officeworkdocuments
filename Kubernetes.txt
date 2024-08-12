@@ -857,7 +857,16 @@ spec:
 	kubectl describe pod resources
 	kubectl delete  -f podresources.yml
 ============RESOURCEQUOTA========================================
-
+		Default Ranage of container
+			CPU
+				Request - 0.5 {min}
+				Limit   - 1 {max}
+				
+			MEMORY
+				Request - 500M {min}
+				Limit   - 1G  {max}
+				
+				
 apiVersion: v1
 kind: ResourceQuota
 metadata:
@@ -963,4 +972,177 @@ spec:
 	kubectl delete -f  cpu3.yml	
 ===============================================
 
-**************************************END****************************************************					
+**************************************END****************************************************
+
+**************************************Start**************************************************
+							Kubernetes Horizontal Pod Autoscaling
+					************************************************
+minikube start --driver=docker --force						
+==============cpu2.yml=========================================================================
+apiVersion: v1
+kind: Pod
+metadata:
+  name: default-cpu-demo-2
+spec:
+  containers:
+  - name: default-cpu-demo-2-ctr
+    image: nginx
+    resources:
+      limits:
+        cpu: "1"
+		
+	nano cpu2.yml
+	kubectl apply -f  cpu2.yml
+	kubectl describe pod default-cpu-demo-2
+	kubectl delete -f  cpu2.yml	
+=================================================================================================
+apiVersion: v1
+kind: Pod
+metadata:
+  name: default-cpu-demo-3
+spec:
+  containers:
+  - name: default-cpu-demo-3-ctr
+    image: nginx
+    resources:
+      requests:
+        cpu: "0.75"
+		
+	nano request.yml
+	kubectl apply -f  request.yml
+	kubectl describe pod default-cpu-demo-3
+	kubectl delete -f  request.yml		
+=================================MEMDEFAULT.YML========================================
+1.
+
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mem-min-max-demo-lr
+spec:
+  limits:
+  - max:
+      memory: 1Gi
+    min:
+      memory: 500Mi
+    type: Container
+	
+	nano memorydefault.yml
+	kubectl apply -f  memorydefault.yml
+	kubectl describe pod mem-min-max-demo-lr
+	kubectl delete -f  memorydefault.yml
+==========
+apply 1 here 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: constraints-mem-demo
+spec:
+  containers:
+  - name: constraints-mem-demo-ctr
+    image: nginx
+    resources:
+      limits:
+        memory: "800Mi"
+      requests:
+        memory: "600Mi"
+
+	nano con-mem-demo.yml 
+	kubectl apply -f con-mem-demo.yml
+	kubectl describe pod constraints-mem-demo
+	kubectl delete -f con-mem-demo.
+----
+apply 1 here
+	
+apiVersion: v1
+kind: Pod
+metadata:
+  name: constraints-mem-demo
+spec:
+  containers:
+  - name: constraints-mem-demo-ctr
+    image: nginx
+    resources:
+      limits:
+        memory: "1400Mi"
+      requests:
+        memory: "600Mi"
+
+	nano con-mem-error.yml 
+	kubectl apply -f con-mem-error.yml
+----
+
+apply 1 here
+	
+apiVersion: v1
+kind: Pod
+metadata:
+  name: constraints-mem-demo
+spec:
+  containers:
+  - name: constraints-mem-demo-ctr
+    image: nginx
+    resources:
+      limits:
+        memory: "800Mi"
+      requests:
+        memory: "300Mi"
+
+	nano con-mem-error1.yml 
+	kubectl apply -f con-mem-error1.yml		
+	
+- If request is not specified & limit is given, then request = limit
+=================
+wget -O metricserver.yml https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+add this line on metricsserver.yml on deployment kind and ad with cert 
+	- --kubelet-insecure-tls
+	kubectl apply -f  metricserver.yml
+	kubectl get namespaces
+	kubectl get pods -n kube-system
+	kubectl logs -f metrics-server-7ffbc6d68-tsr66 -n kube-system
+--------------
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+   name: mydeploy
+spec:
+   replicas: 1
+   selector:
+    matchLabels:
+     name: deployment
+   template:
+     metadata:
+       name: testpod8
+       labels:
+         name: deployment
+     spec:
+      containers:
+        - name: c00
+          image: httpd
+          ports:
+          - containerPort: 80
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+			  
+	nano deployhpa.yml
+	kubectl apply -f deployhpa.yml
+	kubectl get all
+	watch kubectl get all
+	
+		  
+---------------------
+kubectl autoscale deployment mydeploy --cpu-percent=20 --min=1 --max=10
+--------------
+Test on another session
+		kubectl get pods
+		kubectl exec mydeploy-bfcbc64d4-wrgkr -it -- /bin/bash
+		apt update
+		
+
+					
+**************************************END***************************************************9204NR					

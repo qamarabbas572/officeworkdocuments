@@ -1489,6 +1489,15 @@ how to stop a running port in ubuntu
 		ss -tunp | grep -i 3000
 		kill -9 pid 
 		
-************************************************		
+************************************************	
+How to open ports on linux 
+		-->> sudo firewall-cmd --permanent --add-port=1234/tcp
+		#opening a port in firewalld
+		-->> firewall-cmd --reload
+		#reload firewall to reflect changes
+		-->> firewall-cmd --list-services
+		#checking allowed services
+		
+*******************************************************		
 
 
