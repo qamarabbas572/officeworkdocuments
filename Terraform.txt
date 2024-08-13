@@ -1,0 +1,14 @@
+**************************************Start**************************************************
+							Terraform basic commands
+					************************************************
+
+				Terraform -------> AWS {install all aws plugins}
+				Terraform -------> AWS { aws login }
+						access key
+						secret key
+						
+				Terraform -------> AWS { create resource }
+
+
+
+**************************************END***************************************************

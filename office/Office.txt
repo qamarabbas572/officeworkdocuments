@@ -85,7 +85,7 @@ https://xdebug.org/download/historical
 
 
 [xdebug]
-zend_extension =  /opt/phpbrew/php/php-8.2.0/lib/php/extensions/no-debug-non-zts-20220829/xdebug.so
+zend_extension =  /opt/phpbrew/php/php-7.4.20/lib/php/extensions/no-debug-zts-20190902/xdebug.so
 xdebug.remote_enable=1
 xdebug.profiler_output_dir="/tmp/xdebug/"
 xdebug.profiler_enable=On
@@ -1235,6 +1235,8 @@ Install postgres on ubuntu
 		apt-get install postgresql-12
 		
 		psql --version
+		/usr/bin/psql
+		sudo -u postgres psql
 		
 *************************************************************		
 MS SQL Extensions
@@ -1499,5 +1501,10 @@ How to open ports on linux
 		#checking allowed services
 		
 *******************************************************		
+snap error
+	snap changes
+	snap abort 6
+	
+***********************************	
 
 
